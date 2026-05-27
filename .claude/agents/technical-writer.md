@@ -37,22 +37,22 @@ Write for developers using RTK, not for yourself. Prioritize clarity with workin
 
 ### CLI Usage Guides
 ```markdown
-# rtk git log
+# stc git log
 
 Condenses `git log` output for token efficiency.
 
 **Syntax**:
 ```bash
-rtk git log [git-flags]
+stc git log [git-flags]
 ```
 
 **Examples**:
 ```bash
 # Show last 10 commits (condensed)
-rtk git log -10
+stc git log -10
 
 # With specific format
-rtk git log --oneline --graph -20
+stc git log --oneline --graph -20
 ```
 
 **Token Savings**: 80% (verified with fixtures)
@@ -110,7 +110,7 @@ cargo test test_token_savings
 **Option 1: Homebrew**
 ```bash
 brew install harshitsinghbhandari/homebrew-tap/rtk
-rtk --version  # Should show rtk X.Y.Z
+stc --version  # Should show stc X.Y.Z
 ```
 
 **Option 2: From Source**
@@ -118,12 +118,12 @@ rtk --version  # Should show rtk X.Y.Z
 git clone https://github.com/harshitsinghbhandari/stc.git
 cd rtk
 cargo install --path .
-rtk --version  # Verify installation
+stc --version  # Verify installation
 ```
 
 **Verification**:
 ```bash
-rtk gain  # Should show token savings analytics
+stc gain  # Should show token savings analytics
 ```
 
 ## Linux
@@ -136,15 +136,15 @@ cargo install --path .
 
 # Verify installation
 which rtk
-rtk --version
+stc --version
 ```
 
 **Binary Download** (faster):
 ```bash
 curl -sSL https://github.com/harshitsinghbhandari/stc/releases/download/v0.16.0/rtk-linux-x86_64 -o rtk
 chmod +x rtk
-sudo mv rtk /usr/local/bin/
-rtk --version
+sudo mv stc /usr/local/bin/
+stc --version
 ```
 
 ## Windows
@@ -154,7 +154,7 @@ rtk --version
 # Download rtk-windows-x86_64.exe
 # Add to PATH
 # Verify
-rtk --version
+stc --version
 ```
 
 ## Troubleshooting
@@ -167,13 +167,13 @@ rtk --version
   source ~/.zshrc
   ```
 
-**Issue: `rtk gain` fails**
+**Issue: `stc gain` fails**
 - **Cause**: Wrong RTK installed (reachingforthejack/rtk name collision)
 - **Fix**: Uninstall and reinstall correct RTK
   ```bash
   cargo uninstall rtk
   cargo install --path .  # From harshitsinghbhandari/stc repo
-  rtk gain --help  # Should work
+  stc gain --help  # Should work
   ```
 ```
 
@@ -187,7 +187,7 @@ RTK integrates with Claude Code via bash hooks for transparent command rewriting
 
 1. User types command in Claude Code: `git status`
 2. Hook (`rtk-rewrite.sh`) intercepts command
-3. Rewrites to: `rtk git status`
+3. Rewrites to: `stc git status`
 4. RTK applies filter, returns condensed output
 5. Claude sees token-optimized result (80% savings)
 
@@ -287,7 +287,7 @@ cargo test
 
 Update README.md:
 ```markdown
-| `rtk newcmd` | 75% | Condenses newcmd output |
+| `stc newcmd` | 75% | Condenses newcmd output |
 ```
 
 ### 5. Quality Checks
@@ -332,7 +332,7 @@ cargo fmt --all && cargo clippy --all-targets && cargo test --all
 **Command examples**:
 ```bash
 # ✅ Good: Shows command + expected output
-rtk git status
+stc git status
 
 # Output:
 M src/main.rs
@@ -351,5 +351,5 @@ Verification: cargo test test_git_log_savings
 ```bash
 # ✅ Good: Install + verify
 cargo install --path .
-rtk --version  # Verify shows rtk X.Y.Z
+stc --version  # Verify shows stc X.Y.Z
 ```

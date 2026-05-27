@@ -36,7 +36,7 @@
 > Apache-2.0. This fork is maintained by **Harshit Singh Bhandari**, renames the user-facing
 > command to `stc`, adds transparent Codex CLI auto-rewrite, and ships its own Homebrew release
 > pipeline. See [NOTICE](NOTICE) for full attribution. The internal crate, data directory, and
-> `RTK_*` environment variables retain the `rtk` name for compatibility.
+> `RTK_*` environment variables retain the `stc` name for compatibility.
 
 ---
 

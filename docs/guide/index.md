@@ -18,7 +18,7 @@ Your AI assistant runs:  git status
                               ↓
               Hook intercepts (PreToolUse)
                               ↓
-              rtk git status  (transparent rewrite)
+              stc git status  (transparent rewrite)
                               ↓
      Raw output: 40 lines     →     Filtered: 3 lines
      ~800 tokens              →     ~60 tokens  (92% saved)
@@ -41,9 +41,9 @@ Dozens of commands across all major ecosystems — Git, Cargo/Rust, JavaScript, 
 ## Measure your savings
 
 ```bash
-rtk gain           # total savings across all sessions
-rtk gain --daily   # day-by-day breakdown
-rtk gain --weekly  # weekly aggregation
+stc gain           # total savings across all sessions
+stc gain --daily   # day-by-day breakdown
+stc gain --weekly  # weekly aggregation
 ```
 
 See [Token Savings Analytics](./analytics/gain.md) for export formats and analysis workflows.
@@ -51,8 +51,8 @@ See [Token Savings Analytics](./analytics/gain.md) for export formats and analys
 ## Analyze your usage
 
 ```bash
-rtk discover       # find commands that ran without RTK (missed savings)
-rtk session        # RTK adoption rate per Claude Code session
+stc discover       # find commands that ran without RTK (missed savings)
+stc session        # RTK adoption rate per Claude Code session
 ```
 
 See [Discover and Session](./analytics/discover.md) for details.

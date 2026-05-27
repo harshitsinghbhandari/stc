@@ -249,7 +249,7 @@ hyperfine 'rtk git status' 'git status' --warmup 3
 
 # Should show RTK startup <10ms
 # Example output:
-#   rtk git status    6.2 ms ±  0.3 ms
+#   stc git status    6.2 ms ±  0.3 ms
 #   git status        8.1 ms ±  0.4 ms
 ```
 
@@ -257,11 +257,11 @@ hyperfine 'rtk git status' 'git status' --warmup 3
 
 ```bash
 # macOS
-/usr/bin/time -l rtk git status
+/usr/bin/time -l stc git status
 # Look for "maximum resident set size" - should be <5MB
 
 # Linux
-/usr/bin/time -v rtk git status
+/usr/bin/time -v stc git status
 # Look for "Maximum resident set size" - should be <5000 kbytes
 ```
 
@@ -289,7 +289,7 @@ diff /tmp/before.txt /tmp/after.txt
 | Metric | Target | Verification |
 |--------|--------|--------------|
 | Startup time | <10ms | `hyperfine 'rtk <cmd>'` |
-| Memory usage | <5MB | `time -l rtk <cmd>` |
+| Memory usage | <5MB | `time -l stc <cmd>` |
 | Binary size | <5MB | `ls -lh target/release/rtk` |
 
 ## Test Organization

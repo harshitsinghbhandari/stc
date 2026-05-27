@@ -13,7 +13,7 @@ Vérifie l'état de l'environnement RTK et suggère des corrections.
   - `rtk: command not found` → RTK non installé ou pas dans PATH
   - Hook errors in Claude Code → Hooks mal configurés ou non exécutables
   - `Unknown command` dans RTK → Version incompatible ou commande non supportée
-  - Token savings reports missing → `rtk gain` not working
+  - Token savings reports missing → `stc gain` not working
   - Command routing errors → Hook integration broken
 
 - **Manuellement** après installation, mise à jour RTK, ou si comportement suspect
@@ -26,7 +26,7 @@ Lancer ces commandes en parallèle :
 
 ```bash
 # RTK installation check
-which rtk && rtk --version || echo "❌ RTK not found in PATH"
+which stc && stc --version || echo "❌ RTK not found in PATH"
 ```
 
 ```bash
@@ -76,12 +76,12 @@ fi
 
 ```bash
 # Test command routing (dry-run)
-if command -v rtk >/dev/null 2>&1; then
-    # Test if rtk gain works (validates install)
-    if rtk --help | grep -q "gain"; then
-        echo "✅ OK: rtk gain available"
+if command -v stc >/dev/null 2>&1; then
+    # Test if stc gain works (validates install)
+    if stc --help | grep -q "gain"; then
+        echo "✅ OK: stc gain available"
     else
-        echo "❌ MISSING: rtk gain command (old version or wrong binary)"
+        echo "❌ MISSING: stc gain command (old version or wrong binary)"
     fi
 else
     echo "❌ RTK binary not found"
@@ -91,13 +91,13 @@ fi
 ### 2. Validate token analytics
 
 ```bash
-# Run rtk gain to verify analytics work
-if command -v rtk >/dev/null 2>&1; then
+# Run stc gain to verify analytics work
+if command -v stc >/dev/null 2>&1; then
     echo ""
     echo "📊 Token Savings (last 5 commands):"
-    rtk gain --history 2>&1 | head -8 || echo "⚠️ rtk gain failed"
+    stc gain --history 2>&1 | head -8 || echo "⚠️ stc gain failed"
 else
-    echo "⚠️ Cannot test rtk gain (binary not installed)"
+    echo "⚠️ Cannot test stc gain (binary not installed)"
 fi
 ```
 
@@ -186,13 +186,13 @@ options:
     description: "Si hooks manquants, copier depuis repository principal"
 ```
 
-### Si rtk gain échoue
+### Si stc gain échoue
 ```
 options:
   - label: "Réinstaller RTK"
     description: "cargo install --path . --force (version outdated?)"
   - label: "Vérifier version"
-    description: "rtk --version (besoin v0.16.0+ pour rtk gain)"
+    description: "rtk --version (besoin v0.16.0+ pour stc gain)"
 ```
 
 ## Exécution des fixes
@@ -202,7 +202,7 @@ options:
 # Depuis la racine du repo RTK
 cargo install --path .
 # Vérifier installation
-which rtk && rtk --version
+which stc && stc --version
 ```
 
 ### Fix 2 : Rendre hooks exécutables
@@ -221,7 +221,7 @@ cargo install --path .
 chmod +x .claude/hooks/*.sh
 
 # Verify
-which rtk && rtk --version && rtk gain --history | head -3
+which stc && stc --version && stc gain --history | head -3
 ```
 
 ## Détection automatique
@@ -233,7 +233,7 @@ which rtk && rtk --version && rtk gain --history | head -3
 | RTK not found | `rtk: command not found` | Pas installé ou pas dans PATH |
 | Hook error | Hook execution failed, permission denied | Hooks non exécutables (`chmod +x` needed) |
 | Version mismatch | `Unknown command` in RTK output | Version RTK incompatible (upgrade needed) |
-| No analytics | `rtk gain` fails or command not found | RTK install incomplete or old version |
+| No analytics | `stc gain` fails or command not found | RTK install incomplete or old version |
 | Command not rewritten | Commands not proxied via RTK | Hook integration broken (check `CLAUDE_CODE_HOOK_BASH_TEMPLATE`) |
 
 ### Exemples de suggestion automatique
@@ -252,9 +252,9 @@ les hooks ne sont pas exécutables. Lance `/diagnose` pour identifier
 le problème et corriger les permissions avec `chmod +x`.
 ```
 
-**Cas 3 : rtk gain unavailable**
+**Cas 3 : stc gain unavailable**
 ```
-La commande `rtk gain` échoue, ce qui suggère une version RTK obsolète
+La commande `stc gain` échoue, ce qui suggère une version RTK obsolète
 ou une installation incomplète. `/diagnose` va vérifier la version et
 suggérer une réinstallation si nécessaire.
 ```
@@ -285,15 +285,15 @@ source ~/.zshrc  # or source ~/.bashrc
 
 ### Issue : Multiple RTK binaries (name collision)
 
-**Symptom**: `rtk gain` fails with "command not found" even though `rtk --version` works
+**Symptom**: `stc gain` fails with "command not found" even though `stc --version` works
 
 **Diagnosis**:
 ```bash
 # Check if wrong RTK installed (reachingforthejack/rtk)
-rtk --version
+stc --version
 # Should show "rtk X.Y.Z", NOT "Rust Type Kit"
 
-rtk --help | grep gain
+stc --help | grep gain
 # Should show "gain" command - if missing, wrong binary
 ```
 
@@ -306,12 +306,12 @@ cargo uninstall rtk
 cargo install --path .
 
 # Verify
-rtk gain --help  # Should work
+stc gain --help  # Should work
 ```
 
 ### Issue : Hooks not triggering in Claude Code
 
-**Symptom**: Commands not rewritten to `rtk <cmd>` automatically
+**Symptom**: Commands not rewritten to `stc <cmd>` automatically
 
 **Diagnosis**:
 ```bash
@@ -335,7 +335,7 @@ chmod +x .claude/hooks/*.sh
 
 ## Version Compatibility Matrix
 
-| RTK Version | rtk gain | rtk discover | Python/Go support | Notes |
+| RTK Version | stc gain | stc discover | Python/Go support | Notes |
 |-------------|----------|--------------|-------------------|-------|
 | v0.14.x     | ❌ No    | ❌ No        | ❌ No             | Outdated, upgrade |
 | v0.15.x     | ✅ Yes   | ❌ No        | ❌ No             | Missing discover |
@@ -348,5 +348,5 @@ chmod +x .claude/hooks/*.sh
 # From the RTK repo root
 git pull origin main
 cargo install --path . --force
-rtk --version  # Should show 0.16.x or newer
+stc --version  # Should show 0.16.x or newer
 ```

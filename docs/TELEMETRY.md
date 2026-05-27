@@ -1,6 +1,6 @@
 # Telemetry
 
-RTK collects anonymous, aggregate usage metrics once per day to help improve the product. Telemetry is **disabled by default** and requires explicit consent during `rtk init` or `rtk telemetry enable`.
+RTK collects anonymous, aggregate usage metrics once per day to help improve the product. Telemetry is **disabled by default** and requires explicit consent during `stc init` or `stc telemetry enable`.
 
 ## Data Collector
 
@@ -118,13 +118,13 @@ This data directly drives our roadmap. For example, if telemetry shows that 40% 
 
 ## Consent
 
-Telemetry requires explicit opt-in consent (GDPR Art. 6, 7). Consent is requested during `rtk init` or via `rtk telemetry enable`. Without consent, no data is sent.
+Telemetry requires explicit opt-in consent (GDPR Art. 6, 7). Consent is requested during `stc init` or via `stc telemetry enable`. Without consent, no data is sent.
 
 ```bash
-rtk telemetry status     # Check current consent state
-rtk telemetry enable     # Give consent (interactive prompt)
-rtk telemetry disable    # Withdraw consent
-rtk telemetry forget     # Withdraw consent + delete local data + request server erasure
+stc telemetry status     # Check current consent state
+stc telemetry enable     # Give consent (interactive prompt)
+stc telemetry disable    # Withdraw consent
+stc telemetry forget     # Withdraw consent + delete local data + request server erasure
 ```
 
 Environment variable override (blocks telemetry regardless of consent):
@@ -136,22 +136,22 @@ export RTK_TELEMETRY_DISABLED=1
 
 - **Server-side**: telemetry records are retained for a maximum of **12 months**, then automatically purged (periodic task every 24 hours).
 - **Server-side (erasure log)**: IP addresses in the erasure audit log are **anonymized after 6 months** (GDPR — IP is personal data).
-- **Client-side**: the local SQLite database (`~/.local/share/rtk/tracking.db`) retains data for **90 days** by default (configurable via `tracking.history_days` in `config.toml`). Deleted entirely by `rtk telemetry forget`.
+- **Client-side**: the local SQLite database (`~/.local/share/rtk/tracking.db`) retains data for **90 days** by default (configurable via `tracking.history_days` in `config.toml`). Deleted entirely by `stc telemetry forget`.
 
 ## Your Rights (GDPR)
 
 Under the EU General Data Protection Regulation, you have the right to:
 
-- **Access** your data: `rtk telemetry status` shows your device hash; the telemetry payload is fully documented above.
+- **Access** your data: `stc telemetry status` shows your device hash; the telemetry payload is fully documented above.
 - **Rectification**: since data is anonymous and aggregate, rectification is not applicable.
-- **Erasure** (Art. 17): run `rtk telemetry forget` to delete local data and send an erasure request to the server. Alternatively, email contact@github.com/harshitsinghbhandari/stc with your device hash.
-- **Restriction of processing**: `rtk telemetry disable` stops all data collection immediately.
+- **Erasure** (Art. 17): run `stc telemetry forget` to delete local data and send an erasure request to the server. Alternatively, email contact@github.com/harshitsinghbhandari/stc with your device hash.
+- **Restriction of processing**: `stc telemetry disable` stops all data collection immediately.
 - **Portability**: the local SQLite database at `~/.local/share/rtk/tracking.db` contains all locally stored data.
-- **Objection**: `rtk telemetry disable` or `export RTK_TELEMETRY_DISABLED=1`.
+- **Objection**: `stc telemetry disable` or `export RTK_TELEMETRY_DISABLED=1`.
 
 ## Erasure Procedure
 
-1. Run `rtk telemetry forget` — this disables telemetry, deletes your device salt, ping marker, and local tracking database (`history.db`), then sends an erasure request to the server.
+1. Run `stc telemetry forget` — this disables telemetry, deletes your device salt, ping marker, and local tracking database (`history.db`), then sends an erasure request to the server.
 2. If the server is unreachable, the CLI prints your full device hash and fallback instructions to email contact@github.com/harshitsinghbhandari/stc for manual erasure.
 3. You can also email contact@github.com/harshitsinghbhandari/stc directly to request manual erasure.
 

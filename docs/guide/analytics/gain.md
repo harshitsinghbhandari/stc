@@ -1,41 +1,41 @@
 ---
 title: Token Savings Analytics
-description: Measure and analyze your RTK token savings with rtk gain
+description: Measure and analyze your RTK token savings with stc gain
 sidebar:
   order: 1
 ---
 
 # Token Savings Analytics
 
-`rtk gain` shows how many tokens RTK has saved across all your commands, with daily, weekly, and monthly breakdowns.
+`stc gain` shows how many tokens RTK has saved across all your commands, with daily, weekly, and monthly breakdowns.
 
 ## Quick reference
 
 ```bash
 # Default summary
-rtk gain
+stc gain
 
 # Temporal breakdowns
-rtk gain --daily          # all days since tracking started
-rtk gain --weekly         # aggregated by week
-rtk gain --monthly        # aggregated by month
-rtk gain --all            # all breakdowns at once
+stc gain --daily          # all days since tracking started
+stc gain --weekly         # aggregated by week
+stc gain --monthly        # aggregated by month
+stc gain --all            # all breakdowns at once
 
 # Classic flags
-rtk gain --graph          # ASCII graph, last 30 days
-rtk gain --history        # last 10 commands
-rtk gain --quota          # monthly quota savings estimate (default tier: 20x)
-rtk gain --quota -t pro   # use pro tier token budget for estimate
+stc gain --graph          # ASCII graph, last 30 days
+stc gain --history        # last 10 commands
+stc gain --quota          # monthly quota savings estimate (default tier: 20x)
+stc gain --quota -t pro   # use pro tier token budget for estimate
 
 # Export
-rtk gain --all --format json > savings.json
-rtk gain --all --format csv  > savings.csv
+stc gain --all --format json > savings.json
+stc gain --all --format csv  > savings.csv
 ```
 
 ## Daily breakdown
 
 ```bash
-rtk gain --daily
+stc gain --daily
 ```
 
 ```
@@ -59,8 +59,8 @@ TOTAL            196       1.3M      59.2K       1.2M   95.6%
 ## Weekly and monthly breakdowns
 
 ```bash
-rtk gain --weekly
-rtk gain --monthly
+stc gain --weekly
+stc gain --monthly
 ```
 
 Same columns as daily, aggregated by Sunday-Saturday week or calendar month.
@@ -137,14 +137,14 @@ rm ~/.local/share/rtk/history.db    # recreated on next command
 
 ```bash
 # Weekly progress: generate a CSV report every Monday
-rtk gain --weekly --format csv > reports/week-$(date +%Y-%W).csv
+stc gain --weekly --format csv > reports/week-$(date +%Y-%W).csv
 
 # Monthly budget review
-rtk gain --monthly --format json | jq '.monthly[] |
+stc gain --monthly --format json | jq '.monthly[] |
   {month, saved_tokens, quota_pct: (.saved_tokens / 6000000 * 100)}'
 
 # Cron: daily JSON snapshot for a dashboard
-0 0 * * * rtk gain --all --format json > /var/www/dashboard/rtk-stats.json
+0 0 * * * stc gain --all --format json > /var/www/dashboard/rtk-stats.json
 ```
 
 **Python/pandas:**
@@ -173,8 +173,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: cargo install rtk
-      - run: rtk gain --weekly --format json > stats/week-$(date +%Y-%W).json
-      - run: git add stats/ && git commit -m "Weekly rtk stats" && git push
+      - run: stc gain --weekly --format json > stats/week-$(date +%Y-%W).json
+      - run: git add stats/ && git commit -m "Weekly stc stats" && git push
 ```
 
 ## Quota estimate
@@ -182,16 +182,16 @@ jobs:
 `--quota` estimates how many tokens RTK has saved relative to your monthly subscription budget, so you can see the cost impact of those savings.
 
 ```bash
-rtk gain --quota          # uses 20x tier by default
-rtk gain --quota -t pro   # Claude Pro plan budget
-rtk gain --quota -t 5x    # 5× usage plan budget
-rtk gain --quota -t 20x   # 20× usage plan budget
+stc gain --quota          # uses 20x tier by default
+stc gain --quota -t pro   # Claude Pro plan budget
+stc gain --quota -t 5x    # 5× usage plan budget
+stc gain --quota -t 20x   # 20× usage plan budget
 ```
 
 The tiers (`pro`, `5x`, `20x`) correspond to Anthropic Claude API subscription levels, each with a different monthly token allocation. RTK uses those allocations as a denominator to express your savings as a percentage of your budget.
 
 :::tip[Find missed savings]
-`rtk gain` shows what RTK saved. To find commands that ran *without* RTK and calculate what you lost, see [rtk discover](./discover.md).
+`stc gain` shows what RTK saved. To find commands that ran *without* RTK and calculate what you lost, see [rtk discover](./discover.md).
 :::
 
 ## Troubleshooting

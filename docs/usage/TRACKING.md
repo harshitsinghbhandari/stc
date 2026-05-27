@@ -26,7 +26,7 @@ RTK's tracking system records every command execution to provide analytics on to
 ### Data Flow
 
 ```
-rtk command execution
+stc command execution
   ↓
 TimedExecution::start()
   ↓
@@ -373,7 +373,7 @@ jobs:
 
       - name: Export weekly stats
         run: |
-          rtk gain --weekly --format json > rtk-weekly.json
+          stc gain --weekly --format json > rtk-weekly.json
           cat rtk-weekly.json
 
       - name: Upload artifact
@@ -444,7 +444,7 @@ if __name__ == "__main__":
 ```rust
 // In your Cargo.toml
 // [dependencies]
-// rtk = { git = "https://github.com/harshitsinghbhandari/stc" }
+// stc = { git = "https://github.com/harshitsinghbhandari/stc" }
 
 use rtk::tracking::{Tracker, TimedExecution};
 use anyhow::Result;
@@ -539,7 +539,7 @@ let _ = conn.execute(
 ## Security & Privacy
 
 - **Local storage only**: Tracking database never leaves the machine
-- **Telemetry requires consent**: RTK can send a daily anonymous usage ping (version, OS, command counts, token savings). Disabled by default, requires explicit consent via `rtk init` or `rtk telemetry enable`. Manage with `rtk telemetry status/disable/forget`. Override: `RTK_TELEMETRY_DISABLED=1`
+- **Telemetry requires consent**: RTK can send a daily anonymous usage ping (version, OS, command counts, token savings). Disabled by default, requires explicit consent via `stc init` or `stc telemetry enable`. Manage with `stc telemetry status/disable/forget`. Override: `RTK_TELEMETRY_DISABLED=1`
 - **User control**: Users can delete `~/.local/share/rtk/tracking.db` anytime
 - **90-day retention**: Old data automatically purged
 
@@ -550,7 +550,7 @@ let _ = conn.execute(
 If you see "database is locked" errors:
 - Ensure only one RTK process writes at a time
 - Check file permissions on `~/.local/share/rtk/tracking.db`
-- Delete and recreate: `rm ~/.local/share/rtk/tracking.db && rtk gain`
+- Delete and recreate: `rm ~/.local/share/rtk/tracking.db && stc gain`
 
 ### Missing exec_time_ms column
 

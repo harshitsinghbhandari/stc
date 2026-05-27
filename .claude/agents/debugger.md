@@ -20,7 +20,7 @@ When invoked to debug RTK issues, follow this systematic approach:
 **For filter parsing errors**:
 ```bash
 # Capture full error output
-rtk <cmd> 2>&1 | tee /tmp/rtk_error.log
+stc <cmd> 2>&1 | tee /tmp/rtk_error.log
 
 # Show filter source
 cat src/<cmd>_cmd.rs
@@ -35,7 +35,7 @@ cat src/<cmd>_cmd.rs
 hyperfine 'rtk <cmd>' --warmup 3
 
 # Profile with flamegraph
-cargo flamegraph -- rtk <cmd>
+cargo flamegraph -- stc <cmd>
 open flamegraph.svg
 ```
 
@@ -55,11 +55,11 @@ cat tests/fixtures/<cmd>_raw.txt
 ```bash
 # Create minimal reproduction
 echo "problematic output" > /tmp/test_input.txt
-rtk <cmd> < /tmp/test_input.txt
+stc <cmd> < /tmp/test_input.txt
 
 # Test with various inputs
 for input in empty_file unicode_file ansi_codes_file; do
-    rtk <cmd> < /tmp/$input.txt
+    stc <cmd> < /tmp/$input.txt
 done
 ```
 
@@ -153,7 +153,7 @@ fn filter_cmd(input: &str) -> String {
 
 ```bash
 # Flamegraph shows hotspots
-cargo flamegraph -- rtk <cmd>
+cargo flamegraph -- stc <cmd>
 
 # Look for:
 # - Regex::new() in hot path (should be in lazy_static init)
@@ -230,7 +230,7 @@ Command::new(cmd).args(args).spawn();
 git log -20 > /tmp/git_log_raw.txt
 
 # 2. Run RTK filter
-rtk git log -20 > /tmp/git_log_filtered.txt
+stc git log -20 > /tmp/git_log_filtered.txt
 
 # 3. Compare
 diff /tmp/git_log_raw.txt /tmp/git_log_filtered.txt
@@ -289,7 +289,7 @@ diff /tmp/before.txt /tmp/after.txt
 
 ```bash
 # Generate flamegraph
-cargo flamegraph -- rtk git log -10
+cargo flamegraph -- stc git log -10
 
 # Look for hotspots (wide bars):
 # - Regex::new() in hot path → lazy_static missing
@@ -302,11 +302,11 @@ cargo flamegraph -- rtk git log -10
 
 ```bash
 # macOS
-/usr/bin/time -l rtk git status 2>&1 | grep "maximum resident set size"
+/usr/bin/time -l stc git status 2>&1 | grep "maximum resident set size"
 # Should be <5MB (5242880 bytes)
 
 # Linux
-/usr/bin/time -v rtk git status 2>&1 | grep "Maximum resident set size"
+/usr/bin/time -v stc git status 2>&1 | grep "Maximum resident set size"
 # Should be <5000 kbytes
 ```
 
@@ -421,8 +421,8 @@ For each debugging session, provide:
 | Tool | Purpose | Command |
 |------|---------|---------|
 | **hyperfine** | Benchmark startup time | `hyperfine 'rtk <cmd>' --warmup 3` |
-| **flamegraph** | CPU profiling | `cargo flamegraph -- rtk <cmd>` |
-| **time** | Memory usage | `/usr/bin/time -l rtk <cmd>` (macOS) |
+| **flamegraph** | CPU profiling | `cargo flamegraph -- stc <cmd>` |
+| **time** | Memory usage | `/usr/bin/time -l stc <cmd>` (macOS) |
 | **cargo test** | Run tests with output | `cargo test -- --nocapture` |
 | **cargo clippy** | Static analysis | `cargo clippy --all-targets` |
 | **rg (ripgrep)** | Find patterns | `rg "\.unwrap\(\)" --type rust src/` |
@@ -473,7 +473,7 @@ For each debugging session, provide:
    ```
 4. Profile if regression found
    ```bash
-   cargo flamegraph -- rtk git status
+   cargo flamegraph -- stc git status
    open flamegraph.svg
    ```
 5. Fix hotspot (usually lazy_static missing or allocation in loop)
@@ -489,7 +489,7 @@ For each debugging session, provide:
 1. Reproduce on affected platform
    ```bash
    # macOS
-   rtk git log --format="%H %s"
+   stc git log --format="%H %s"
 
    # Linux via Docker
    docker run --rm -v $(pwd):/rtk -w /rtk rust:latest target/release/rtk git log --format="%H %s"

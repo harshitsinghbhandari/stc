@@ -267,7 +267,7 @@ cargo test --all
 # Run snapshot tests only
 cargo test --test snapshots
 
-# Run integration tests (requires real commands + rtk installed)
+# Run integration tests (requires real commands + stc installed)
 cargo test --ignored
 
 # Review snapshot changes

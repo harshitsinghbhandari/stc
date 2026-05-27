@@ -2362,7 +2362,7 @@ fn codex_hook_present(root: &serde_json::Value) -> bool {
         .unwrap_or(false)
 }
 
-/// Idempotently register the `rtk hook codex` PreToolUse hook in Codex's
+/// Idempotently register the `stc hook codex` PreToolUse hook in Codex's
 /// `hooks.json`. Returns `true` if a new entry was written, `false` if the
 /// hook was already present. The user's other hooks are preserved.
 fn patch_codex_hooks_json(hooks_json_path: &Path, ctx: InitContext) -> Result<bool> {
@@ -2425,7 +2425,7 @@ fn patch_codex_hooks_json(hooks_json_path: &Path, ctx: InitContext) -> Result<bo
     Ok(true)
 }
 
-/// Remove the `rtk hook codex` PreToolUse hook from Codex's `hooks.json`,
+/// Remove the `stc hook codex` PreToolUse hook from Codex's `hooks.json`,
 /// preserving any other hooks. Returns `true` if an entry was removed.
 fn remove_codex_hooks_json(hooks_json_path: &Path, ctx: InitContext) -> Result<bool> {
     let InitContext { verbose, dry_run } = ctx;

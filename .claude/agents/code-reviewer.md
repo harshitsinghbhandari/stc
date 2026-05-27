@@ -53,7 +53,7 @@ Raise alarms immediately when you see:
 | No fallback to raw command | Filter bug → user blocked entirely | Match error → execute_raw() |
 | Token savings not tested | Claim unverified, regression possible | `count_tokens()` assertion |
 | Synthetic fixture data | Doesn't reflect real command output | Real output in `tests/fixtures/` |
-| Exit code not propagated | `rtk cmd` returns 0 when underlying cmd fails | `std::process::exit(code)` |
+| Exit code not propagated | `stc cmd` returns 0 when underlying cmd fails | `std::process::exit(code)` |
 | `println!` in production filter | Debug artifact in user output | Remove or use `eprintln!` for errors |
 | `clone()` of large string | Unnecessary allocation | Borrow with `&str` |
 

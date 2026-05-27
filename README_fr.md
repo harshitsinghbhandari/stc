@@ -33,11 +33,11 @@
 
 ---
 
-rtk filtre et compresse les sorties de commandes avant qu'elles n'atteignent le contexte de votre LLM. Binaire Rust unique, zero dependance, <10ms d'overhead.
+stc filtre et compresse les sorties de commandes avant qu'elles n'atteignent le contexte de votre LLM. Binaire Rust unique, zero dependance, <10ms d'overhead.
 
 ## Economies de tokens (session Claude Code de 30 min)
 
-| Operation | Frequence | Standard | rtk | Economies |
+| Operation | Frequence | Standard | stc | Economies |
 |-----------|-----------|----------|-----|-----------|
 | `ls` / `tree` | 10x | 2 000 | 400 | -80% |
 | `cat` / `read` | 20x | 40 000 | 12 000 | -70% |
@@ -74,29 +74,29 @@ cargo install --git https://github.com/harshitsinghbhandari/stc
 ### Verification
 
 ```bash
-rtk --version   # Doit afficher "rtk 0.27.x"
-rtk gain        # Doit afficher les statistiques d'economies
+stc --version   # Doit afficher "rtk 0.27.x"
+stc gain        # Doit afficher les statistiques d'economies
 ```
 
-> **Attention** : Un autre projet "rtk" (Rust Type Kit) existe sur crates.io. Si `rtk gain` echoue, vous avez le mauvais package.
+> **Attention** : Un autre projet "rtk" (Rust Type Kit) existe sur crates.io. Si `stc gain` echoue, vous avez le mauvais package.
 
 ## Demarrage rapide
 
 ```bash
 # 1. Installer le hook pour Claude Code (recommande)
-rtk init --global
+stc init --global
 # Suivre les instructions pour enregistrer dans ~/.claude/settings.json
 
 # 2. Redemarrer Claude Code, puis tester
-git status  # Automatiquement reecrit en rtk git status
+git status  # Automatiquement reecrit en stc git status
 ```
 
-Le hook reecrit de maniere transparente les commandes (ex: `git status` -> `rtk git status`) avant execution.
+Le hook reecrit de maniere transparente les commandes (ex: `git status` -> `stc git status`) avant execution.
 
 ## Comment ca marche
 
 ```
-  Sans rtk :                                       Avec rtk :
+  Sans stc :                                       Avec stc :
 
   Claude  --git status-->  shell  -->  git          Claude  --git status-->  RTK  -->  git
     ^                                   |             ^                      |          |
@@ -115,55 +115,55 @@ Quatre strategies appliquees par type de commande :
 
 ### Fichiers
 ```bash
-rtk ls .                        # Arbre de repertoires optimise
-rtk read file.rs                # Lecture intelligente
-rtk read file.rs -l aggressive  # Signatures uniquement
-rtk find "*.rs" .               # Resultats compacts
-rtk grep "pattern" .            # Resultats groupes par fichier
-rtk diff file1 file2            # Diff condense
+stc ls .                        # Arbre de repertoires optimise
+stc read file.rs                # Lecture intelligente
+stc read file.rs -l aggressive  # Signatures uniquement
+stc find "*.rs" .               # Resultats compacts
+stc grep "pattern" .            # Resultats groupes par fichier
+stc diff file1 file2            # Diff condense
 ```
 
 ### Git
 ```bash
-rtk git status                  # Status compact
-rtk git log -n 10               # Commits sur une ligne
-rtk git diff                    # Diff condense
-rtk git add                     # -> "ok"
-rtk git commit -m "msg"         # -> "ok abc1234"
-rtk git push                    # -> "ok main"
+stc git status                  # Status compact
+stc git log -n 10               # Commits sur une ligne
+stc git diff                    # Diff condense
+stc git add                     # -> "ok"
+stc git commit -m "msg"         # -> "ok abc1234"
+stc git push                    # -> "ok main"
 ```
 
 ### Tests
 ```bash
-rtk jest                        # Jest compact
-rtk vitest                      # Vitest compact
-rtk pytest                      # Tests Python (-90%)
-rtk go test                     # Tests Go (-90%)
-rtk cargo test                  # Tests Cargo (-90%)
-rtk test <cmd>                  # Echecs uniquement (-90%)
+stc jest                        # Jest compact
+stc vitest                      # Vitest compact
+stc pytest                      # Tests Python (-90%)
+stc go test                     # Tests Go (-90%)
+stc cargo test                  # Tests Cargo (-90%)
+stc test <cmd>                  # Echecs uniquement (-90%)
 ```
 
 ### Build & Lint
 ```bash
-rtk lint                        # ESLint groupe par regle
-rtk tsc                         # Erreurs TypeScript groupees
-rtk cargo build                 # Build Cargo (-80%)
-rtk cargo clippy                # Clippy (-80%)
-rtk ruff check                  # Linting Python (-80%)
+stc lint                        # ESLint groupe par regle
+stc tsc                         # Erreurs TypeScript groupees
+stc cargo build                 # Build Cargo (-80%)
+stc cargo clippy                # Clippy (-80%)
+stc ruff check                  # Linting Python (-80%)
 ```
 
 ### Conteneurs
 ```bash
-rtk docker ps                   # Liste compacte
-rtk docker logs <container>     # Logs dedupliques
-rtk kubectl pods                # Pods compacts
+stc docker ps                   # Liste compacte
+stc docker logs <container>     # Logs dedupliques
+stc kubectl pods                # Pods compacts
 ```
 
 ### Analytics
 ```bash
-rtk gain                        # Statistiques d'economies
-rtk gain --graph                # Graphique ASCII (30 jours)
-rtk discover                    # Trouver les economies manquees
+stc gain                        # Statistiques d'economies
+stc gain --graph                # Graphique ASCII (30 jours)
+stc discover                    # Trouver les economies manquees
 ```
 
 ## Configuration

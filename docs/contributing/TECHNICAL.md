@@ -66,9 +66,9 @@ User / LLM Agent
 
 This is the full lifecycle of a command through RTK, from LLM agent to filtered output.
 
-### 3.1 Hook Installation (`rtk init`)
+### 3.1 Hook Installation (`stc init`)
 
-The user runs `rtk init` to set up hooks for their LLM agent. This:
+The user runs `stc init` to set up hooks for their LLM agent. This:
 
 1. Writes a thin shell hook script (e.g., `~/.claude/hooks/rtk-rewrite.sh`)
 2. Stores its SHA-256 hash for integrity verification
@@ -85,10 +85,10 @@ When an LLM agent runs a command (e.g., `git status`):
 
 1. The agent fires a `PreToolUse` event (or equivalent) containing the command as JSON
 2. The hook script reads the JSON, extracts the command string
-3. The hook calls `rtk rewrite "git status"` as a subprocess
-4. `rtk rewrite` consults the command registry and returns `rtk git status`
+3. The hook calls `stc rewrite "git status"` as a subprocess
+4. `stc rewrite` consults the command registry and returns `stc git status`
 5. The hook sends a response telling the agent to use the rewritten command
-6. If anything fails (jq missing, rtk not found, no match), the hook exits silently -- the raw command runs unchanged
+6. If anything fails (jq missing, stc not found, no match), the hook exits silently -- the raw command runs unchanged
 
 All rewrite logic lives in Rust (`src/discover/registry.rs`). Hooks are thin delegates that handle agent-specific JSON formats.
 
@@ -108,8 +108,8 @@ Traced step by step for `cargo fmt --all && cargo test 2>&1 | tail -20`:
 LLM Agent: "cargo fmt --all && cargo test 2>&1 | tail -20"
   |
   |  Hook shell (hooks/claude/rtk-rewrite.sh)
-  |  Reads JSON from agent, extracts command, calls `rtk rewrite "$CMD"`
-  |  On failure (jq missing, rtk missing, old version): exit 0 (passthrough)
+  |  Reads JSON from agent, extracts command, calls `stc rewrite "$CMD"`
+  |  On failure (jq missing, stc missing, old version): exit 0 (passthrough)
   |
   v
 rewrite_cmd::run(cmd)                              [src/hooks/rewrite_cmd.rs]
@@ -192,14 +192,14 @@ classify_command(cmd)                              [src/discover/registry.rs]
   |  9. Return Classification::Supported { rtk_equivalent, category, savings, status }
   |
   v
-Result: "rtk cargo fmt --all && rtk cargo test 2>&1 | tail -20"
+Result: "rtk cargo fmt --all && stc cargo test 2>&1 | tail -20"
   |
   |  Hook response
   |  Hook wraps result in agent-specific JSON, returns to LLM agent
   |
   v
 LLM Agent executes rewritten command
-  (bash handles && and |, each rtk invocation is a separate process)
+  (bash handles && and |, each stc invocation is a separate process)
 ```
 
 Key design decisions:
@@ -269,7 +269,7 @@ Every command execution records metrics to SQLite (`~/.local/share/rtk/tracking.
 - 90-day automatic retention cleanup
 - Token estimation: `ceil(chars / 4.0)` approximation
 
-Analytics commands (`rtk gain`, `rtk cc-economics`, `rtk session`) query this database to produce dashboards and ROI reports.
+Analytics commands (`stc gain`, `stc cc-economics`, `stc session`) query this database to produce dashboards and ROI reports.
 
 > **Details**: [`src/analytics/README.md`](../src/analytics/README.md) covers the analytics modules, and [`src/core/README.md`](../src/core/README.md) covers the tracking database schema.
 
@@ -297,8 +297,8 @@ Start here, then drill down into each README for file-level details.
 |-----------|-------------|-------------------------------|
 | `main.rs` | CLI entry point, `Commands` enum, routing match | _(no README — read the file directly)_ |
 | [`core/`](../src/core/README.md) | Shared infrastructure | Tracking DB schema, config system, tee recovery, TOML filter engine, utility functions |
-| [`hooks/`](../src/hooks/README.md) | Hook system | Installation flow (`rtk init`), integrity verification, rewrite command, trust model |
-| [`analytics/`](../src/analytics/README.md) | Token savings analytics | `rtk gain` dashboard, Claude Code economics, ccusage parsing |
+| [`hooks/`](../src/hooks/README.md) | Hook system | Installation flow (`stc init`), integrity verification, rewrite command, trust model |
+| [`analytics/`](../src/analytics/README.md) | Token savings analytics | `stc gain` dashboard, Claude Code economics, ccusage parsing |
 | [`cmds/`](../src/cmds/README.md) | **Command filters (9 ecosystems)** | Common filter pattern, cross-command routing, token savings table, **links to each ecosystem** |
 | [`discover/`](../src/discover/README.md) | History analysis + rewrite registry | Rewrite patterns, session providers, compound command splitting |
 | [`learn/`](../src/learn/README.md) | CLI correction detection | Error classification, correction pair detection, rule generation |
@@ -327,10 +327,10 @@ RTK supports the following LLM agents through hook integrations:
 | Agent | Hook Type | Mechanism | Can Modify Command? |
 |-------|-----------|-----------|---------------------|
 | Claude Code | Shell hook | `PreToolUse` in `settings.json` | Yes (`updatedInput`) |
-| GitHub Copilot (VS Code) | Rust binary | `rtk hook copilot` reads JSON | Yes (`updatedInput`) |
-| GitHub Copilot CLI | Rust binary | `rtk hook copilot` reads JSON | No (deny + suggestion) |
+| GitHub Copilot (VS Code) | Rust binary | `stc hook copilot` reads JSON | Yes (`updatedInput`) |
+| GitHub Copilot CLI | Rust binary | `stc hook copilot` reads JSON | No (deny + suggestion) |
 | Cursor | Shell hook | `preToolUse` hook | Yes (`updated_input`) |
-| Gemini CLI | Rust binary | `rtk hook gemini` reads JSON | Yes (`hookSpecificOutput`) |
+| Gemini CLI | Rust binary | `stc hook gemini` reads JSON | Yes (`hookSpecificOutput`) |
 | Cline/Roo Code | Rules file | Prompt-level guidance | N/A (prompt) |
 | Windsurf | Rules file | Prompt-level guidance | N/A (prompt) |
 | Codex CLI | Awareness doc | AGENTS.md integration | N/A (prompt) |
@@ -361,7 +361,7 @@ Declarative filters with an 8-stage pipeline: strip ANSI, regex replace, match o
 | Metric | Target | Verification |
 |--------|--------|--------------|
 | Startup time | < 10ms | `hyperfine 'rtk git status' 'git status'` |
-| Memory usage | < 5MB resident | `/usr/bin/time -v rtk git status` |
+| Memory usage | < 5MB resident | `/usr/bin/time -v stc git status` |
 | Binary size | < 5MB stripped | `ls -lh target/release/rtk` |
 | Token savings | 60-90% per filter | Snapshot + token count tests |
 

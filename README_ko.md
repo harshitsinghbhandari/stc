@@ -37,7 +37,7 @@ rtk는 명령 출력이 LLM 컨텍스트에 도달하기 전에 필터링하고 
 
 ## 토큰 절약 (30분 Claude Code 세션)
 
-| 작업 | 빈도 | 표준 | rtk | 절약 |
+| 작업 | 빈도 | 표준 | stc | 절약 |
 |------|------|------|-----|------|
 | `ls` / `tree` | 10x | 2,000 | 400 | -80% |
 | `cat` / `read` | 20x | 40,000 | 12,000 | -70% |
@@ -69,24 +69,24 @@ cargo install --git https://github.com/harshitsinghbhandari/stc
 ### 확인
 
 ```bash
-rtk --version   # "rtk 0.27.x" 표시되어야 함
-rtk gain        # 토큰 절약 통계 표시되어야 함
+stc --version   # "rtk 0.27.x" 표시되어야 함
+stc gain        # 토큰 절약 통계 표시되어야 함
 ```
 
 ## 빠른 시작
 
 ```bash
 # 1. Claude Code용 hook 설치 (권장)
-rtk init --global
+stc init --global
 
 # 2. Claude Code 재시작 후 테스트
-git status  # 자동으로 rtk git status로 재작성
+git status  # 자동으로 stc git status로 재작성
 ```
 
 ## 작동 원리
 
 ```
-  rtk 없이:                                        rtk 사용:
+  stc 없이:                                        stc 사용:
 
   Claude  --git status-->  shell  -->  git          Claude  --git status-->  RTK  -->  git
     ^                                   |             ^                      |          |
@@ -105,42 +105,42 @@ git status  # 자동으로 rtk git status로 재작성
 
 ### 파일
 ```bash
-rtk ls .                        # 최적화된 디렉토리 트리
-rtk read file.rs                # 스마트 파일 읽기
-rtk find "*.rs" .               # 컴팩트한 검색 결과
-rtk grep "pattern" .            # 파일별 그룹화 검색
+stc ls .                        # 최적화된 디렉토리 트리
+stc read file.rs                # 스마트 파일 읽기
+stc find "*.rs" .               # 컴팩트한 검색 결과
+stc grep "pattern" .            # 파일별 그룹화 검색
 ```
 
 ### Git
 ```bash
-rtk git status                  # 컴팩트 상태
-rtk git log -n 10               # 한 줄 커밋
-rtk git diff                    # 압축된 diff
-rtk git push                    # -> "ok main"
+stc git status                  # 컴팩트 상태
+stc git log -n 10               # 한 줄 커밋
+stc git diff                    # 압축된 diff
+stc git push                    # -> "ok main"
 ```
 
 ### 테스트
 ```bash
-rtk jest                        # Jest 컴팩트
-rtk vitest                      # Vitest 컴팩트
-rtk pytest                      # Python 테스트 (-90%)
-rtk go test                     # Go 테스트 (-90%)
-rtk test <cmd>                  # 실패만 표시 (-90%)
+stc jest                        # Jest 컴팩트
+stc vitest                      # Vitest 컴팩트
+stc pytest                      # Python 테스트 (-90%)
+stc go test                     # Go 테스트 (-90%)
+stc test <cmd>                  # 실패만 표시 (-90%)
 ```
 
 ### 빌드 & 린트
 ```bash
-rtk lint                        # ESLint 규칙별 그룹화
-rtk tsc                         # TypeScript 에러 그룹화
-rtk cargo build                 # Cargo 빌드 (-80%)
-rtk ruff check                  # Python 린트 (-80%)
+stc lint                        # ESLint 규칙별 그룹화
+stc tsc                         # TypeScript 에러 그룹화
+stc cargo build                 # Cargo 빌드 (-80%)
+stc ruff check                  # Python 린트 (-80%)
 ```
 
 ### 분석
 ```bash
-rtk gain                        # 절약 통계
-rtk gain --graph                # ASCII 그래프 (30일)
-rtk discover                    # 놓친 절약 기회 발견
+stc gain                        # 절약 통계
+stc gain --graph                # ASCII 그래프 (30일)
+stc discover                    # 놓친 절약 기회 발견
 ```
 
 ## 문서

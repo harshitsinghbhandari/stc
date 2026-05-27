@@ -15,8 +15,8 @@ sidebar:
 | macOS | `~/Library/Application Support/rtk/config.toml` |
 
 ```bash
-rtk config            # show current configuration
-rtk config --create   # create config file with defaults
+stc config            # show current configuration
+stc config --create   # create config file with defaults
 ```
 
 ## Full config structure

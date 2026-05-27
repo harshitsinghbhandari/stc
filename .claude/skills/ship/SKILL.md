@@ -54,7 +54,7 @@ git status  # Should show "nothing to commit, working tree clean"
 - **PATCH** (v0.0.X): Bug fixes, performance improvements
 
 **Examples**:
-- New filter added (`rtk pytest`) → **MINOR** bump (v0.16.0 → v0.17.0)
+- New filter added (`stc pytest`) → **MINOR** bump (v0.16.0 → v0.17.0)
 - Bug fix in `git log` filter → **PATCH** bump (v0.16.0 → v0.16.1)
 - Breaking CLI arg change → **MAJOR** bump (v0.16.0 → v1.0.0)
 
@@ -84,7 +84,7 @@ version = "0.17.0"  # New version
 ## [0.17.0] - 2026-02-15
 
 ### Added
-- `rtk pytest` command for Python test filtering (90% token reduction)
+- `stc pytest` command for Python test filtering (90% token reduction)
 - Support for `pytest` JSON output parsing
 - Integration with `uv` package manager auto-detection
 
@@ -140,7 +140,7 @@ Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
 git tag -a v0.17.0 -m "Release v0.17.0
 
 Added:
-- rtk pytest command (90% token reduction)
+- stc pytest command (90% token reduction)
 - Support for uv package manager
 
 Fixed:
@@ -346,7 +346,7 @@ git push origin v0.17.0
 
 ### Issue: Version Mismatch
 
-**Symptom**: `rtk --version` shows old version after bump
+**Symptom**: `stc --version` shows old version after bump
 
 **Solution**:
 ```bash

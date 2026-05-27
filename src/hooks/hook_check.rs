@@ -86,7 +86,7 @@ fn binary_hook_registered(claude_dir: &std::path::Path) -> bool {
         .any(|cmd| cmd == CLAUDE_HOOK_COMMAND)
 }
 
-/// Check whether the `rtk hook codex` PreToolUse hook is registered in the
+/// Check whether the `stc hook codex` PreToolUse hook is registered in the
 /// given Codex config directory's `hooks.json`. Mirrors the OpenCode plugin
 /// detection: a thin existence/registration check used by diagnostics.
 pub fn codex_hook_registered(codex_dir: &std::path::Path) -> bool {

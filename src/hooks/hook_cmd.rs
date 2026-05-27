@@ -145,7 +145,7 @@ fn handle_vscode(cmd: &str) -> Result<()> {
         "hookSpecificOutput": {
             "hookEventName": PRE_TOOL_USE_KEY,
             "permissionDecision": decision,
-            "permissionDecisionReason": "RTK auto-rewrite",
+            "permissionDecisionReason": "stc auto-rewrite",
             "updatedInput": { "command": rewritten }
         }
     });
@@ -169,7 +169,7 @@ fn handle_copilot_cli(cmd: &str) -> Result<()> {
     let output = json!({
         "permissionDecision": "deny",
         "permissionDecisionReason": format!(
-            "Token savings: use `{}` instead (rtk saves 60-90% tokens)",
+            "Token savings: use `{}` instead (stc saves 60-90% tokens)",
             rewritten
         )
     });
@@ -206,7 +206,7 @@ pub fn run_gemini() -> Result<()> {
     if permissions::check_command(cmd) == PermissionVerdict::Deny {
         let _ = writeln!(
             io::stdout(),
-            r#"{{"decision":"deny","reason":"Blocked by RTK permission rule"}}"#
+            r#"{{"decision":"deny","reason":"Blocked by stc permission rule"}}"#
         );
         return Ok(());
     }
@@ -335,7 +335,7 @@ fn process_claude_payload(v: &Value) -> PayloadAction {
 
     let mut hook_output = json!({
         "hookEventName": PRE_TOOL_USE_KEY,
-        "permissionDecisionReason": "RTK auto-rewrite",
+        "permissionDecisionReason": "stc auto-rewrite",
         "updatedInput": updated_input
     });
 
@@ -440,7 +440,7 @@ fn process_codex_payload(v: &Value) -> Option<(String, String, Value)> {
         "hookSpecificOutput": {
             "hookEventName": PRE_TOOL_USE_KEY,
             "permissionDecision": "allow",
-            "permissionDecisionReason": "RTK auto-rewrite",
+            "permissionDecisionReason": "stc auto-rewrite",
             "updatedInput": updated_input
         }
     });
@@ -851,7 +851,7 @@ mod tests {
         assert_eq!(hook["hookEventName"], PRE_TOOL_USE_KEY);
         // permissionDecision is only set when an explicit allow rule matches;
         // with default-to-ask semantics (no rules configured), it is absent.
-        assert_eq!(hook["permissionDecisionReason"], "RTK auto-rewrite");
+        assert_eq!(hook["permissionDecisionReason"], "stc auto-rewrite");
         assert!(hook["updatedInput"].is_object());
         assert!(hook["updatedInput"]["command"].is_string());
     }
@@ -880,7 +880,7 @@ mod tests {
         assert_eq!(hook["hookEventName"], PRE_TOOL_USE_KEY);
         // Codex requires permissionDecision == "allow" to honour updatedInput.
         assert_eq!(hook["permissionDecision"], "allow");
-        assert_eq!(hook["updatedInput"]["command"], "rtk git status");
+        assert_eq!(hook["updatedInput"]["command"], "stc git status");
     }
 
     #[test]
@@ -897,7 +897,7 @@ mod tests {
         let result = run_codex_inner(&input).unwrap();
         let v: Value = serde_json::from_str(&result).unwrap();
         let updated = &v["hookSpecificOutput"]["updatedInput"];
-        assert_eq!(updated["command"], "rtk git status");
+        assert_eq!(updated["command"], "stc git status");
         assert_eq!(updated["timeout"], 30000);
         assert_eq!(updated["workdir"], "/tmp/proj");
     }
@@ -909,7 +909,7 @@ mod tests {
 
     #[test]
     fn test_codex_already_rtk_passthrough() {
-        assert!(run_codex_inner(&codex_input("rtk git status")).is_none());
+        assert!(run_codex_inner(&codex_input("stc git status")).is_none());
     }
 
     #[test]
@@ -948,7 +948,7 @@ mod tests {
         let v: Value = serde_json::from_str(&result).unwrap();
         assert_eq!(
             v["hookSpecificOutput"]["updatedInput"]["command"],
-            "rtk git add . && rtk cargo test"
+            "stc git add . && stc cargo test"
         );
     }
 
@@ -958,7 +958,7 @@ mod tests {
         let v: Value = serde_json::from_str(&result).unwrap();
         assert_eq!(
             v["hookSpecificOutput"]["updatedInput"]["command"],
-            "GIT_PAGER=cat rtk git status"
+            "GIT_PAGER=cat stc git status"
         );
     }
 

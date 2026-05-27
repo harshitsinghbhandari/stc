@@ -6,7 +6,7 @@
 
 1. ✅ **Rust Token Killer** (this project) - LLM token optimizer
    - Repos: `harshitsinghbhandari/stc`
-   - Has `rtk gain` command for token savings stats
+   - Has `stc gain` command for token savings stats
 
 2. ❌ **Rust Type Kit** (reachingforthejack/rtk) - DIFFERENT PROJECT
    - Rust codebase query tool and type generator
@@ -27,9 +27,9 @@ stc gain    # Should show token savings stats, NOT "command not found"
 which stc
 ```
 
-If `rtk gain` works, you have the **correct** RTK installed. **DO NOT reinstall**. Skip to "Project Initialization".
+If `stc gain` works, you have the **correct** RTK installed. **DO NOT reinstall**. Skip to "Project Initialization".
 
-If `rtk gain` fails but `rtk --version` succeeds, you have the **wrong** RTK (Type Kit). Uninstall and reinstall the correct one (see below).
+If `stc gain` fails but `stc --version` succeeds, you have the **wrong** RTK (Type Kit). Uninstall and reinstall the correct one (see below).
 
 ## Installation (only if RTK not available or wrong RTK installed)
 
@@ -160,7 +160,7 @@ stc init -g  # Automatically migrates to hook-first mode
 
 #### From old hook with inline logic (pre-0.24) — ⚠️ Breaking Change
 
-RTK 0.24.0 replaced the inline command-detection hook (~200 lines) with a **thin delegator** that calls `rtk rewrite`. The binary now contains the rewrite logic, so adding new commands no longer requires a hook update.
+RTK 0.24.0 replaced the inline command-detection hook (~200 lines) with a **thin delegator** that calls `stc rewrite`. The binary now contains the rewrite logic, so adding new commands no longer requires a hook update.
 
 The old hook still works but won't benefit from new rules added in future releases.
 
@@ -387,10 +387,10 @@ cargo install --path . --force
 
 Before each session:
 
-- [ ] Verify RTK is installed: `rtk --version`
+- [ ] Verify RTK is installed: `stc --version`
 - [ ] If not installed → follow "Install from fork"
-- [ ] If project not initialized → `rtk init`
+- [ ] If project not initialized → `stc init`
 - [ ] Use `stc` for ALL git/pnpm/test/vitest commands
-- [ ] Check savings: `rtk gain`
+- [ ] Check savings: `stc gain`
 
 **Golden Rule**: AI coding assistants should ALWAYS use `stc` as a proxy for shell commands that generate verbose output (git, pnpm, npm, cargo test, vitest, docker, kubectl).

@@ -11,14 +11,14 @@ RTK supports all major AI coding agents across 3 integration tiers. Mistral Vibe
 
 ## How it works
 
-Each agent integration intercepts CLI commands before execution and rewrites them to their RTK equivalent. The agent runs `rtk cargo test` instead of `cargo test`, sees filtered output, and uses up to 90% fewer tokens — without any change to your workflow.
+Each agent integration intercepts CLI commands before execution and rewrites them to their RTK equivalent. The agent runs `stc cargo test` instead of `cargo test`, sees filtered output, and uses up to 90% fewer tokens — without any change to your workflow.
 
-All rewrite logic lives in the RTK binary (`rtk rewrite`). Agent hooks are thin delegates that parse the agent-specific JSON format and call `rtk rewrite` for the actual decision.
+All rewrite logic lives in the RTK binary (`stc rewrite`). Agent hooks are thin delegates that parse the agent-specific JSON format and call `stc rewrite` for the actual decision.
 
 ```
 Agent runs "cargo test"
   -> Hook intercepts (PreToolUse / plugin event)
-  -> Calls rtk rewrite "cargo test"
+  -> Calls stc rewrite "cargo test"
   -> Returns "rtk cargo test"
   -> Agent executes filtered command
   -> LLM sees 90% fewer tokens
@@ -49,19 +49,19 @@ Agent runs "cargo test"
 ### Claude Code
 
 ```bash
-rtk init --global    # installs hook + patches settings.json
+stc init --global    # installs hook + patches settings.json
 ```
 
 Restart Claude Code. Verify:
 
 ```bash
-rtk init --show    # shows hook status
+stc init --show    # shows hook status
 ```
 
 ### Cursor
 
 ```bash
-rtk init --global --cursor
+stc init --global --cursor
 ```
 
 Restart Cursor. The hook uses `preToolUse` with Cursor's `updated_input` format.
@@ -69,19 +69,19 @@ Restart Cursor. The hook uses `preToolUse` with Cursor's `updated_input` format.
 ### VS Code Copilot Chat
 
 ```bash
-rtk init --global --copilot
+stc init --global --copilot
 ```
 
 ### Gemini CLI
 
 ```bash
-rtk init --global --gemini
+stc init --global --gemini
 ```
 
 ### OpenCode
 
 ```bash
-rtk init --global --opencode
+stc init --global --opencode
 ```
 
 Creates `~/.config/opencode/plugins/rtk.ts`. Uses the `tool.execute.before` hook.
@@ -90,10 +90,10 @@ Creates `~/.config/opencode/plugins/rtk.ts`. Uses the `tool.execute.before` hook
 
 ```bash
 # Project-local (default)
-rtk init --agent pi
+stc init --agent pi
 
 # Global — all projects
-rtk init --agent pi --global
+stc init --agent pi --global
 ```
 
 Creates `.pi/extensions/rtk.ts` (local) or `~/.pi/agent/extensions/rtk.ts` (global). Pi auto-discovers extensions from both paths on startup.
@@ -101,8 +101,8 @@ Creates `.pi/extensions/rtk.ts` (local) or `~/.pi/agent/extensions/rtk.ts` (glob
 Uninstall:
 
 ```bash
-rtk init --uninstall --agent pi
-rtk init --uninstall --agent pi --global
+stc init --uninstall --agent pi
+stc init --uninstall --agent pi --global
 ```
 
 Removes only the installed Pi extension file.
@@ -113,53 +113,53 @@ Removes only the installed Pi extension file.
 openclaw plugins install ./openclaw
 ```
 
-Plugin in the `openclaw/` directory. Uses the `before_tool_call` hook, delegates to `rtk rewrite`.
+Plugin in the `openclaw/` directory. Uses the `before_tool_call` hook, delegates to `stc rewrite`.
 
 ### Hermes
 
 ```bash
-rtk init --agent hermes
+stc init --agent hermes
 ```
 
-Creates `~/.hermes/plugins/rtk-rewrite/` and enables it through `plugins.enabled` in the Hermes config. Hermes loads Python plugins, so the plugin entrypoint is Python, but it is only a thin adapter. It mutates the Hermes `terminal` tool `command` before execution and delegates all rewrite decisions to Rust through `rtk rewrite`. The repository source and tests for that adapter live in `hooks/hermes/`; only installed runtime files use the `~/.hermes/plugins/rtk-rewrite/` path.
+Creates `~/.hermes/plugins/rtk-rewrite/` and enables it through `plugins.enabled` in the Hermes config. Hermes loads Python plugins, so the plugin entrypoint is Python, but it is only a thin adapter. It mutates the Hermes `terminal` tool `command` before execution and delegates all rewrite decisions to Rust through `stc rewrite`. The repository source and tests for that adapter live in `hooks/hermes/`; only installed runtime files use the `~/.hermes/plugins/rtk-rewrite/` path.
 
-The plugin fails open. If `rtk` is missing at load time, the hook is not registered. If `rtk rewrite` errors, the tool is not `terminal`, the payload has no string `command`, or the plugin raises an exception, Hermes runs the original command unchanged. The same `rtk rewrite` limitations apply: already-prefixed `rtk` commands, compound shell commands, heredocs, and commands without filters are not rewritten.
+The plugin fails open. If `stc` is missing at load time, the hook is not registered. If `stc rewrite` errors, the tool is not `terminal`, the payload has no string `command`, or the plugin raises an exception, Hermes runs the original command unchanged. The same `stc rewrite` limitations apply: already-prefixed `stc` commands, compound shell commands, heredocs, and commands without filters are not rewritten.
 
 ### Cline / Roo Code
 
 ```bash
-rtk init --cline    # creates .clinerules in current project
+stc init --cline    # creates .clinerules in current project
 ```
 
-Cline reads `.clinerules` as custom instructions. RTK adds guidance telling Cline to prefer `rtk <cmd>` over raw commands.
+Cline reads `.clinerules` as custom instructions. RTK adds guidance telling Cline to prefer `stc <cmd>` over raw commands.
 
 ### Windsurf
 
 ```bash
-rtk init --windsurf    # creates .windsurfrules in current project
+stc init --windsurf    # creates .windsurfrules in current project
 ```
 
 ### Codex CLI
 
 ```bash
-rtk init --codex    # creates AGENTS.md or patches existing one
+stc init --codex    # creates AGENTS.md or patches existing one
 ```
 
 ### Kilo Code
 
 ```bash
-rtk init --agent kilocode    # creates .kilocode/rules/rtk-rules.md in current project
+stc init --agent kilocode    # creates .kilocode/rules/rtk-rules.md in current project
 ```
 
-Kilo Code reads `.kilocode/rules/` as custom instructions. RTK adds guidance telling Kilo Code to prefer `rtk <cmd>` over raw commands.
+Kilo Code reads `.kilocode/rules/` as custom instructions. RTK adds guidance telling Kilo Code to prefer `stc <cmd>` over raw commands.
 
 ### Google Antigravity
 
 ```bash
-rtk init --agent antigravity    # creates .agents/rules/antigravity-rtk-rules.md in current project
+stc init --agent antigravity    # creates .agents/rules/antigravity-rtk-rules.md in current project
 ```
 
-Antigravity reads `.agents/rules/` as custom instructions. RTK adds guidance telling Antigravity to prefer `rtk <cmd>` over raw commands.
+Antigravity reads `.agents/rules/` as custom instructions. RTK adds guidance telling Antigravity to prefer `stc <cmd>` over raw commands.
 
 ### Mistral Vibe (planned)
 
@@ -171,7 +171,7 @@ Support is blocked on upstream `BeforeToolCallback` ([mistral-vibe#531](https://
 |------|-----------|------------------|
 | **Full hook** | Shell script or Rust binary, intercepts via agent API | Transparent — agent never sees the raw command |
 | **Plugin** | TypeScript, JavaScript, or Python in agent's plugin system | Transparent, in-place mutation when the agent allows it |
-| **Rules file** | Prompt-level instructions | Guidance only — agent is told to prefer `rtk <cmd>` |
+| **Rules file** | Prompt-level instructions | Guidance only — agent is told to prefer `stc <cmd>` |
 
 Rules file integrations (Cline, Windsurf, Codex, Kilo Code, Antigravity) rely on the model following instructions. Full hook integrations (Claude Code, Cursor, Gemini) are guaranteed — the command is rewritten before the agent sees it. Plugin integrations (OpenCode, Pi) use in-place mutation via the agent's TypeScript extension API.
 
@@ -179,8 +179,8 @@ Rules file integrations (Cline, Windsurf, Codex, Kilo Code, Antigravity) rely on
 
 The shell hook (`rtk-rewrite.sh`) requires a Unix shell. On native Windows:
 
-- `rtk init -g` automatically falls back to **CLAUDE.md injection mode** (prompt-level instructions)
-- Filters work normally (`rtk cargo test`, `rtk git status`)
+- `stc init -g` automatically falls back to **CLAUDE.md injection mode** (prompt-level instructions)
+- Filters work normally (`stc cargo test`, `stc git status`)
 - Auto-rewrite does not work — the AI assistant is instructed to use RTK but commands are not intercepted
 
 For full hook support on Windows, use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install). Inside WSL, all agents with shell hook integration (Claude Code, Cursor, Gemini) work identically to Linux.
