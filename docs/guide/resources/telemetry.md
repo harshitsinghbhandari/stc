@@ -12,7 +12,7 @@ RTK collects anonymous, aggregate usage metrics once per day to help improve the
 ## Data Collector
 
 **Entity**: `RTK AI Labs`
-**Contact**: contact@rtk-ai.app
+**Contact**: contact@github.com/harshitsinghbhandari/stc
 
 ## Why we collect telemetry
 
@@ -149,7 +149,7 @@ Under the EU General Data Protection Regulation, you have the right to:
 
 - **Access** your data: `rtk telemetry status` shows your device hash; the telemetry payload is fully documented above.
 - **Rectification**: since data is anonymous and aggregate, rectification is not applicable.
-- **Erasure** (Art. 17): run `rtk telemetry forget` to delete local data and send an erasure request to the server. Alternatively, email contact@rtk-ai.app with your device hash.
+- **Erasure** (Art. 17): run `rtk telemetry forget` to delete local data and send an erasure request to the server. Alternatively, email contact@github.com/harshitsinghbhandari/stc with your device hash.
 - **Restriction of processing**: `rtk telemetry disable` stops all data collection immediately.
 - **Portability**: the local SQLite database at `~/.local/share/rtk/history.db` contains all locally stored data.
 - **Objection**: `rtk telemetry disable` or `export RTK_TELEMETRY_DISABLED=1`.
@@ -157,8 +157,8 @@ Under the EU General Data Protection Regulation, you have the right to:
 ## Erasure Procedure
 
 1. Run `rtk telemetry forget` — this disables telemetry, deletes your device salt, ping marker, and local tracking database (`history.db`), then sends an erasure request to the server.
-2. If the server is unreachable, the CLI prints your full device hash and fallback instructions to email contact@rtk-ai.app for manual erasure.
-3. You can also email contact@rtk-ai.app directly to request manual erasure.
+2. If the server is unreachable, the CLI prints your full device hash and fallback instructions to email contact@github.com/harshitsinghbhandari/stc for manual erasure.
+3. You can also email contact@github.com/harshitsinghbhandari/stc directly to request manual erasure.
 
 ## Data Handling
 

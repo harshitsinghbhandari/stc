@@ -1379,7 +1379,7 @@ RTK peut envoyer un ping anonyme une fois par jour (23h d'intervalle) pour des s
 
 **Donnees envoyees :** hash de device (SHA-256 d'un sel aleatoire), version, OS, architecture, nombre de commandes/24h, top commandes, pourcentage d'economies.
 
-**Responsable du traitement :** `RTK AI Labs`, contact@rtk-ai.app
+**Responsable du traitement :** `RTK AI Labs`, contact@github.com/harshitsinghbhandari/stc
 
 **Gerer la telemetrie :**
 ```bash

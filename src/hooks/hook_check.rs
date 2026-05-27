@@ -10,7 +10,7 @@ use std::path::PathBuf;
 const CURRENT_HOOK_VERSION: u8 = 3;
 const WARN_INTERVAL_SECS: u64 = 24 * 3600;
 
-/// Hook status for diagnostics and `rtk gain`.
+/// Hook status for diagnostics and `stc gain`.
 #[derive(Debug, PartialEq, Clone)]
 pub enum HookStatus {
     /// Hook is installed and up to date.
@@ -37,7 +37,7 @@ pub fn status() -> HookStatus {
     // Check for new binary command in settings.json first
     if binary_hook_registered(&claude_dir) {
         // If old script file still exists alongside new command, report Outdated
-        // (migration not complete — user should run `rtk init -g` to clean up)
+        // (migration not complete — user should run `stc init -g` to clean up)
         let old_hook = claude_dir.join(HOOKS_SUBDIR).join(REWRITE_HOOK_FILE);
         if old_hook.exists() {
             return HookStatus::Outdated;
@@ -123,9 +123,9 @@ fn check_and_warn() -> Option<()> {
     let warning = match status() {
         HookStatus::Ok => return Some(()),
         HookStatus::Missing => {
-            "[rtk] /!\\ No hook installed — run `rtk init -g` for automatic token savings"
+            "[rtk] /!\\ No hook installed — run `stc init -g` for automatic token savings"
         }
-        HookStatus::Outdated => "[rtk] /!\\ Hook outdated — run `rtk init -g` to update",
+        HookStatus::Outdated => "[rtk] /!\\ Hook outdated — run `stc init -g` to update",
     };
 
     // Rate limit: warn once per day

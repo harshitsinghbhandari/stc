@@ -7,7 +7,7 @@
 ///   3. Built-in TOML                     — `src/filters/*.toml`, concatenated by build.rs and embedded at compile time
 ///   4. Passthrough                       — no match, handled by caller
 ///
-/// `rtk init` generates a commented template for both levels (project or global).
+/// `stc init` generates a commented template for both levels (project or global).
 ///
 /// Environment variables:
 ///   - `RTK_NO_TOML=1`     — bypass TOML engine entirely
@@ -154,7 +154,7 @@ pub struct CompiledFilter {
 }
 
 // ---------------------------------------------------------------------------
-// Results for `rtk verify`
+// Results for `stc verify`
 // ---------------------------------------------------------------------------
 
 /// Outcome of running a single inline test.
@@ -206,11 +206,11 @@ impl TomlFilterRegistry {
                 }
                 crate::hooks::trust::TrustStatus::Untrusted => {
                     eprintln!("[rtk] WARNING: untrusted project filters (.rtk/filters.toml)");
-                    eprintln!("[rtk] Filters NOT applied. Run `rtk trust` to review and enable.");
+                    eprintln!("[rtk] Filters NOT applied. Run `stc trust` to review and enable.");
                 }
                 crate::hooks::trust::TrustStatus::ContentChanged { .. } => {
                     eprintln!("[rtk] WARNING: .rtk/filters.toml changed since trusted.");
-                    eprintln!("[rtk] Filters NOT applied. Run `rtk trust` to re-review.");
+                    eprintln!("[rtk] Filters NOT applied. Run `stc trust` to re-review.");
                 }
             }
         }
@@ -534,7 +534,7 @@ pub fn apply_filter(filter: &CompiledFilter, stdout: &str) -> String {
 }
 
 // ---------------------------------------------------------------------------
-// rtk verify — inline test execution
+// stc verify — inline test execution
 // ---------------------------------------------------------------------------
 
 /// Run inline tests from loaded TOML files (builtin + project-local).

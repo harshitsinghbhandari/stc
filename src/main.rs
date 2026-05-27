@@ -53,9 +53,9 @@ pub enum AgentTarget {
 
 #[derive(Parser)]
 #[command(
-    name = "rtk",
+    name = "stc",
     version,
-    about = "Rust Token Killer - Minimize LLM token consumption",
+    about = "stc - Minimize LLM token consumption (a fork of rtk, Rust Token Killer)",
     long_about = "A high-performance CLI proxy designed to filter and summarize system outputs before they reach your LLM context."
 )]
 struct Cli {
@@ -327,7 +327,7 @@ enum Commands {
         extra_args: Vec<String>,
     },
 
-    /// Initialize rtk instructions for assistant CLI usage
+    /// Initialize stc instructions for assistant CLI usage
     Init {
         /// Add to global assistant config directory instead of local project file
         #[arg(short, long)]
@@ -753,7 +753,7 @@ enum Commands {
     ///   REWRITTEN=$(rtk rewrite "$CMD") || exit 0
     Rewrite {
         /// Raw command to rewrite (e.g. "git status", "cargo test && git push")
-        /// Accepts multiple args: `rtk rewrite ls -al` is equivalent to `rtk rewrite "ls -al"`
+        /// Accepts multiple args: `stc rewrite ls -al` is equivalent to `stc rewrite "ls -al"`
         #[arg(trailing_var_arg = true, allow_hyphen_values = true)]
         args: Vec<String>,
     },
@@ -1155,7 +1155,7 @@ fn run_fallback(parse_error: clap::Error) -> Result<i32> {
     }
 
     // RTK meta-commands should never fall back to raw execution.
-    // e.g. `rtk gain --badtypo` should show Clap's error, not try to run `gain` from $PATH.
+    // e.g. `stc gain --badtypo` should show Clap's error, not try to run `gain` from $PATH.
     if RTK_META_COMMANDS.contains(&args[0].as_str()) {
         parse_error.exit();
     }
@@ -1257,7 +1257,7 @@ fn run_fallback(parse_error: clap::Error) -> Result<i32> {
 
         match status {
             Ok(s) => {
-                timer.track_passthrough(&raw_command, &format!("rtk fallback: {}", raw_command));
+                timer.track_passthrough(&raw_command, &format!("stc fallback: {}", raw_command));
 
                 core::tracking::record_parse_failure_silent(&raw_command, &error_message, true);
 
@@ -1339,7 +1339,7 @@ fn validate_pnpm_filters(filters: &[String], command: &PnpmCommands) -> Option<S
     // Check if this is a Build or Typecheck command with filters
     match command {
         PnpmCommands::Typecheck { .. } => {
-            // FIXME: if filters are present, we should find out which workspaces are selected before running rtk dedicated commands
+            // FIXME: if filters are present, we should find out which workspaces are selected before running stc dedicated commands
             if !filters.is_empty() {
                 let cmd_name = match command {
                     PnpmCommands::Typecheck { .. } => "tsc",
@@ -1422,7 +1422,7 @@ fn run_cli() -> Result<i32> {
 
         Commands::Tree { args } => tree::run(&args, cli.verbose)?,
 
-        // ISSUE #989: support multiple files (cat file1 file2 → rtk read file1 file2)
+        // ISSUE #989: support multiple files (cat file1 file2 → stc read file1 file2)
         Commands::Read {
             files,
             level,
@@ -1848,13 +1848,13 @@ fn run_cli() -> Result<i32> {
                 hooks::init::run_pi_mode(global, ctx)?
             } else if agent == Some(AgentTarget::Kilocode) {
                 if global {
-                    anyhow::bail!("Kilo Code is project-scoped. Use: rtk init --agent kilocode");
+                    anyhow::bail!("Kilo Code is project-scoped. Use: stc init --agent kilocode");
                 }
                 hooks::init::run_kilocode_mode(ctx)?;
             } else if agent == Some(AgentTarget::Antigravity) {
                 if global {
                     anyhow::bail!(
-                        "Antigravity is project-scoped. Use: rtk init --agent antigravity"
+                        "Antigravity is project-scoped. Use: stc init --agent antigravity"
                     );
                 }
                 hooks::init::run_antigravity_mode(ctx)?;
@@ -2114,7 +2114,7 @@ fn run_cli() -> Result<i32> {
                                 let args_str = args.join(" ");
                                 timer.track_passthrough(
                                     &format!("npx {}", args_str),
-                                    &format!("rtk npx {} (passthrough)", args_str),
+                                    &format!("stc npx {} (passthrough)", args_str),
                                 );
                                 core::utils::exit_code_from_status(&status, "npx prisma")
                             }
@@ -2125,7 +2125,7 @@ fn run_cli() -> Result<i32> {
                             .arg("prisma")
                             .status()
                             .context("Failed to run npx prisma")?;
-                        timer.track_passthrough("npx prisma", "rtk npx prisma (passthrough)");
+                        timer.track_passthrough("npx prisma", "stc npx prisma (passthrough)");
                         core::utils::exit_code_from_status(&status, "npx prisma")
                     }
                 }
@@ -2259,15 +2259,15 @@ fn run_cli() -> Result<i32> {
 
             if args.is_empty() {
                 anyhow::bail!(
-                    "proxy requires a command to execute\nUsage: rtk proxy <command> [args...]"
+                    "proxy requires a command to execute\nUsage: stc proxy <command> [args...]"
                 );
             }
 
             let timer = core::tracking::TimedExecution::start();
 
             // If a single quoted arg contains spaces, split it respecting quotes (#388).
-            // e.g. rtk proxy 'head -50 file.php' → cmd=head, args=["-50", "file.php"]
-            // e.g. rtk proxy 'git log --format="%H %s"' → cmd=git, args=["log", "--format=%H %s"]
+            // e.g. stc proxy 'head -50 file.php' → cmd=head, args=["-50", "file.php"]
+            // e.g. stc proxy 'git log --format="%H %s"' → cmd=git, args=["log", "--format=%H %s"]
             let (cmd_name, cmd_args): (String, Vec<String>) = if args.len() == 1 {
                 let full = args[0].to_string_lossy();
                 let parts = shell_split(&full);
@@ -2423,7 +2423,7 @@ fn run_cli() -> Result<i32> {
             // Track usage (input = output since no filtering)
             timer.track(
                 &format!("{} {}", cmd_name, cmd_args.join(" ")),
-                &format!("rtk proxy {} {}", cmd_name, cmd_args.join(" ")),
+                &format!("stc proxy {} {}", cmd_name, cmd_args.join(" ")),
                 &full_output,
                 &full_output,
             );
@@ -2972,7 +2972,7 @@ mod tests {
 
     #[test]
     fn test_rewrite_clap_multi_args() {
-        // This is the bug KuSh reported: `rtk rewrite ls -al` failed because
+        // This is the bug KuSh reported: `stc rewrite ls -al` failed because
         // Clap rejected `-al` as an unknown flag. With trailing_var_arg + allow_hyphen_values,
         // multiple args are accepted and joined into a single command string.
         let cases = vec![
@@ -2987,7 +2987,7 @@ mod tests {
             let result = Cli::try_parse_from(args.iter());
             assert!(
                 result.is_ok(),
-                "rtk rewrite {:?} should parse (was failing before trailing_var_arg fix)",
+                "stc rewrite {:?} should parse (was failing before trailing_var_arg fix)",
                 &args[2..]
             );
             if let Ok(cli) = result {
@@ -3003,7 +3003,7 @@ mod tests {
 
     #[test]
     fn test_rewrite_clap_quoted_single_arg() {
-        // Quoted form: `rtk rewrite "git status"` — single arg containing spaces
+        // Quoted form: `stc rewrite "git status"` — single arg containing spaces
         let result = Cli::try_parse_from(["rtk", "rewrite", "git status"]);
         assert!(result.is_ok());
         if let Ok(cli) = result {
@@ -3181,7 +3181,7 @@ mod tests {
 
     #[test]
     fn test_npx_unknown_tool_passthrough() {
-        // The bug (rtk-ai/rtk#815) was that unknown tools under `rtk npx`
+        // The bug (harshitsinghbhandari/stc#815) was that unknown tools under `stc npx`
         // were dispatched to `npm` instead of `npx`. At the parse level, the
         // Npx variant must carry all args through unchanged so the dispatch
         // arm can forward them to npx.

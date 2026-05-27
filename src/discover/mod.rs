@@ -169,8 +169,8 @@ pub fn run(
                         bucket.count += 1;
                     }
                     Classification::Ignored => {
-                        // Check if it starts with "rtk "
-                        if part.trim().starts_with("rtk ") {
+                        // Check if it starts with "stc "
+                        if part.trim().starts_with("stc ") {
                             already_rtk += 1;
                         }
                         // Otherwise just skip

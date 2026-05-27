@@ -2,14 +2,20 @@
 name = "rtk"
 version = "0.40.0"
 edition = "2021"
-authors = ["Patrick Szymkowiak"]
-description = "Rust Token Killer - High-performance CLI proxy to minimize LLM token consumption"
-license = "Apache 2.0"
-homepage = "https://www.rtk-ai.app"
-repository = "https://github.com/rtk-ai/rtk"
+authors = ["Patrick Szymkowiak", "Harshit Singh Bhandari"]
+description = "stc (Save Token Cost) - High-performance CLI proxy to minimize LLM token consumption. A fork of rtk (Rust Token Killer)."
+license = "Apache-2.0"
+homepage = "https://github.com/harshitsinghbhandari/stc"
+repository = "https://github.com/harshitsinghbhandari/stc"
 readme = "README.md"
 keywords = ["cli", "llm", "token", "filter", "productivity"]
 categories = ["command-line-utilities", "development-tools"]
+
+# The crate/package remains `rtk` internally to limit churn, but the
+# user-facing binary/command is `stc`.
+[[bin]]
+name = "stc"
+path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
@@ -51,19 +57,21 @@ strip = true
 
 # cargo-deb configuration
 [package.metadata.deb]
-maintainer = "Patrick Szymkowiak"
-copyright = "2024 Patrick Szymkowiak"
+name = "stc"
+maintainer = "Harshit Singh Bhandari"
+copyright = "2024 Patrick Szymkowiak; 2026 Harshit Singh Bhandari"
 license-file = ["LICENSE", "0"]
-extended-description = "rtk filters and compresses command outputs before they reach your LLM context, saving 60-90% of tokens."
+extended-description = "stc filters and compresses command outputs before they reach your LLM context, saving 60-90% of tokens. A fork of rtk (Rust Token Killer)."
 section = "utility"
 priority = "optional"
 assets = [
-    ["target/release/rtk", "usr/bin/", "755"],
+    ["target/release/stc", "usr/bin/", "755"],
 ]
 # cargo-generate-rpm configuration
 [package.metadata.generate-rpm]
+name = "stc"
 assets = [
-    { source = "target/release/rtk", dest = "/usr/bin/rtk", mode = "755" },
+    { source = "target/release/stc", dest = "/usr/bin/stc", mode = "755" },
 ]
 
 [lints.rust]

@@ -1040,20 +1040,20 @@ mod tests {
 
     #[test]
     fn test_extract_identifier_with_repo_flag_after() {
-        // gh issue view 185 -R rtk-ai/rtk
-        let args: Vec<String> = vec!["185".into(), "-R".into(), "rtk-ai/rtk".into()];
+        // gh issue view 185 -R harshitsinghbhandari/stc
+        let args: Vec<String> = vec!["185".into(), "-R".into(), "harshitsinghbhandari/stc".into()];
         let (id, extra) = extract_identifier_and_extra_args(&args).unwrap();
         assert_eq!(id, "185");
-        assert_eq!(extra, vec!["-R", "rtk-ai/rtk"]);
+        assert_eq!(extra, vec!["-R", "harshitsinghbhandari/stc"]);
     }
 
     #[test]
     fn test_extract_identifier_with_repo_flag_before() {
-        // gh issue view -R rtk-ai/rtk 185
-        let args: Vec<String> = vec!["-R".into(), "rtk-ai/rtk".into(), "185".into()];
+        // gh issue view -R harshitsinghbhandari/stc 185
+        let args: Vec<String> = vec!["-R".into(), "harshitsinghbhandari/stc".into(), "185".into()];
         let (id, extra) = extract_identifier_and_extra_args(&args).unwrap();
         assert_eq!(id, "185");
-        assert_eq!(extra, vec!["-R", "rtk-ai/rtk"]);
+        assert_eq!(extra, vec!["-R", "harshitsinghbhandari/stc"]);
     }
 
     #[test]
@@ -1073,7 +1073,7 @@ mod tests {
     #[test]
     fn test_extract_identifier_only_flags() {
         // No positional identifier, only flags
-        let args: Vec<String> = vec!["-R".into(), "rtk-ai/rtk".into()];
+        let args: Vec<String> = vec!["-R".into(), "harshitsinghbhandari/stc".into()];
         assert!(extract_identifier_and_extra_args(&args).is_none());
     }
 
@@ -1417,8 +1417,8 @@ mod tests {
 
 Added smart markdown filtering for gh issue/pr view commands.
 
-[![CI](https://img.shields.io/github/actions/workflow/status/rtk-ai/rtk/ci.yml)](https://github.com/rtk-ai/rtk/actions)
-[![Coverage](https://img.shields.io/codecov/c/github/rtk-ai/rtk)](https://codecov.io/gh/rtk-ai/rtk)
+[![CI](https://img.shields.io/github/actions/workflow/status/harshitsinghbhandari/stc/ci.yml)](https://github.com/harshitsinghbhandari/stc/actions)
+[![Coverage](https://img.shields.io/codecov/c/github/harshitsinghbhandari/stc)](https://codecov.io/gh/harshitsinghbhandari/stc)
 
 ![screenshot](https://user-images.githubusercontent.com/123/screenshot.png)
 

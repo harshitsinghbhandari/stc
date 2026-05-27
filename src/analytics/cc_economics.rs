@@ -1,6 +1,6 @@
 //! Claude Code Economics: Spending vs Savings Analysis
 //!
-//! Combines ccusage (tokens spent) with rtk tracking (tokens saved) to provide
+//! Combines ccusage (tokens spent) with stc tracking (tokens saved) to provide
 //! dual-metric economic impact reporting with blended and active cost-per-token.
 
 use anyhow::{Context, Result};
@@ -34,7 +34,7 @@ pub struct PeriodEconomics {
     pub cc_output_tokens: Option<u64>,
     pub cc_cache_create_tokens: Option<u64>,
     pub cc_cache_read_tokens: Option<u64>,
-    // rtk metrics
+    // stc metrics
     pub rtk_commands: Option<usize>,
     pub rtk_saved_tokens: Option<usize>,
     pub rtk_savings_pct: Option<f64>,
@@ -211,7 +211,7 @@ fn merge_daily(cc: Option<Vec<CcusagePeriod>>, rtk: Vec<DayStats>) -> Vec<Period
         }
     }
 
-    // Merge rtk data
+    // Merge stc data
     for entry in rtk {
         map.entry(entry.date.clone())
             .or_insert_with_key(|k| PeriodEconomics::new(k))
@@ -241,7 +241,7 @@ fn merge_weekly(cc: Option<Vec<CcusagePeriod>>, rtk: Vec<WeekStats>) -> Vec<Peri
         }
     }
 
-    // Merge rtk data (week_start = legacy Saturday "2026-01-18")
+    // Merge stc data (week_start = legacy Saturday "2026-01-18")
     // Convert Saturday to Monday for alignment
     for entry in rtk {
         let monday_key = match convert_saturday_to_monday(&entry.week_start) {
@@ -279,7 +279,7 @@ fn merge_monthly(cc: Option<Vec<CcusagePeriod>>, rtk: Vec<MonthStats>) -> Vec<Pe
         }
     }
 
-    // Merge rtk data
+    // Merge stc data
     for entry in rtk {
         map.entry(entry.month.clone())
             .or_insert_with_key(|k| PeriodEconomics::new(k))
@@ -302,7 +302,7 @@ fn merge_monthly(cc: Option<Vec<CcusagePeriod>>, rtk: Vec<MonthStats>) -> Vec<Pe
 fn convert_saturday_to_monday(saturday: &str) -> Option<String> {
     let sat_date = NaiveDate::parse_from_str(saturday, "%Y-%m-%d").ok()?;
 
-    // rtk uses Saturday as week start, ISO uses Monday
+    // stc uses Saturday as week start, ISO uses Monday
     // Saturday + 2 days = Monday
     let monday = sat_date + chrono::TimeDelta::try_days(2)?;
 
@@ -433,7 +433,7 @@ fn display_summary(tracker: &Tracker, verbose: u8) -> Result<()> {
     let periods = merge_monthly(cc_monthly, rtk_monthly);
 
     if periods.is_empty() {
-        println!("No data available. Run some rtk commands to start tracking.");
+        println!("No data available. Run some stc commands to start tracking.");
         return Ok(());
     }
 

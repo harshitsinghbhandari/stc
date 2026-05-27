@@ -54,8 +54,8 @@ fn run_status() -> Result<()> {
     }
 
     println!();
-    println!("Data controller: RTK AI Labs, contact@rtk-ai.app");
-    println!("Details: https://github.com/rtk-ai/rtk/blob/master/docs/TELEMETRY.md");
+    println!("Data controller: RTK AI Labs, contact@github.com/harshitsinghbhandari/stc");
+    println!("Details: https://github.com/harshitsinghbhandari/stc/blob/master/docs/TELEMETRY.md");
 
     Ok(())
 }
@@ -72,8 +72,10 @@ fn run_enable() -> Result<()> {
     eprintln!("RTK collects anonymous usage metrics once per day to improve filters.");
     eprintln!();
     eprintln!("  What:    command names (not arguments), token savings, OS, version");
-    eprintln!("  Who:     RTK AI Labs, contact@rtk-ai.app");
-    eprintln!("  Details: https://github.com/rtk-ai/rtk/blob/master/docs/TELEMETRY.md");
+    eprintln!("  Who:     RTK AI Labs, contact@github.com/harshitsinghbhandari/stc");
+    eprintln!(
+        "  Details: https://github.com/harshitsinghbhandari/stc/blob/master/docs/TELEMETRY.md"
+    );
     eprintln!();
     eprint!("Enable anonymous telemetry? [y/N] ");
 
@@ -92,7 +94,7 @@ fn run_enable() -> Result<()> {
     crate::hooks::init::save_telemetry_consent(accepted)?;
 
     if accepted {
-        println!("Telemetry enabled. Disable anytime: rtk telemetry disable");
+        println!("Telemetry enabled. Disable anytime: stc telemetry disable");
     } else {
         println!("Telemetry not enabled.");
     }
@@ -148,7 +150,9 @@ fn run_forget() -> Result<()> {
             }
             Err(e) => {
                 eprintln!("rtk: could not reach server: {}", e);
-                eprintln!("  To complete erasure, email contact@rtk-ai.app");
+                eprintln!(
+                    "  To complete erasure, email contact@github.com/harshitsinghbhandari/stc"
+                );
                 eprintln!("  with your device hash: {}", hash);
             }
         }

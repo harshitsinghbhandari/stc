@@ -7,17 +7,17 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/rtk-ai/rtk/actions"><img src="https://github.com/rtk-ai/rtk/workflows/Security%20Check/badge.svg" alt="CI"></a>
-  <a href="https://github.com/rtk-ai/rtk/releases"><img src="https://img.shields.io/github/v/release/rtk-ai/rtk" alt="Release"></a>
+  <a href="https://github.com/harshitsinghbhandari/stc/actions"><img src="https://github.com/harshitsinghbhandari/stc/workflows/Security%20Check/badge.svg" alt="CI"></a>
+  <a href="https://github.com/harshitsinghbhandari/stc/releases"><img src="https://img.shields.io/github/v/release/harshitsinghbhandari/stc" alt="Release"></a>
   <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
   <a href="https://discord.gg/RySmvNF5kF"><img src="https://img.shields.io/discord/1470188214710046894?label=Discord&logo=discord" alt="Discord"></a>
   <a href="https://formulae.brew.sh/formula/rtk"><img src="https://img.shields.io/homebrew/v/rtk" alt="Homebrew"></a>
 </p>
 
 <p align="center">
-  <a href="https://www.rtk-ai.app">Website</a> &bull;
+  <a href="https://github.com/harshitsinghbhandari/stc">Website</a> &bull;
   <a href="#installation">Install</a> &bull;
-  <a href="https://www.rtk-ai.app/guide/troubleshooting">Troubleshooting</a> &bull;
+  <a href="https://github.com/harshitsinghbhandari/stc/guide/troubleshooting">Troubleshooting</a> &bull;
   <a href="docs/contributing/ARCHITECTURE.md">Architecture</a> &bull;
   <a href="https://discord.gg/RySmvNF5kF">Discord</a>
 </p>
@@ -66,7 +66,7 @@ brew install rtk
 ### Quick Install (Linux/macOS)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/refs/heads/master/install.sh | sh
 ```
 
 > Installs to `~/.local/bin`. Add to PATH if needed:
@@ -77,12 +77,12 @@ curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/instal
 ### Cargo
 
 ```bash
-cargo install --git https://github.com/rtk-ai/rtk
+cargo install --git https://github.com/harshitsinghbhandari/stc
 ```
 
 ### Pre-built Binaries
 
-Download from [releases](https://github.com/rtk-ai/rtk/releases):
+Download from [releases](https://github.com/harshitsinghbhandari/stc/releases):
 - macOS: `rtk-x86_64-apple-darwin.tar.gz` / `rtk-aarch64-apple-darwin.tar.gz`
 - Linux: `rtk-x86_64-unknown-linux-musl.tar.gz` / `rtk-aarch64-unknown-linux-gnu.tar.gz`
 - Windows: `rtk-x86_64-pc-windows-msvc.zip`
@@ -322,7 +322,7 @@ For the best experience, use [WSL](https://learn.microsoft.com/en-us/windows/wsl
 
 ```bash
 # Inside WSL
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/refs/heads/master/install.sh | sh
 rtk init -g
 ```
 
@@ -366,11 +366,11 @@ RTK supports 13 AI coding tools. Each integration rewrites shell commands to `rt
 | **OpenCode** | `rtk init -g --opencode` | Plugin TS (tool.execute.before) |
 | **OpenClaw** | `openclaw plugins install ./openclaw` | Plugin TS (before_tool_call) |
 | **Hermes** | `rtk init --agent hermes` | Python plugin adapter (terminal command mutation via `rtk rewrite`) |
-| **Mistral Vibe** | Planned ([#800](https://github.com/rtk-ai/rtk/issues/800)) | Blocked on upstream |
+| **Mistral Vibe** | Planned ([#800](https://github.com/harshitsinghbhandari/stc/issues/800)) | Blocked on upstream |
 | **Kilo Code** | `rtk init --agent kilocode` | .kilocode/rules/rtk-rules.md (project-scoped) |
 | **Google Antigravity** | `rtk init --agent antigravity` | .agents/rules/antigravity-rtk-rules.md (project-scoped) |
 
-For per-agent setup details, override controls, and graceful degradation, see the [Supported Agents guide](https://www.rtk-ai.app/guide/getting-started/supported-agents). The Hermes plugin source and tests live in `hooks/hermes/`; installed Hermes runtime files still live under `~/.hermes/plugins/rtk-rewrite/`.
+For per-agent setup details, override controls, and graceful degradation, see the [Supported Agents guide](https://github.com/harshitsinghbhandari/stc/guide/getting-started/supported-agents). The Hermes plugin source and tests live in `hooks/hermes/`; installed Hermes runtime files still live under `~/.hermes/plugins/rtk-rewrite/`.
 
 ## Configuration
 
@@ -392,7 +392,7 @@ FAILED: 2/15 tests
 [full output: ~/.local/share/rtk/tee/1707753600_cargo_test.log]
 ```
 
-For the full config reference (all sections, env vars, per-project filters), see the [Configuration guide](https://www.rtk-ai.app/guide/getting-started/configuration).
+For the full config reference (all sections, env vars, per-project filters), see the [Configuration guide](https://github.com/harshitsinghbhandari/stc/guide/getting-started/configuration).
 
 ### Uninstall
 
@@ -404,7 +404,7 @@ brew uninstall rtk           # If installed via Homebrew
 
 ## Documentation
 
-- **[rtk-ai.app/guide](https://www.rtk-ai.app/guide)** — full user guide (installation, supported agents, what gets optimized, analytics, configuration, troubleshooting)
+- **[github.com/harshitsinghbhandari/stc/guide](https://github.com/harshitsinghbhandari/stc/guide)** — full user guide (installation, supported agents, what gets optimized, analytics, configuration, troubleshooting)
 - **[INSTALL.md](INSTALL.md)** — detailed installation reference
 - **[ARCHITECTURE.md](docs/contributing/ARCHITECTURE.md)** — system design and technical decisions
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — contribution guide
@@ -450,19 +450,19 @@ export RTK_TELEMETRY_DISABLED=1   # Blocks telemetry regardless of consent
 
 <a href="https://www.star-history.com/?repos=rtk-ai%2Frtk&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=rtk-ai/rtk&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=rtk-ai/rtk&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=rtk-ai/rtk&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=harshitsinghbhandari/stc&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=harshitsinghbhandari/stc&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=harshitsinghbhandari/stc&type=date&legend=top-left" />
  </picture>
 </a>
 
 ## StarMapper
 
-<a href="https://starmapper.bruniaux.com/rtk-ai/rtk">
+<a href="https://starmapper.bruniaux.com/harshitsinghbhandari/stc">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://starmapper.bruniaux.com/api/map-image/rtk-ai/rtk?theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://starmapper.bruniaux.com/api/map-image/rtk-ai/rtk?theme=light" />
-    <img alt="StarMapper" src="https://starmapper.bruniaux.com/api/map-image/rtk-ai/rtk" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://starmapper.bruniaux.com/api/map-image/harshitsinghbhandari/stc?theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://starmapper.bruniaux.com/api/map-image/harshitsinghbhandari/stc?theme=light" />
+    <img alt="StarMapper" src="https://starmapper.bruniaux.com/api/map-image/harshitsinghbhandari/stc" />
   </picture>
 </a>
 
@@ -477,7 +477,7 @@ export RTK_TELEMETRY_DISABLED=1   # Blocks telemetry regardless of consent
 
 ## Contributing
 
-Contributions welcome! Please open an issue or PR on [GitHub](https://github.com/rtk-ai/rtk).
+Contributions welcome! Please open an issue or PR on [GitHub](https://github.com/harshitsinghbhandari/stc).
 
 Join the community on [Discord](https://discord.gg/RySmvNF5kF).
 

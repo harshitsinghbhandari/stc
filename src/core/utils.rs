@@ -1,6 +1,6 @@
 //! Utility functions for text processing and command execution.
 //!
-//! Provides common helpers used across rtk commands:
+//! Provides common helpers used across stc commands:
 //! - ANSI color code stripping
 //! - Text truncation
 //! - Command execution with error context

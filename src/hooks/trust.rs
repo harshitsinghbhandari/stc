@@ -7,7 +7,7 @@
 //!
 //! This module implements a trust-before-load model:
 //! - Untrusted filters are **skipped** (not "loaded with warning")
-//! - `rtk trust` stores the SHA-256 hash after user review
+//! - `stc trust` stores the SHA-256 hash after user review
 //! - Content changes invalidate trust (re-review required)
 //! - `RTK_TRUST_PROJECT_FILTERS=1` overrides for CI pipelines
 
@@ -177,7 +177,7 @@ pub fn list_trusted() -> Result<HashMap<String, TrustEntry>> {
 // CLI commands
 // ---------------------------------------------------------------------------
 
-/// Run `rtk trust` — review and trust project-local filters.
+/// Run `stc trust` — review and trust project-local filters.
 pub fn run_trust(list: bool) -> Result<()> {
     if list {
         let trusted = list_trusted()?;
@@ -232,7 +232,7 @@ pub fn run_trust(list: bool) -> Result<()> {
     Ok(())
 }
 
-/// Run `rtk untrust` — revoke trust for project-local filters.
+/// Run `stc untrust` — revoke trust for project-local filters.
 pub fn run_untrust() -> Result<()> {
     let filter_path = Path::new(".rtk/filters.toml");
     // If file doesn't exist, untrust by canonical path lookup won't work.

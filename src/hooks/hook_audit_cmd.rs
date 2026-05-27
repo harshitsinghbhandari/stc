@@ -180,11 +180,11 @@ mod tests {
 
     #[test]
     fn test_parse_line_rewrite() {
-        let line = "2026-02-16T14:30:01Z | rewrite | git status | rtk git status";
+        let line = "2026-02-16T14:30:01Z | rewrite | git status | stc git status";
         let entry = parse_line(line).unwrap();
         assert_eq!(entry.action, "rewrite");
         assert_eq!(entry.original_cmd, "git status");
-        assert_eq!(entry._rewritten_cmd, "rtk git status");
+        assert_eq!(entry._rewritten_cmd, "stc git status");
     }
 
     #[test]
@@ -240,15 +240,15 @@ mod tests {
 
     #[test]
     fn test_token_savings() {
-        // Simulate what rtk hook-audit would output vs raw log dump
-        let raw_log = r#"2026-02-16T14:30:01Z | rewrite | git status | rtk git status
+        // Simulate what stc hook-audit would output vs raw log dump
+        let raw_log = r#"2026-02-16T14:30:01Z | rewrite | git status | stc git status
 2026-02-16T14:30:02Z | skip:no_match | echo hello | -
-2026-02-16T14:30:03Z | rewrite | cargo test | rtk cargo test
-2026-02-16T14:30:04Z | skip:already_rtk | rtk git log | -
-2026-02-16T14:30:05Z | rewrite | git log --oneline -10 | rtk git log --oneline -10
-2026-02-16T14:30:06Z | rewrite | gh pr view 42 | rtk gh pr view 42
+2026-02-16T14:30:03Z | rewrite | cargo test | stc cargo test
+2026-02-16T14:30:04Z | skip:already_rtk | stc git log | -
+2026-02-16T14:30:05Z | rewrite | git log --oneline -10 | stc git log --oneline -10
+2026-02-16T14:30:06Z | rewrite | gh pr view 42 | stc gh pr view 42
 2026-02-16T14:30:07Z | skip:no_match | mkdir -p foo | -
-2026-02-16T14:30:08Z | rewrite | cargo clippy --all-targets | rtk cargo clippy --all-targets"#;
+2026-02-16T14:30:08Z | rewrite | cargo clippy --all-targets | stc cargo clippy --all-targets"#;
 
         let entries: Vec<AuditEntry> = raw_log.lines().filter_map(parse_line).collect();
         assert_eq!(entries.len(), 8);

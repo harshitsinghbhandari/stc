@@ -9,11 +9,11 @@ pub const PRE_TOOL_USE_KEY: &str = "PreToolUse";
 pub const BEFORE_TOOL_KEY: &str = "BeforeTool";
 
 /// Native Rust hook command for Claude Code (replaces rtk-rewrite.sh).
-pub const CLAUDE_HOOK_COMMAND: &str = "rtk hook claude";
+pub const CLAUDE_HOOK_COMMAND: &str = "stc hook claude";
 /// Native Rust hook command for Cursor (replaces rtk-rewrite.sh).
-pub const CURSOR_HOOK_COMMAND: &str = "rtk hook cursor";
+pub const CURSOR_HOOK_COMMAND: &str = "stc hook cursor";
 /// Native Rust hook command for Codex CLI PreToolUse (registered in hooks.json).
-pub const CODEX_HOOK_COMMAND: &str = "rtk hook codex";
+pub const CODEX_HOOK_COMMAND: &str = "stc hook codex";
 
 pub const CONFIG_DIR: &str = ".config";
 pub const OPENCODE_SUBDIR: &str = "opencode";

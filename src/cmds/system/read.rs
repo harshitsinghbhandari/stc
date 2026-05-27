@@ -73,7 +73,7 @@ pub fn run(
     print!("{}", rtk_output);
     timer.track(
         &format!("cat {}", file.display()),
-        "rtk read",
+        "stc read",
         &content,
         &rtk_output,
     );
@@ -136,7 +136,7 @@ pub fn run_stdin(
     };
     print!("{}", rtk_output);
 
-    timer.track("cat - (stdin)", "rtk read -", &content, &rtk_output);
+    timer.track("cat - (stdin)", "stc read -", &content, &rtk_output);
     Ok(())
 }
 
@@ -248,7 +248,7 @@ fn main() {{
         let output = std::process::Command::new(&bin)
             .args(["read", &f1.path().to_string_lossy(), &f2.path().to_string_lossy()])
             .output()
-            .expect("failed to run rtk read");
+            .expect("failed to run stc read");
 
         assert!(output.status.success());
         let stdout = String::from_utf8_lossy(&output.stdout);
@@ -268,7 +268,7 @@ fn main() {{
         let output = std::process::Command::new(&bin)
             .args(["read", &f1.path().to_string_lossy(), "/tmp/rtk_nonexistent_file.txt"])
             .output()
-            .expect("failed to run rtk read");
+            .expect("failed to run stc read");
 
         assert!(!output.status.success(), "should exit non-zero on missing file");
         let stdout = String::from_utf8_lossy(&output.stdout);
@@ -287,7 +287,7 @@ fn main() {{
             .args(["read", "-", "-"])
             .stdin(std::process::Stdio::piped())
             .output()
-            .expect("failed to run rtk read");
+            .expect("failed to run stc read");
 
         let stderr = String::from_utf8_lossy(&output.stderr);
         assert!(
