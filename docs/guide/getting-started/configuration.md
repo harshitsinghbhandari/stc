@@ -15,8 +15,8 @@ sidebar:
 | macOS | `~/Library/Application Support/rtk/config.toml` |
 
 ```bash
-rtk config            # show current configuration
-rtk config --create   # create config file with defaults
+stc config            # show current configuration
+stc config --create   # create config file with defaults
 ```
 
 ## Full config structure
@@ -129,4 +129,4 @@ enabled = false
 
 ## Per-project filters
 
-Create `.rtk/filters.toml` in your project root to add custom filters or override built-ins. See [`src/filters/README.md`](https://github.com/rtk-ai/rtk/blob/master/src/filters/README.md) for the full TOML DSL reference.
+Create `.rtk/filters.toml` in your project root to add custom filters or override built-ins. See [`src/filters/README.md`](https://github.com/harshitsinghbhandari/stc/blob/master/src/filters/README.md) for the full TOML DSL reference.

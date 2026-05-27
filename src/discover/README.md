@@ -6,9 +6,9 @@
 
 This module has two jobs:
 
-1. **Rewrite commands** — Every LLM agent hook calls `rtk rewrite "git status"`. This module decides whether to rewrite it (`rtk git status`) or pass it through unchanged. This is the hot path — every command the LLM runs goes through here.
+1. **Rewrite commands** — Every LLM agent hook calls `stc rewrite "git status"`. This module decides whether to rewrite it (`stc git status`) or pass it through unchanged. This is the hot path — every command the LLM runs goes through here.
 
-2. **Analyze history** — `rtk discover` scans past LLM sessions to find commands that *could have been* rewritten but weren't. Same classification logic, different consumer.
+2. **Analyze history** — `stc discover` scans past LLM sessions to find commands that *could have been* rewritten but weren't. Same classification logic, different consumer.
 
 ## How Command Rewriting Works
 
@@ -26,22 +26,22 @@ When a hook sends `cargo fmt --all && cargo test 2>&1 | tail -20`:
 **Per-segment rewriting** — Each segment goes through:
 
 1. Strip trailing redirects (`2>&1`, `>/dev/null`) — matched via lexer tokens, set aside, re-appended after rewriting
-2. Short-circuit special cases — `head -20 file` → `rtk read file --max-lines 20`, `tail -n 5 file` → `rtk read file --tail-lines 5`. These can't go through generic prefix replacement because it would produce `rtk read -20 file` (wrong flag position)
+2. Short-circuit special cases — `head -20 file` → `stc read file --max-lines 20`, `tail -n 5 file` → `stc read file --tail-lines 5`. These can't go through generic prefix replacement because it would produce `stc read -20 file` (wrong flag position)
 3. Classify the command — strip env prefixes (`sudo`, `FOO="bar baz"`), normalize paths (`/usr/bin/grep` → `grep`), strip git global opts (`git -C /tmp` → `git`), then match against 60+ regex patterns from `rules.rs`
-4. Apply the rewrite — find the matching rule, replace the command prefix with `rtk <cmd>`, re-prepend the env prefix, re-append the redirect suffix
+4. Apply the rewrite — find the matching rule, replace the command prefix with `stc <cmd>`, re-prepend the env prefix, re-append the redirect suffix
 
 **Guards along the way:**
 - `RTK_DISABLED=1` in the env prefix → skip rewrite
-- `gh` with `--json`/`--jq`/`--template` → skip (structured output, rtk would corrupt it)
-- `cat` with flags other than `-n` → skip (different semantics than `rtk read`)
+- `gh` with `--json`/`--jq`/`--template` → skip (structured output, stc would corrupt it)
+- `cat` with flags other than `-n` → skip (different semantics than `stc read`)
 - `cat`/`head`/`tail` with `>` or `>>` → skip (write operation, not a read)
 - Command in `hooks.exclude_commands` config → skip
 
-**Result**: `rtk cargo fmt --all && rtk cargo test 2>&1 | tail -20`. Bash handles the `&&` and `|` at execution time — each `rtk` invocation is a separate process.
+**Result**: `stc cargo fmt --all && stc cargo test 2>&1 | tail -20`. Bash handles the `&&` and `|` at execution time — each `stc` invocation is a separate process.
 
 ## How History Analysis Works
 
-`rtk discover` reads Claude Code JSONL session files. Each file contains `tool_use`/`tool_result` pairs for every command the LLM ran. The module:
+`stc discover` reads Claude Code JSONL session files. Each file contains `tool_use`/`tool_result` pairs for every command the LLM ran. The module:
 
 1. Extracts commands from the JSONL (via `SessionProvider` trait — currently only Claude Code)
 2. Splits compound commands using the same lexer-based tokenization

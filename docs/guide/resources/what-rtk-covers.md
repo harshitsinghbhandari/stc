@@ -114,8 +114,8 @@ Typical savings: 60-99%.
 | `grep` | 70% | Truncated lines, grouped by file |
 | `diff` | 65% | Context reduced |
 | `wc` | 60% | Compact counts |
-| `cat` / `head` / `tail <file>` | 60-80% | Smart file reading via `rtk read` |
-| `rtk smart <file>` | 85% | 2-line heuristic code summary (signatures only) |
+| `cat` / `head` / `tail <file>` | 60-80% | Smart file reading via `stc read` |
+| `stc smart <file>` | 85% | 2-line heuristic code summary (signatures only) |
 
 ## Cloud and Data
 
@@ -136,10 +136,10 @@ These flags apply to all RTK commands and can push savings even higher:
 
 ```bash
 # Ultra-compact: even smaller output
-rtk git log --ultra-compact
+stc git log --ultra-compact
 
 # Debug: see what RTK is doing
-rtk git status -vvv
+stc git status -vvv
 ```
 
 :::note
@@ -151,7 +151,7 @@ Use `--ultra-compact` (long form) rather than `-u` when working with Git command
 If a command isn't in the list above, RTK runs it through passthrough — the output reaches the LLM unchanged. You can explicitly track unsupported commands:
 
 ```bash
-rtk proxy make install    # runs make install, tracks usage, no filtering
+stc proxy make install    # runs make install, tracks usage, no filtering
 ```
 
-To check which commands were missed opportunities: `rtk discover`.
+To check which commands were missed opportunities: `stc discover`.

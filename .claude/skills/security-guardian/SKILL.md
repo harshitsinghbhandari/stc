@@ -146,8 +146,8 @@ if [ -z "$CLAUDE_CODE_HOOK_BASH_TEMPLATE" ]; then
 fi
 
 # Validate RTK binary exists and is executable
-if ! command -v rtk >/dev/null 2>&1; then
-    echo "Error: rtk binary not found"
+if ! command -v stc >/dev/null 2>&1; then
+    echo "Error: stc binary not found"
     exit 1
 fi
 
@@ -279,7 +279,7 @@ if [ -z "$CLAUDE_CODE_HOOK_BASH_TEMPLATE" ]; then
 fi
 
 # 2. Verify RTK binary exists
-if ! command -v rtk >/dev/null 2>&1; then
+if ! command -v stc >/dev/null 2>&1; then
     exit 1
 fi
 
@@ -458,7 +458,7 @@ rg "eval|source" --type bash .claude/hooks/
 **Example advisory template**:
 
 ```markdown
-## Security Advisory: Command Injection in rtk v0.16.0
+## Security Advisory: Command Injection in stc v0.16.0
 
 **Severity**: CRITICAL (CVSS 9.8)
 **Affected versions**: v0.15.0 - v0.16.0

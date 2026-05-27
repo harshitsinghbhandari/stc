@@ -9,18 +9,18 @@ sidebar:
 
 ## Name collision warning
 
-Two unrelated projects share the name `rtk`. Make sure you install the right one:
+Two unrelated projects share the name `stc`. Make sure you install the right one:
 
-- **Rust Token Killer** (`rtk-ai/rtk`) — this project, a token-saving CLI proxy
+- **Rust Token Killer** (`harshitsinghbhandari/stc`) — this project, a token-saving CLI proxy
 - **Rust Type Kit** (`reachingforthejack/rtk`) — a different tool for generating Rust types
 
-The easiest way to verify you have the correct one: run `rtk gain`. It should display token savings stats. If it returns "command not found", you either have the wrong package or RTK is not installed.
+The easiest way to verify you have the correct one: run `stc gain`. It should display token savings stats. If it returns "command not found", you either have the wrong package or RTK is not installed.
 
 ## Check before installing
 
 ```bash
-rtk --version   # should print: rtk x.y.z
-rtk gain        # should show token savings stats
+stc --version   # should print: stc x.y.z
+stc gain        # should show token savings stats
 ```
 
 If both commands work, RTK is already installed. Skip to [Project initialization](#project-initialization).
@@ -28,13 +28,13 @@ If both commands work, RTK is already installed. Skip to [Project initialization
 ## Quick install (Linux and macOS)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/master/install.sh | sh
 ```
 
 ## Homebrew (macOS and Linux)
 
 ```bash
-brew install rtk-ai/tap/rtk
+brew install harshitsinghbhandari/homebrew-tap/rtk
 ```
 
 ## Cargo
@@ -44,12 +44,12 @@ brew install rtk-ai/tap/rtk
 :::
 
 ```bash
-cargo install --git https://github.com/rtk-ai/rtk rtk
+cargo install --git https://github.com/harshitsinghbhandari/stc rtk
 ```
 
 ## Pre-built binaries (Windows, Linux, macOS)
 
-Download from [GitHub releases](https://github.com/rtk-ai/rtk/releases):
+Download from [GitHub releases](https://github.com/harshitsinghbhandari/stc/releases):
 
 - macOS: `rtk-x86_64-apple-darwin.tar.gz` / `rtk-aarch64-apple-darwin.tar.gz`
 - Linux: `rtk-x86_64-unknown-linux-musl.tar.gz` / `rtk-aarch64-unknown-linux-gnu.tar.gz`
@@ -60,11 +60,11 @@ Download from [GitHub releases](https://github.com/rtk-ai/rtk/releases):
 ## Verify installation
 
 ```bash
-rtk --version   # rtk x.y.z
-rtk gain        # token savings dashboard
+stc --version   # stc x.y.z
+stc gain        # token savings dashboard
 ```
 
-If `rtk gain` fails but `rtk --version` succeeds, you installed Rust Type Kit by mistake. Uninstall it first:
+If `stc gain` fails but `stc --version` succeeds, you installed Rust Type Kit by mistake. Uninstall it first:
 
 ```bash
 cargo uninstall rtk
@@ -77,19 +77,19 @@ Then reinstall using one of the methods above.
 Run once per project to enable the Claude Code hook:
 
 ```bash
-rtk init
+stc init
 ```
 
 For a global install that patches `settings.json` automatically:
 
 ```bash
-rtk init --global
+stc init --global
 ```
 
 ## Uninstall
 
 ```bash
-rtk init -g --uninstall    # remove hook, RTK.md, and settings.json entry
-cargo uninstall rtk         # remove binary (if installed via Cargo)
-brew uninstall rtk          # remove binary (if installed via Homebrew)
+stc init -g --uninstall    # remove hook, RTK.md, and settings.json entry
+cargo uninstall stc         # remove binary (if installed via Cargo)
+brew uninstall stc          # remove binary (if installed via Homebrew)
 ```

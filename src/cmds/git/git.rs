@@ -106,8 +106,8 @@ pub fn run(
 ///
 /// clap's `trailing_var_arg = true` silently drops `--` when it appears as the
 /// first positional argument (before any other positional).  This means:
-///   `rtk git diff -- file` → args = ["file"]   (clap ate `--`)
-///   `rtk git diff HEAD -- file` → args = ["HEAD", "--", "file"]  (preserved)
+///   `stc git diff -- file` → args = ["file"]   (clap ate `--`)
+///   `stc git diff HEAD -- file` → args = ["HEAD", "--", "file"]  (preserved)
 ///
 /// Without the `--` separator git may treat an unambiguous path as a revision and
 /// emit "fatal: ambiguous argument".  We re-insert `--` before the first path-like
@@ -202,7 +202,7 @@ fn run_diff(
 
         timer.track(
             &format!("git diff {}", args.join(" ")),
-            &format!("rtk git diff {} (passthrough)", args.join(" ")),
+            &format!("stc git diff {} (passthrough)", args.join(" ")),
             &result.stdout,
             &result.stdout,
         );
@@ -226,7 +226,7 @@ fn run_diff(
         }
         timer.track(
             &format!("git diff {}", args.join(" ")),
-            &format!("rtk git diff {}", args.join(" ")),
+            &format!("stc git diff {}", args.join(" ")),
             &result.stdout,
             &result.stdout,
         );
@@ -260,7 +260,7 @@ fn run_diff(
 
     timer.track(
         &format!("git diff {}", args.join(" ")),
-        &format!("rtk git diff {}", args.join(" ")),
+        &format!("stc git diff {}", args.join(" ")),
         &format!("{}\n{}", result.stdout, diff_result.stdout),
         &final_output,
     );
@@ -308,7 +308,7 @@ fn run_show(
 
         timer.track(
             &format!("git show {}", args.join(" ")),
-            &format!("rtk git show {} (passthrough)", args.join(" ")),
+            &format!("stc git show {} (passthrough)", args.join(" ")),
             &result.stdout,
             &result.stdout,
         );
@@ -372,7 +372,7 @@ fn run_show(
 
     timer.track(
         &format!("git show {}", args.join(" ")),
-        &format!("rtk git show {}", args.join(" ")),
+        &format!("stc git show {}", args.join(" ")),
         &raw_output,
         &final_output,
     );
@@ -469,7 +469,7 @@ pub(crate) fn compact_diff(diff: &str, max_lines: usize) -> String {
     }
 
     if was_truncated {
-        result.push("[full diff: rtk git diff --no-compact]".to_string());
+        result.push("[full diff: stc git diff --no-compact]".to_string());
     }
 
     result.join("\n")
@@ -551,7 +551,7 @@ fn run_log(
 
     timer.track(
         &format!("git log {}", args.join(" ")),
-        &format!("rtk git log {}", args.join(" ")),
+        &format!("stc git log {}", args.join(" ")),
         &result.stdout,
         &filtered,
     );
@@ -885,7 +885,7 @@ fn run_status(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
             }
             timer.track(
                 &format!("git status {}", args.join(" ")),
-                &format!("rtk git status {}", args.join(" ")),
+                &format!("stc git status {}", args.join(" ")),
                 &result.stdout,
                 &result.stdout,
             );
@@ -902,7 +902,7 @@ fn run_status(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
 
         timer.track(
             &format!("git status {}", args.join(" ")),
-            &format!("rtk git status {}", args.join(" ")),
+            &format!("stc git status {}", args.join(" ")),
             &result.stdout,
             &filtered,
         );
@@ -929,9 +929,9 @@ fn run_status(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
             format!("git status {}", args.join(" "))
         };
         let rtk_cmd = if args.is_empty() {
-            "rtk git status".to_string()
+            "stc git status".to_string()
         } else {
-            format!("rtk git status {}", args.join(" "))
+            format!("stc git status {}", args.join(" "))
         };
         timer.track(&original_cmd, &rtk_cmd, &raw_output, &message);
         return Ok(result.exit_code);
@@ -958,9 +958,9 @@ fn run_status(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
         format!("git status {}", args.join(" "))
     };
     let rtk_cmd = if args.is_empty() {
-        "rtk git status".to_string()
+        "stc git status".to_string()
     } else {
-        format!("rtk git status {}", args.join(" "))
+        format!("stc git status {}", args.join(" "))
     };
 
     timer.track(&original_cmd, &rtk_cmd, &raw_output, &final_output);
@@ -1018,7 +1018,7 @@ fn run_add(args: &[String], verbose: u8, global_args: &[String]) -> Result<i32> 
 
         timer.track(
             &format!("git add {}", args.join(" ")),
-            &format!("rtk git add {}", args.join(" ")),
+            &format!("stc git add {}", args.join(" ")),
             &raw_output,
             &compact,
         );
@@ -1083,12 +1083,12 @@ fn run_commit(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
 
         println!("{}", compact);
 
-        timer.track(&original_cmd, "rtk git commit", &raw_output, &compact);
+        timer.track(&original_cmd, "stc git commit", &raw_output, &compact);
     } else if stderr.contains("nothing to commit") || stdout.contains("nothing to commit") {
         println!("ok (nothing to commit)");
         timer.track(
             &original_cmd,
-            "rtk git commit",
+            "stc git commit",
             &raw_output,
             "ok (nothing to commit)",
         );
@@ -1099,7 +1099,7 @@ fn run_commit(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
         if !stdout.trim().is_empty() {
             eprint!("{}", stdout);
         }
-        timer.track(&original_cmd, "rtk git commit", &raw_output, &raw_output);
+        timer.track(&original_cmd, "stc git commit", &raw_output, &raw_output);
         return Ok(exit_code);
     }
 
@@ -1186,7 +1186,7 @@ fn run_push(args: &[String], verbose: u8, global_args: &[String]) -> Result<i32>
 
     timer.track(
         &cmd_label,
-        &format!("rtk {}", cmd_label),
+        &format!("stc {}", cmd_label),
         &result.raw,
         &result.filtered,
     );
@@ -1261,7 +1261,7 @@ fn run_pull(args: &[String], verbose: u8, global_args: &[String]) -> Result<i32>
 
         timer.track(
             &format!("git pull {}", args.join(" ")),
-            &format!("rtk git pull {}", args.join(" ")),
+            &format!("stc git pull {}", args.join(" ")),
             &raw_output,
             &compact,
         );
@@ -1339,7 +1339,7 @@ fn run_branch(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
         let trimmed = result.stdout.trim();
         timer.track(
             &format!("git branch {}", args.join(" ")),
-            &format!("rtk git branch {}", args.join(" ")),
+            &format!("stc git branch {}", args.join(" ")),
             &combined,
             trimmed,
         );
@@ -1370,7 +1370,7 @@ fn run_branch(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
 
         timer.track(
             &format!("git branch {}", args.join(" ")),
-            &format!("rtk git branch {}", args.join(" ")),
+            &format!("stc git branch {}", args.join(" ")),
             &combined,
             msg,
         );
@@ -1409,7 +1409,7 @@ fn run_branch(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
         }
         timer.track(
             &format!("git branch {}", args.join(" ")),
-            &format!("rtk git branch {}", args.join(" ")),
+            &format!("stc git branch {}", args.join(" ")),
             &result.stdout,
             &result.stdout,
         );
@@ -1421,7 +1421,7 @@ fn run_branch(args: &[String], verbose: u8, global_args: &[String]) -> Result<i3
 
     timer.track(
         &format!("git branch {}", args.join(" ")),
-        &format!("rtk git branch {}", args.join(" ")),
+        &format!("stc git branch {}", args.join(" ")),
         &result.stdout,
         &filtered,
     );
@@ -1528,7 +1528,7 @@ fn run_fetch(args: &[String], verbose: u8, global_args: &[String]) -> Result<i32
     };
 
     println!("{}", msg);
-    timer.track("git fetch", "rtk git fetch", &raw, &msg);
+    timer.track("git fetch", "stc git fetch", &raw, &msg);
 
     Ok(0)
 }
@@ -1574,7 +1574,7 @@ fn run_stash(
             if result.stdout.trim().is_empty() {
                 let msg = "No stashes";
                 println!("{}", msg);
-                timer.track("git stash list", "rtk git stash list", &result.stdout, msg);
+                timer.track("git stash list", "stc git stash list", &result.stdout, msg);
                 return Ok(0);
             }
 
@@ -1582,7 +1582,7 @@ fn run_stash(
             println!("{}", filtered);
             timer.track(
                 "git stash list",
-                "rtk git stash list",
+                "stc git stash list",
                 &result.stdout,
                 &filtered,
             );
@@ -1607,7 +1607,7 @@ fn run_stash(
 
             timer.track(
                 "git stash show",
-                "rtk git stash show",
+                "stc git stash show",
                 &result.stdout,
                 &filtered,
             );
@@ -1637,7 +1637,7 @@ fn run_stash(
 
             timer.track(
                 &format!("git stash {}", sub),
-                &format!("rtk git stash {}", sub),
+                &format!("stc git stash {}", sub),
                 &combined,
                 &msg,
             );
@@ -1679,7 +1679,7 @@ fn run_stash(
 
             timer.track(
                 &format!("git stash {}", sub),
-                &format!("rtk git stash {}", sub),
+                &format!("stc git stash {}", sub),
                 &combined,
                 &msg,
             );
@@ -1739,7 +1739,7 @@ fn run_worktree(args: &[String], verbose: u8, global_args: &[String]) -> Result<
 
         timer.track(
             &format!("git worktree {}", args.join(" ")),
-            &format!("rtk git worktree {}", args.join(" ")),
+            &format!("stc git worktree {}", args.join(" ")),
             &combined,
             msg,
         );
@@ -1765,7 +1765,7 @@ fn run_worktree(args: &[String], verbose: u8, global_args: &[String]) -> Result<
     println!("{}", filtered);
     timer.track(
         "git worktree list",
-        "rtk git worktree",
+        "stc git worktree",
         &result.stdout,
         &filtered,
     );
@@ -1815,7 +1815,7 @@ pub fn run_passthrough(args: &[OsString], global_args: &[String], verbose: u8) -
     let args_str = tracking::args_display(args);
     timer.track_passthrough(
         &format!("git {}", args_str),
-        &format!("rtk git {} (passthrough)", args_str),
+        &format!("stc git {} (passthrough)", args_str),
     );
 
     if !status.success() {
@@ -2094,7 +2094,7 @@ mod tests {
     }
 
     /// Branch name with `/` that does NOT exist as a file → no injection.
-    /// Regression for issue #1431: `rtk git diff feature/user-auth` must not inject `--`.
+    /// Regression for issue #1431: `stc git diff feature/user-auth` must not inject `--`.
     #[test]
     fn test_normalize_diff_args_no_injection_for_branch_with_slash() {
         let args = vec!["feature/user-auth".to_string()];
@@ -2106,7 +2106,7 @@ mod tests {
     }
 
     /// Range syntax with `/` → no injection.
-    /// Regression: `rtk git diff main...feature/user-auth` produced no output.
+    /// Regression: `stc git diff main...feature/user-auth` produced no output.
     #[test]
     fn test_normalize_diff_args_no_injection_for_range_with_slash() {
         let args = vec!["main...feature/user-auth".to_string()];
@@ -2119,7 +2119,7 @@ mod tests {
 
     /// Bare word that happens to exist as a file on disk → still no injection.
     /// A file named "main" must not cause `--` to be injected when the user
-    /// intends `rtk git diff main` as a branch comparison.
+    /// intends `stc git diff main` as a branch comparison.
     #[test]
     fn test_normalize_diff_args_no_injection_for_bare_word_even_if_file_exists() {
         let args = vec!["main".to_string()];
@@ -2697,7 +2697,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
     #[test]
     #[ignore] // Requires `cargo build` first — run with `cargo test --ignored`
     fn test_git_status_not_a_repo_exits_nonzero() {
-        // Run rtk git status in a directory that is not a git repo
+        // Run stc git status in a directory that is not a git repo
         let tmp = std::env::temp_dir().join("rtk_test_not_a_repo");
         let _ = std::fs::create_dir_all(&tmp);
 
@@ -2777,7 +2777,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
         }
         let result = compact_diff(&diff, 500);
         assert!(
-            result.contains("[full diff: rtk git diff --no-compact]"),
+            result.contains("[full diff: stc git diff --no-compact]"),
             "Expected recovery hint when hunk is truncated, got:\n{}",
             result
         );

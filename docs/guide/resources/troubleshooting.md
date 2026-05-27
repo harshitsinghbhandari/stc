@@ -7,54 +7,54 @@ sidebar:
 
 # Troubleshooting
 
-## `rtk gain` says "not a rtk command"
+## `stc gain` says "not a stc command"
 
 **Symptom:**
 ```bash
-$ rtk gain
-rtk: 'gain' is not a rtk command. See 'rtk --help'.
+$ stc gain
+rtk: 'gain' is not a stc command. See 'rtk --help'.
 ```
 
-**Cause:** You installed **Rust Type Kit** (`reachingforthejack/rtk`) instead of **Rust Token Killer** (`rtk-ai/rtk`). They share the same binary name.
+**Cause:** You installed **Rust Type Kit** (`reachingforthejack/rtk`) instead of **Rust Token Killer** (`harshitsinghbhandari/stc`). They share the same binary name.
 
 **Fix:**
 ```bash
 cargo uninstall rtk
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
-rtk gain    # should now show token savings stats
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/master/install.sh | sh
+stc gain    # should now show token savings stats
 ```
 
-## How to tell which rtk you have
+## How to tell which stc you have
 
-| If `rtk gain`... | You have |
+| If `stc gain`... | You have |
 |------------------|----------|
 | Shows token savings dashboard | Rust Token Killer ✅ |
-| Returns "not a rtk command" | Rust Type Kit ❌ |
+| Returns "not a stc command" | Rust Type Kit ❌ |
 
 ## AI assistant not using RTK
 
-**Symptom:** Claude Code (or another agent) runs `cargo test` instead of `rtk cargo test`.
+**Symptom:** Claude Code (or another agent) runs `cargo test` instead of `stc cargo test`.
 
 **Checklist:**
 
 1. Verify RTK is installed:
    ```bash
-   rtk --version
-   rtk gain
+   stc --version
+   stc gain
    ```
 
 2. Initialize the hook:
    ```bash
-   rtk init --global    # Claude Code
-   rtk init --global --cursor    # Cursor
-   rtk init --global --opencode  # OpenCode
+   stc init --global    # Claude Code
+   stc init --global --cursor    # Cursor
+   stc init --global --opencode  # OpenCode
    ```
 
 3. Restart your AI assistant.
 
 4. Verify hook status:
    ```bash
-   rtk init --show
+   stc init --show
    ```
 
 5. Check `settings.json` has the hook registered (Claude Code):
@@ -66,7 +66,7 @@ rtk gain    # should now show token savings stats
 
 **Symptom:**
 ```bash
-$ rtk --version
+$ stc --version
 zsh: command not found: rtk
 ```
 
@@ -87,7 +87,7 @@ set -gx PATH $HOME/.cargo/bin $PATH
 Then reload:
 ```bash
 source ~/.zshrc    # or ~/.bashrc
-rtk --version
+stc --version
 ```
 
 ## RTK on Windows
@@ -101,28 +101,28 @@ rtk --version
 **Fix:** Open a terminal first, then run RTK from there:
 - Press `Win+R`, type `cmd`, press Enter
 - Or open PowerShell or Windows Terminal
-- Then run: `rtk --version`
+- Then run: `stc --version`
 
 ### Hook not working (no auto-rewrite)
 
-**Symptom:** `rtk init -g` shows "Falling back to --claude-md mode" on Windows.
+**Symptom:** `stc init -g` shows "Falling back to --claude-md mode" on Windows.
 
 **Cause:** The auto-rewrite hook (`rtk-rewrite.sh`) requires a Unix shell. Native Windows doesn't have one.
 
 **Fix:** Use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) for full hook support:
 ```bash
 # Inside WSL
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
-rtk init -g    # full hook mode works in WSL
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/refs/heads/master/install.sh | sh
+stc init -g    # full hook mode works in WSL
 ```
 
-On native Windows, RTK falls back to CLAUDE.md injection. Your AI assistant gets RTK instructions but won't auto-rewrite commands. It can still use RTK manually: `rtk cargo test`, `rtk git status`, etc.
+On native Windows, RTK falls back to CLAUDE.md injection. Your AI assistant gets RTK instructions but won't auto-rewrite commands. It can still use RTK manually: `stc cargo test`, `stc git status`, etc.
 
 ### Node.js tools not found
 
 **Symptom:**
 ```
-rtk vitest --run
+stc vitest --run
 Error: program not found
 ```
 
@@ -130,8 +130,8 @@ Error: program not found
 
 **Fix:** Update to RTK v0.23.1+:
 ```bash
-cargo install --git https://github.com/rtk-ai/rtk
-rtk --version    # should be 0.23.1+
+cargo install --git https://github.com/harshitsinghbhandari/stc
+stc --version    # should be 0.23.1+
 ```
 
 ## Compilation error during installation
@@ -149,19 +149,19 @@ Minimum required Rust version: 1.70+.
 ## OpenCode not using RTK
 
 ```bash
-rtk init --global --opencode
+stc init --global --opencode
 # restart OpenCode
-rtk init --show    # should show "OpenCode: plugin installed"
+stc init --show    # should show "OpenCode: plugin installed"
 ```
 
 ## `cargo install rtk` installs the wrong package
 
-If Rust Type Kit is published to crates.io under the name `rtk`, `cargo install rtk` may install the wrong one.
+If Rust Type Kit is published to crates.io under the name `stc`, `cargo install rtk` may install the wrong one.
 
 Always use the explicit URL:
 
 ```bash
-cargo install --git https://github.com/rtk-ai/rtk
+cargo install --git https://github.com/harshitsinghbhandari/stc
 ```
 
 ## Run the diagnostic script
@@ -181,4 +181,4 @@ Checks:
 
 ## Still stuck?
 
-Open an issue: https://github.com/rtk-ai/rtk/issues
+Open an issue: https://github.com/harshitsinghbhandari/stc/issues

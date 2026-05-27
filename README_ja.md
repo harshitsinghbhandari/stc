@@ -7,15 +7,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/rtk-ai/rtk/actions"><img src="https://github.com/rtk-ai/rtk/workflows/Security%20Check/badge.svg" alt="CI"></a>
-  <a href="https://github.com/rtk-ai/rtk/releases"><img src="https://img.shields.io/github/v/release/rtk-ai/rtk" alt="Release"></a>
+  <a href="https://github.com/harshitsinghbhandari/stc/actions"><img src="https://github.com/harshitsinghbhandari/stc/workflows/Security%20Check/badge.svg" alt="CI"></a>
+  <a href="https://github.com/harshitsinghbhandari/stc/releases"><img src="https://img.shields.io/github/v/release/harshitsinghbhandari/stc" alt="Release"></a>
   <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
   <a href="https://discord.gg/RySmvNF5kF"><img src="https://img.shields.io/discord/1478373640461488159?label=Discord&logo=discord" alt="Discord"></a>
   <a href="https://formulae.brew.sh/formula/rtk"><img src="https://img.shields.io/homebrew/v/rtk" alt="Homebrew"></a>
 </p>
 
 <p align="center">
-  <a href="https://www.rtk-ai.app">ウェブサイト</a> &bull;
+  <a href="https://github.com/harshitsinghbhandari/stc">ウェブサイト</a> &bull;
   <a href="#インストール">インストール</a> &bull;
   <a href="docs/TROUBLESHOOTING.md">トラブルシューティング</a> &bull;
   <a href="docs/contributing/ARCHITECTURE.md">アーキテクチャ</a> &bull;
@@ -33,11 +33,11 @@
 
 ---
 
-rtk はコマンド出力を LLM コンテキストに届く前にフィルタリング・圧縮します。単一の Rust バイナリ、依存関係ゼロ、オーバーヘッド 10ms 未満。
+stc はコマンド出力を LLM コンテキストに届く前にフィルタリング・圧縮します。単一の Rust バイナリ、依存関係ゼロ、オーバーヘッド 10ms 未満。
 
 ## トークン節約（30分の Claude Code セッション）
 
-| 操作 | 頻度 | 標準 | rtk | 節約 |
+| 操作 | 頻度 | 標準 | stc | 節約 |
 |------|------|------|-----|------|
 | `ls` / `tree` | 10x | 2,000 | 400 | -80% |
 | `cat` / `read` | 20x | 40,000 | 12,000 | -70% |
@@ -57,36 +57,36 @@ brew install rtk
 ### クイックインストール（Linux/macOS）
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/refs/heads/master/install.sh | sh
 ```
 
 ### Cargo
 
 ```bash
-cargo install --git https://github.com/rtk-ai/rtk
+cargo install --git https://github.com/harshitsinghbhandari/stc
 ```
 
 ### 確認
 
 ```bash
-rtk --version   # "rtk 0.27.x" と表示されるはず
-rtk gain        # トークン節約統計が表示されるはず
+stc --version   # "rtk 0.27.x" と表示されるはず
+stc gain        # トークン節約統計が表示されるはず
 ```
 
 ## クイックスタート
 
 ```bash
 # 1. Claude Code 用フックをインストール（推奨）
-rtk init --global
+stc init --global
 
 # 2. Claude Code を再起動してテスト
-git status  # 自動的に rtk git status に書き換え
+git status  # 自動的に stc git status に書き換え
 ```
 
 ## 仕組み
 
 ```
-  rtk なし：                                       rtk あり：
+  stc なし：                                       stc あり：
 
   Claude  --git status-->  shell  -->  git          Claude  --git status-->  RTK  -->  git
     ^                                   |             ^                      |          |
@@ -105,42 +105,42 @@ git status  # 自動的に rtk git status に書き換え
 
 ### ファイル
 ```bash
-rtk ls .                        # 最適化されたディレクトリツリー
-rtk read file.rs                # スマートファイル読み取り
-rtk find "*.rs" .               # コンパクトな検索結果
-rtk grep "pattern" .            # ファイル別グループ化検索
+stc ls .                        # 最適化されたディレクトリツリー
+stc read file.rs                # スマートファイル読み取り
+stc find "*.rs" .               # コンパクトな検索結果
+stc grep "pattern" .            # ファイル別グループ化検索
 ```
 
 ### Git
 ```bash
-rtk git status                  # コンパクトなステータス
-rtk git log -n 10               # 1行コミット
-rtk git diff                    # 圧縮された diff
-rtk git push                    # -> "ok main"
+stc git status                  # コンパクトなステータス
+stc git log -n 10               # 1行コミット
+stc git diff                    # 圧縮された diff
+stc git push                    # -> "ok main"
 ```
 
 ### テスト
 ```bash
-rtk jest                        # Jest コンパクト
-rtk vitest                      # Vitest コンパクト
-rtk pytest                      # Python テスト（-90%）
-rtk go test                     # Go テスト（-90%）
-rtk test <cmd>                  # 失敗のみ表示（-90%）
+stc jest                        # Jest コンパクト
+stc vitest                      # Vitest コンパクト
+stc pytest                      # Python テスト（-90%）
+stc go test                     # Go テスト（-90%）
+stc test <cmd>                  # 失敗のみ表示（-90%）
 ```
 
 ### ビルド & リント
 ```bash
-rtk lint                        # ESLint ルール別グループ化
-rtk tsc                         # TypeScript エラーグループ化
-rtk cargo build                 # Cargo ビルド（-80%）
-rtk ruff check                  # Python リント（-80%）
+stc lint                        # ESLint ルール別グループ化
+stc tsc                         # TypeScript エラーグループ化
+stc cargo build                 # Cargo ビルド（-80%）
+stc ruff check                  # Python リント（-80%）
 ```
 
 ### 分析
 ```bash
-rtk gain                        # 節約統計
-rtk gain --graph                # ASCII グラフ（30日間）
-rtk discover                    # 見逃した節約機会を発見
+stc gain                        # 節約統計
+stc gain --graph                # ASCII グラフ（30日間）
+stc discover                    # 見逃した節約機会を発見
 ```
 
 ## ドキュメント
@@ -151,7 +151,7 @@ rtk discover                    # 見逃した節約機会を発見
 
 ## コントリビュート
 
-コントリビューション歓迎！[GitHub](https://github.com/rtk-ai/rtk) で issue または PR を作成してください。
+コントリビューション歓迎！[GitHub](https://github.com/harshitsinghbhandari/stc) で issue または PR を作成してください。
 
 [Discord](https://discord.gg/RySmvNF5kF) コミュニティに参加。
 

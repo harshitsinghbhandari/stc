@@ -1,20 +1,20 @@
 ---
 title: Discover and Session
-description: Find missed savings opportunities with rtk discover, and track RTK adoption with rtk session
+description: Find missed savings opportunities with stc discover, and track RTK adoption with stc session
 sidebar:
   order: 2
 ---
 
 # Discover and Session
 
-## rtk discover — find missed savings
+## stc discover — find missed savings
 
-`rtk discover` analyzes your Claude Code command history to identify commands that ran without RTK filtering and calculates how many tokens you lost.
+`stc discover` analyzes your Claude Code command history to identify commands that ran without RTK filtering and calculates how many tokens you lost.
 
 ```bash
-rtk discover                    # analyze current project history
-rtk discover --all              # all projects
-rtk discover --all --since 7    # last 7 days, all projects
+stc discover                    # analyze current project history
+stc discover --all              # all projects
+stc discover --all --since 7    # last 7 days, all projects
 ```
 
 **Example output:**
@@ -29,17 +29,17 @@ pnpm list                3      ~6,000 tokens
 ────────────────────────────────────
 Total missed:           23     ~66,000 tokens
 
-Run `rtk init --global` to capture these automatically.
+Run `stc init --global` to capture these automatically.
 ```
 
 If commands appear in the missed list after installing RTK, it usually means the hook isn't active for that agent. See [Troubleshooting](../resources/troubleshooting.md) — "Agent not using RTK".
 
-## rtk session — adoption tracking
+## stc session — adoption tracking
 
-`rtk session` shows RTK adoption across recent Claude Code sessions: how many shell commands ran through RTK vs. raw.
+`stc session` shows RTK adoption across recent Claude Code sessions: how many shell commands ran through RTK vs. raw.
 
 ```bash
-rtk session
+stc session
 ```
 
 **Example output:**

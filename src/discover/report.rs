@@ -184,7 +184,7 @@ pub fn format_text(report: &DiscoverReport, limit: usize, verbose: bool) -> Stri
 
         out.push_str(&"-".repeat(52));
         out.push('\n');
-        out.push_str("-> github.com/rtk-ai/rtk/issues\n");
+        out.push_str("-> github.com/harshitsinghbhandari/stc/issues\n");
     }
 
     // RTK_DISABLED bypass warning
@@ -215,11 +215,11 @@ pub fn format_text(report: &DiscoverReport, limit: usize, verbose: bool) -> Stri
 
 fn append_agent_notes(out: &mut String, status: AgentIntegrationStatus) {
     if status.cursor_hook_installed {
-        out.push_str("\nNote: Cursor sessions are tracked via `rtk gain` (discover scans Claude Code only)\n");
+        out.push_str("\nNote: Cursor sessions are tracked via `stc gain` (discover scans Claude Code only)\n");
     }
 
     if status.hermes_plugin_installed {
-        out.push_str("\nNote: Hermes plugin is installed; Hermes sessions are tracked via `rtk gain` (discover scans Claude Code only)\n");
+        out.push_str("\nNote: Hermes plugin is installed; Hermes sessions are tracked via `stc gain` (discover scans Claude Code only)\n");
     }
 }
 

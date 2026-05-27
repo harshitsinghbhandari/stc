@@ -17,7 +17,7 @@ Systematic performance analysis and optimization for RTK CLI tool, focusing on *
 | Metric | Target | Verification Method | Failure Threshold |
 |--------|--------|---------------------|-------------------|
 | **Startup time** | <10ms | `hyperfine 'rtk <cmd>'` | >15ms = blocker |
-| **Memory usage** | <5MB resident | `/usr/bin/time -l rtk <cmd>` (macOS) | >7MB = blocker |
+| **Memory usage** | <5MB resident | `/usr/bin/time -l stc <cmd>` (macOS) | >7MB = blocker |
 | **Token savings** | 60-90% | Tests with `count_tokens()` | <60% = blocker |
 | **Binary size** | <5MB stripped | `ls -lh target/release/rtk` | >8MB = investigate |
 
@@ -32,10 +32,10 @@ Before making any changes, capture current performance:
 hyperfine 'rtk git status' --warmup 3 --export-json /tmp/baseline_startup.json
 
 # Memory usage baseline (macOS)
-/usr/bin/time -l rtk git status 2>&1 | grep "maximum resident set size" > /tmp/baseline_memory.txt
+/usr/bin/time -l stc git status 2>&1 | grep "maximum resident set size" > /tmp/baseline_memory.txt
 
 # Memory usage baseline (Linux)
-/usr/bin/time -v rtk git status 2>&1 | grep "Maximum resident set size" > /tmp/baseline_memory.txt
+/usr/bin/time -v stc git status 2>&1 | grep "Maximum resident set size" > /tmp/baseline_memory.txt
 
 # Binary size baseline
 ls -lh target/release/rtk | tee /tmp/baseline_binary_size.txt
@@ -68,7 +68,7 @@ ls -lh target/release/rtk | tee /tmp/after_binary_size.txt
 hyperfine 'rtk git status' 'target/release/rtk git status' --warmup 3
 
 # Example output:
-#   Benchmark 1: rtk git status
+#   Benchmark 1: stc git status
 #     Time (mean ± σ):       6.2 ms ±   0.3 ms    [User: 4.1 ms, System: 1.8 ms]
 #   Benchmark 2: target/release/rtk git status
 #     Time (mean ± σ):       7.8 ms ±   0.4 ms    [User: 5.2 ms, System: 2.1 ms]
@@ -325,7 +325,7 @@ Before committing filter changes:
 - [ ] Compare against baseline (regression <2ms)
 
 ### Memory Usage
-- [ ] Profile with `/usr/bin/time -l rtk <cmd>`
+- [ ] Profile with `/usr/bin/time -l stc <cmd>`
 - [ ] Verify <5MB resident set size
 - [ ] Compare against baseline (regression <1MB)
 
@@ -414,9 +414,9 @@ Add to `.github/workflows/ci.yml`:
 | Tool | Purpose | Command |
 |------|---------|---------|
 | **hyperfine** | Benchmark startup time | `hyperfine 'rtk <cmd>' --warmup 3` |
-| **time** | Memory usage (macOS) | `/usr/bin/time -l rtk <cmd>` |
-| **time** | Memory usage (Linux) | `/usr/bin/time -v rtk <cmd>` |
-| **flamegraph** | CPU profiling | `cargo flamegraph -- rtk <cmd>` |
+| **time** | Memory usage (macOS) | `/usr/bin/time -l stc <cmd>` |
+| **time** | Memory usage (Linux) | `/usr/bin/time -v stc <cmd>` |
+| **flamegraph** | CPU profiling | `cargo flamegraph -- stc <cmd>` |
 | **cargo bloat** | Binary size analysis | `cargo bloat --release --crates` |
 | **cargo tree** | Dependency tree | `cargo tree` |
 | **DHAT** | Heap profiling | `cargo +nightly build && valgrind --tool=dhat` |

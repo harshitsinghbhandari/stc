@@ -302,14 +302,14 @@ fn test_real_git_log() {
 }
 ```
 
-**Run integration tests**: `cargo test --ignored` (requires git repo + rtk installed)
+**Run integration tests**: `cargo test --ignored` (requires git repo + stc installed)
 
 ## Key Files Reference
 
 **Core infrastructure** (`src/core/`):
 - `src/main.rs` - CLI entry point, Clap command parsing, routing to modules
 - `src/core/utils.rs` - Shared utilities (truncate, strip_ansi, execute_command)
-- `src/core/tracking.rs` - SQLite token savings tracking (`rtk gain`)
+- `src/core/tracking.rs` - SQLite token savings tracking (`stc gain`)
 - `src/core/filter.rs` - Language-aware code filtering engine
 - `src/core/tee.rs` - Raw output recovery on failure
 - `src/core/config.rs` - User configuration (~/.config/rtk/config.toml)
@@ -325,8 +325,8 @@ fn test_real_git_log() {
 - `src/cmds/system/` - ls.rs, tree.rs, read.rs, grep_cmd.rs, find_cmd.rs, etc.
 
 **Hook & analytics** (`src/hooks/`, `src/analytics/`):
-- `src/hooks/init.rs` - rtk init command
-- `src/analytics/gain.rs` - rtk gain command
+- `src/hooks/init.rs` - stc init command
+- `src/analytics/gain.rs` - stc gain command
 
 **Tests**:
 - `tests/fixtures/` - Real command output fixtures for testing
@@ -345,20 +345,20 @@ cargo run -- cargo test
 cargo run -- gh pr view 123
 
 # Token savings analytics
-rtk gain                           # Show overall savings
-rtk gain --history                 # Show per-command history
-rtk discover                       # Analyze Claude Code history for missed opportunities
+stc gain                           # Show overall savings
+stc gain --history                 # Show per-command history
+stc discover                       # Analyze Claude Code history for missed opportunities
 
 # Testing
 cargo test --all-features          # All tests
 cargo test --test snapshots        # Snapshot tests only
-cargo test --ignored               # Integration tests (requires rtk installed)
+cargo test --ignored               # Integration tests (requires stc installed)
 cargo insta review                 # Review snapshot changes
 
 # Performance profiling
 hyperfine 'rtk git log -10' 'git log -10'         # Benchmark startup
-/usr/bin/time -l rtk git status                   # Memory usage (macOS)
-cargo flamegraph -- rtk git log -10               # Flamegraph profiling
+/usr/bin/time -l stc git status                   # Memory usage (macOS)
+cargo flamegraph -- stc git log -10               # Flamegraph profiling
 
 # Cross-platform testing
 cargo test --target x86_64-pc-windows-gnu         # Windows
@@ -389,7 +389,7 @@ docker run --rm -v $(pwd):/rtk -w /rtk rust:latest cargo test  # Linux via Docke
 - Shell escaping differs: bash/zsh vs PowerShell
 - Test on macOS + Linux (Docker) minimum
 
-❌ **DON'T** break pipe compatibility → `rtk git status | grep modified` must work
+❌ **DON'T** break pipe compatibility → `stc git status | grep modified` must work
 - Preserve stdout/stderr separation
 - Respect exit codes (0 = success, non-zero = failure)
 
@@ -403,7 +403,7 @@ docker run --rm -v $(pwd):/rtk -w /rtk rust:latest cargo test  # Linux via Docke
 
 ## Filter Development Workflow
 
-When adding a new filter (e.g., `rtk newcmd`):
+When adding a new filter (e.g., `stc newcmd`):
 
 ### 1. Create Module
 
@@ -498,7 +498,7 @@ hyperfine 'rtk newcmd args' --warmup 3
 ### 7. Manual Testing
 
 ```bash
-rtk newcmd args
+stc newcmd args
 # Inspect output:
 # - Is it condensed?
 # - Critical info preserved?
@@ -516,7 +516,7 @@ rtk newcmd args
 | Metric | Target | Verification |
 |--------|--------|--------------|
 | Startup time | <10ms | `hyperfine 'rtk git status'` |
-| Memory overhead | <5MB | `/usr/bin/time -l rtk git status` |
+| Memory overhead | <5MB | `/usr/bin/time -l stc git status` |
 | Token savings | 60-90% | Tests with `count_tokens()` |
 | Binary size | <5MB stripped | `ls -lh target/release/rtk` |
 

@@ -30,10 +30,10 @@ const PI_PLUGIN: &str = include_str!("../../hooks/pi/rtk.ts");
 const RTK_SLIM: &str = include_str!("../../hooks/claude/rtk-awareness.md");
 const RTK_SLIM_CODEX: &str = include_str!("../../hooks/codex/rtk-awareness.md");
 
-/// Template written by `rtk init` when no filters.toml exists yet.
+/// Template written by `stc init` when no filters.toml exists yet.
 const FILTERS_TEMPLATE: &str = r#"# Project-local RTK filters — commit this file with your repo.
 # Filters here override user-global and built-in filters.
-# Docs: https://github.com/rtk-ai/rtk#custom-filters
+# Docs: https://github.com/harshitsinghbhandari/stc#custom-filters
 schema_version = 1
 
 # Example: suppress build noise from a custom tool
@@ -49,7 +49,7 @@ schema_version = 1
 /// Template for user-global filters (~/.config/rtk/filters.toml).
 const FILTERS_GLOBAL_TEMPLATE: &str = r#"# User-global RTK filters — apply to all your projects.
 # Project-local .rtk/filters.toml takes precedence over these.
-# Docs: https://github.com/rtk-ai/rtk#custom-filters
+# Docs: https://github.com/harshitsinghbhandari/stc#custom-filters
 schema_version = 1
 
 # Example: suppress noise from a tool you use everywhere
@@ -106,126 +106,126 @@ fn print_dry_run_footer() {
 
 // Legacy full instructions for backward compatibility (--claude-md mode)
 const RTK_INSTRUCTIONS: &str = r##"<!-- rtk-instructions v2 -->
-# RTK (Rust Token Killer) - Token-Optimized Commands
+# stc (Save Token Cost) - Token-Optimized Commands
 
 ## Golden Rule
 
-**Always prefix commands with `rtk`**. If RTK has a dedicated filter, it uses it. If not, it passes through unchanged. This means RTK is always safe to use.
+**Always prefix commands with `stc`**. If stc has a dedicated filter, it uses it. If not, it passes through unchanged. This means stc is always safe to use.
 
-**Important**: Even in command chains with `&&`, use `rtk`:
+**Important**: Even in command chains with `&&`, use `stc`:
 ```bash
 # ❌ Wrong
 git add . && git commit -m "msg" && git push
 
 # ✅ Correct
-rtk git add . && rtk git commit -m "msg" && rtk git push
+stc git add . && stc git commit -m "msg" && stc git push
 ```
 
 ## RTK Commands by Workflow
 
 ### Build & Compile (80-90% savings)
 ```bash
-rtk cargo build         # Cargo build output
-rtk cargo check         # Cargo check output
-rtk cargo clippy        # Clippy warnings grouped by file (80%)
-rtk tsc                 # TypeScript errors grouped by file/code (83%)
-rtk lint                # ESLint/Biome violations grouped (84%)
-rtk prettier --check    # Files needing format only (70%)
-rtk next build          # Next.js build with route metrics (87%)
+stc cargo build         # Cargo build output
+stc cargo check         # Cargo check output
+stc cargo clippy        # Clippy warnings grouped by file (80%)
+stc tsc                 # TypeScript errors grouped by file/code (83%)
+stc lint                # ESLint/Biome violations grouped (84%)
+stc prettier --check    # Files needing format only (70%)
+stc next build          # Next.js build with route metrics (87%)
 ```
 
 ### Test (60-99% savings)
 ```bash
-rtk cargo test          # Cargo test failures only (90%)
-rtk go test             # Go test failures only (90%)
-rtk jest                # Jest failures only (99.5%)
-rtk vitest              # Vitest failures only (99.5%)
-rtk playwright test     # Playwright failures only (94%)
-rtk pytest              # Python test failures only (90%)
-rtk rake test           # Ruby test failures only (90%)
-rtk rspec               # RSpec test failures only (60%)
-rtk test <cmd>          # Generic test wrapper - failures only
+stc cargo test          # Cargo test failures only (90%)
+stc go test             # Go test failures only (90%)
+stc jest                # Jest failures only (99.5%)
+stc vitest              # Vitest failures only (99.5%)
+stc playwright test     # Playwright failures only (94%)
+stc pytest              # Python test failures only (90%)
+stc rake test           # Ruby test failures only (90%)
+stc rspec               # RSpec test failures only (60%)
+stc test <cmd>          # Generic test wrapper - failures only
 ```
 
 ### Git (59-80% savings)
 ```bash
-rtk git status          # Compact status
-rtk git log             # Compact log (works with all git flags)
-rtk git diff            # Compact diff (80%)
-rtk git show            # Compact show (80%)
-rtk git add             # Ultra-compact confirmations (59%)
-rtk git commit          # Ultra-compact confirmations (59%)
-rtk git push            # Ultra-compact confirmations
-rtk git pull            # Ultra-compact confirmations
-rtk git branch          # Compact branch list
-rtk git fetch           # Compact fetch
-rtk git stash           # Compact stash
-rtk git worktree        # Compact worktree
+stc git status          # Compact status
+stc git log             # Compact log (works with all git flags)
+stc git diff            # Compact diff (80%)
+stc git show            # Compact show (80%)
+stc git add             # Ultra-compact confirmations (59%)
+stc git commit          # Ultra-compact confirmations (59%)
+stc git push            # Ultra-compact confirmations
+stc git pull            # Ultra-compact confirmations
+stc git branch          # Compact branch list
+stc git fetch           # Compact fetch
+stc git stash           # Compact stash
+stc git worktree        # Compact worktree
 ```
 
 Note: Git passthrough works for ALL subcommands, even those not explicitly listed.
 
 ### GitHub (26-87% savings)
 ```bash
-rtk gh pr view <num>    # Compact PR view (87%)
-rtk gh pr checks        # Compact PR checks (79%)
-rtk gh run list         # Compact workflow runs (82%)
-rtk gh issue list       # Compact issue list (80%)
-rtk gh api              # Compact API responses (26%)
+stc gh pr view <num>    # Compact PR view (87%)
+stc gh pr checks        # Compact PR checks (79%)
+stc gh run list         # Compact workflow runs (82%)
+stc gh issue list       # Compact issue list (80%)
+stc gh api              # Compact API responses (26%)
 ```
 
 ### JavaScript/TypeScript Tooling (70-90% savings)
 ```bash
-rtk pnpm list           # Compact dependency tree (70%)
-rtk pnpm outdated       # Compact outdated packages (80%)
-rtk pnpm install        # Compact install output (90%)
-rtk npm run <script>    # Compact npm script output
-rtk npx <cmd>           # Compact npx command output
-rtk prisma              # Prisma without ASCII art (88%)
+stc pnpm list           # Compact dependency tree (70%)
+stc pnpm outdated       # Compact outdated packages (80%)
+stc pnpm install        # Compact install output (90%)
+stc npm run <script>    # Compact npm script output
+stc npx <cmd>           # Compact npx command output
+stc prisma              # Prisma without ASCII art (88%)
 ```
 
 ### Files & Search (60-75% savings)
 ```bash
-rtk ls <path>           # Tree format, compact (65%)
-rtk read <file>         # Code reading with filtering (60%)
-rtk grep <pattern>      # Search grouped by file (75%). Format flags (-c, -l, -L, -o, -Z) run raw.
-rtk find <pattern>      # Find grouped by directory (70%)
+stc ls <path>           # Tree format, compact (65%)
+stc read <file>         # Code reading with filtering (60%)
+stc grep <pattern>      # Search grouped by file (75%). Format flags (-c, -l, -L, -o, -Z) run raw.
+stc find <pattern>      # Find grouped by directory (70%)
 ```
 
 ### Analysis & Debug (70-90% savings)
 ```bash
-rtk err <cmd>           # Filter errors only from any command
-rtk log <file>          # Deduplicated logs with counts
-rtk json <file>         # JSON structure without values
-rtk deps                # Dependency overview
-rtk env                 # Environment variables compact
-rtk summary <cmd>       # Smart summary of command output
-rtk diff                # Ultra-compact diffs
+stc err <cmd>           # Filter errors only from any command
+stc log <file>          # Deduplicated logs with counts
+stc json <file>         # JSON structure without values
+stc deps                # Dependency overview
+stc env                 # Environment variables compact
+stc summary <cmd>       # Smart summary of command output
+stc diff                # Ultra-compact diffs
 ```
 
 ### Infrastructure (85% savings)
 ```bash
-rtk docker ps           # Compact container list
-rtk docker images       # Compact image list
-rtk docker logs <c>     # Deduplicated logs
-rtk kubectl get         # Compact resource list
-rtk kubectl logs        # Deduplicated pod logs
+stc docker ps           # Compact container list
+stc docker images       # Compact image list
+stc docker logs <c>     # Deduplicated logs
+stc kubectl get         # Compact resource list
+stc kubectl logs        # Deduplicated pod logs
 ```
 
 ### Network (65-70% savings)
 ```bash
-rtk curl <url>          # Compact HTTP responses (70%)
-rtk wget <url>          # Compact download output (65%)
+stc curl <url>          # Compact HTTP responses (70%)
+stc wget <url>          # Compact download output (65%)
 ```
 
 ### Meta Commands
 ```bash
-rtk gain                # View token savings statistics
-rtk gain --history      # View command history with savings
-rtk discover            # Analyze Claude Code sessions for missed RTK usage
-rtk proxy <cmd>         # Run command without filtering (for debugging)
-rtk init                # Add RTK instructions to CLAUDE.md
-rtk init --global       # Add RTK to ~/.claude/CLAUDE.md
+stc gain                # View token savings statistics
+stc gain --history      # View command history with savings
+stc discover            # Analyze Claude Code sessions for missed stc usage
+stc proxy <cmd>         # Run command without filtering (for debugging)
+stc init                # Add stc instructions to CLAUDE.md
+stc init --global       # Add stc to ~/.claude/CLAUDE.md
 ```
 
 ## Token Savings Overview
@@ -245,7 +245,7 @@ Overall average: **60-90% token reduction** on common development operations.
 <!-- /rtk-instructions -->
 "##;
 
-/// Main entry point for `rtk init`
+/// Main entry point for `stc init`
 #[allow(clippy::too_many_arguments)]
 pub fn run(
     global: bool,
@@ -282,15 +282,15 @@ pub fn run(
     } else {
         // Validation: Global-only features
         if install_opencode && !global {
-            anyhow::bail!("OpenCode plugin is global-only. Use: rtk init -g --opencode");
+            anyhow::bail!("OpenCode plugin is global-only. Use: stc init -g --opencode");
         }
 
         if install_cursor && !global {
-            anyhow::bail!("Cursor hooks are global-only. Use: rtk init -g --agent cursor");
+            anyhow::bail!("Cursor hooks are global-only. Use: stc init -g --agent cursor");
         }
 
         if install_windsurf && !global {
-            anyhow::bail!("Windsurf support is global-only. Use: rtk init -g --agent windsurf");
+            anyhow::bail!("Windsurf support is global-only. Use: stc init -g --agent windsurf");
         }
 
         if install_windsurf {
@@ -467,10 +467,12 @@ fn prompt_telemetry_consent() -> Result<()> {
     eprintln!();
     eprintln!("  What:    command names (not arguments), token savings, OS, version");
     eprintln!("  Why:     prioritize filter development for the most-used commands");
-    eprintln!("  Who:     RTK AI Labs, contact@rtk-ai.app");
-    eprintln!("  Rights:  disable anytime with `rtk telemetry disable`,");
-    eprintln!("           request erasure with `rtk telemetry forget`");
-    eprintln!("  Details: https://github.com/rtk-ai/rtk/blob/master/docs/TELEMETRY.md");
+    eprintln!("  Who:     RTK AI Labs, contact@github.com/harshitsinghbhandari/stc");
+    eprintln!("  Rights:  disable anytime with `stc telemetry disable`,");
+    eprintln!("           request erasure with `stc telemetry forget`");
+    eprintln!(
+        "  Details: https://github.com/harshitsinghbhandari/stc/blob/master/docs/TELEMETRY.md"
+    );
     eprintln!();
     eprint!("Enable anonymous telemetry? [y/N] ");
 
@@ -489,7 +491,7 @@ fn prompt_telemetry_consent() -> Result<()> {
     save_telemetry_consent(accepted)?;
 
     if accepted {
-        eprintln!("  Telemetry enabled. Disable anytime: rtk telemetry disable");
+        eprintln!("  Telemetry enabled. Disable anytime: stc telemetry disable");
     } else {
         eprintln!("  Telemetry disabled.");
     }
@@ -1091,7 +1093,7 @@ fn insert_hook_entry(root: &mut serde_json::Value, hook_command: &str) -> Result
 }
 
 /// Check if RTK hook is already present in settings.json
-/// Matches on legacy rtk-rewrite.sh path OR new `rtk hook claude` command
+/// Matches on legacy rtk-rewrite.sh path OR new `stc hook claude` command
 fn hook_already_present(root: &serde_json::Value, hook_command: &str) -> bool {
     let pre_tool_use_array = match root
         .get("hooks")
@@ -1203,7 +1205,7 @@ fn run_default_mode(
 
 /// Migrate old hook script to new binary command.
 /// Deletes `~/.claude/hooks/rtk-rewrite.sh` and `.rtk-hook.sha256` if present,
-/// and removes the stale settings.json entry so the new `rtk hook claude` entry
+/// and removes the stale settings.json entry so the new `stc hook claude` entry
 /// can be registered.
 fn migrate_old_hook_script(ctx: InitContext) {
     let InitContext { verbose, dry_run } = ctx;
@@ -1266,7 +1268,7 @@ fn migrate_old_hook_script(ctx: InitContext) {
 }
 
 /// Remove only legacy `rtk-rewrite.sh` entries from settings.json.
-/// Preserves any existing `rtk hook claude` entries (new format).
+/// Preserves any existing `stc hook claude` entries (new format).
 fn remove_legacy_settings_entries(ctx: InitContext) -> Result<()> {
     let InitContext { verbose, dry_run } = ctx;
     let claude_dir = resolve_claude_dir()?;
@@ -1314,7 +1316,7 @@ fn remove_legacy_settings_entries(ctx: InitContext) -> Result<()> {
 
 /// Remove only legacy `rtk-rewrite.sh` hook entries from a parsed settings.json.
 /// Returns true if any entries were removed.
-/// Does NOT remove `rtk hook claude` entries — those are the new format.
+/// Does NOT remove `stc hook claude` entries — those are the new format.
 fn remove_legacy_hook_entries_from_json(root: &mut serde_json::Value) -> bool {
     let pre_tool_use_array = match root
         .get_mut("hooks")
@@ -1497,19 +1499,19 @@ fn run_claude_md_mode(global: bool, install_opencode: bool, ctx: InitContext) ->
     }
 
     if verbose > 0 {
-        eprintln!("Writing rtk instructions to: {}", path.display());
+        eprintln!("Writing stc instructions to: {}", path.display());
     }
 
     let recovery_cmd = if global {
-        "rtk init -g --claude-md"
+        "stc init -g --claude-md"
     } else {
-        "rtk init --claude-md"
+        "stc init --claude-md"
     };
 
     let action = write_rtk_block(
         &path,
         RTK_INSTRUCTIONS,
-        "rtk instructions",
+        "stc instructions",
         recovery_cmd,
         ctx,
     )?;
@@ -1530,10 +1532,10 @@ fn run_claude_md_mode(global: bool, install_opencode: bool, ctx: InitContext) ->
             }
         }
         if !dry_run {
-            println!("   Claude Code will now use rtk in all sessions");
+            println!("   Claude Code will now use stc in all sessions");
         }
     } else if !dry_run {
-        println!("   Claude Code will use rtk in this project");
+        println!("   Claude Code will use stc in this project");
     }
 
     Ok(())
@@ -1586,7 +1588,7 @@ fn run_cline_mode(ctx: InitContext) -> Result<()> {
         }
     }
     if !dry_run {
-        println!("  Cline will now use rtk commands for token savings.");
+        println!("  Cline will now use stc commands for token savings.");
         println!("  Test with: git status\n");
     }
 
@@ -1631,7 +1633,7 @@ fn run_windsurf_mode(ctx: InitContext) -> Result<()> {
         }
     }
     if !dry_run {
-        println!("  Cascade will now use rtk commands for token savings.");
+        println!("  Cascade will now use stc commands for token savings.");
         println!("  Restart Windsurf. Test with: git status\n");
     }
 
@@ -1689,7 +1691,7 @@ fn run_kilocode_mode_at(base_dir: &Path, ctx: InitContext) -> Result<()> {
     if dry_run {
         print_dry_run_footer();
     } else {
-        println!("  Kilo Code will now use rtk commands for token savings.");
+        println!("  Kilo Code will now use stc commands for token savings.");
         println!("  Test with: git status\n");
     }
 
@@ -1746,7 +1748,7 @@ fn run_antigravity_mode_at(base_dir: &Path, ctx: InitContext) -> Result<()> {
     if dry_run {
         print_dry_run_footer();
     } else {
-        println!("  Antigravity will now use rtk commands for token savings.");
+        println!("  Antigravity will now use stc commands for token savings.");
         println!("  Test with: git status\n");
     }
 
@@ -1807,7 +1809,7 @@ fn run_hermes_mode_at(hermes_home: &Path, ctx: InitContext) -> Result<()> {
         println!("\nRTK configured for Hermes.\n");
         println!("  Plugin: {}", plugin_dir.display());
         println!("  Config: {}", config_path.display());
-        println!("  Hermes will now rewrite terminal commands through rtk.");
+        println!("  Hermes will now rewrite terminal commands through stc.");
         println!("  Restart Hermes. Test with: git status\n");
     }
 
@@ -2360,7 +2362,7 @@ fn codex_hook_present(root: &serde_json::Value) -> bool {
         .unwrap_or(false)
 }
 
-/// Idempotently register the `rtk hook codex` PreToolUse hook in Codex's
+/// Idempotently register the `stc hook codex` PreToolUse hook in Codex's
 /// `hooks.json`. Returns `true` if a new entry was written, `false` if the
 /// hook was already present. The user's other hooks are preserved.
 fn patch_codex_hooks_json(hooks_json_path: &Path, ctx: InitContext) -> Result<bool> {
@@ -2423,7 +2425,7 @@ fn patch_codex_hooks_json(hooks_json_path: &Path, ctx: InitContext) -> Result<bo
     Ok(true)
 }
 
-/// Remove the `rtk hook codex` PreToolUse hook from Codex's `hooks.json`,
+/// Remove the `stc hook codex` PreToolUse hook from Codex's `hooks.json`,
 /// preserving any other hooks. Returns `true` if an entry was removed.
 fn remove_codex_hooks_json(hooks_json_path: &Path, ctx: InitContext) -> Result<bool> {
     let InitContext { verbose, dry_run } = ctx;
@@ -2580,7 +2582,7 @@ fn upsert_rtk_block(content: &str, block: &str) -> (String, RtkBlockUpsert) {
 /// Returns the [`RtkBlockUpsert`] action so callers can branch on whether anything
 /// was actually changed (e.g., to skip post-install steps on `Unchanged`).
 ///
-/// `label` is shown in user-facing messages (e.g., `"rtk instructions"`,
+/// `label` is shown in user-facing messages (e.g., `"stc instructions"`,
 /// `"Copilot instructions"`).
 fn write_rtk_block(
     path: &Path,
@@ -2886,7 +2888,7 @@ fn remove_rtk_block(content: &str) -> (String, bool) {
         }
 
         eprintln!("    Action: Manually remove the incomplete block, then re-run:");
-        eprintln!("            rtk init -g");
+        eprintln!("            stc init -g");
         (content.to_string(), false)
     } else {
         (content.to_string(), false)
@@ -3263,7 +3265,7 @@ fn patch_cursor_hooks_json(path: &Path, ctx: InitContext) -> Result<bool> {
 }
 
 /// Check if RTK preToolUse hook is already present in Cursor hooks.json
-/// Matches on legacy rtk-rewrite.sh path OR new `rtk hook cursor` command
+/// Matches on legacy rtk-rewrite.sh path OR new `stc hook cursor` command
 fn cursor_hook_already_present(root: &serde_json::Value) -> bool {
     let hooks = match root
         .get("hooks")
@@ -3314,7 +3316,7 @@ fn insert_cursor_hook_entry(root: &mut serde_json::Value) -> Result<()> {
 }
 
 /// Remove only legacy `rtk-rewrite.sh` entries from Cursor hooks.json.
-/// Preserves any existing `rtk hook cursor` entries (new format).
+/// Preserves any existing `stc hook cursor` entries (new format).
 fn remove_legacy_cursor_hooks_json_entries(path: &Path, ctx: InitContext) -> Result<()> {
     let InitContext { verbose, dry_run } = ctx;
     if !path.exists() {
@@ -3354,7 +3356,7 @@ fn remove_legacy_cursor_hooks_json_entries(path: &Path, ctx: InitContext) -> Res
 
 /// Remove only legacy `rtk-rewrite.sh` entries from parsed Cursor hooks.json.
 /// Returns true if any entries were removed.
-/// Does NOT remove `rtk hook cursor` entries — those are the new format.
+/// Does NOT remove `stc hook cursor` entries — those are the new format.
 fn remove_legacy_cursor_hook_entries_from_json(root: &mut serde_json::Value) -> bool {
     let pre_tool_use = match root
         .get_mut("hooks")
@@ -3458,7 +3460,7 @@ fn remove_cursor_hook_from_json(root: &mut serde_json::Value) -> bool {
     pre_tool_use.len() < original_len
 }
 
-/// Show current rtk configuration
+/// Show current stc configuration
 pub fn show_config(codex: bool) -> Result<()> {
     if codex {
         return show_codex_config();
@@ -3474,7 +3476,7 @@ fn show_claude_config() -> Result<()> {
     let global_claude_md = claude_dir.join(CLAUDE_MD);
     let local_claude_md = PathBuf::from(CLAUDE_MD);
 
-    println!("rtk Configuration:\n");
+    println!("stc Configuration:\n");
 
     // Check hook: prefer binary command detection, fall back to script file
     let settings_path = claude_dir.join(SETTINGS_JSON);
@@ -3501,8 +3503,8 @@ fn show_claude_config() -> Result<()> {
 
             let hook_content = fs::read_to_string(&hook_path)?;
             let has_guards =
-                hook_content.contains("command -v rtk") && hook_content.contains("command -v jq");
-            let is_thin_delegator = hook_content.contains("rtk rewrite");
+                hook_content.contains("command -v stc") && hook_content.contains("command -v jq");
+            let is_thin_delegator = hook_content.contains("stc rewrite");
             let hook_version = super::hook_check::parse_hook_version(&hook_content);
 
             if !is_executable {
@@ -3512,12 +3514,12 @@ fn show_claude_config() -> Result<()> {
                 );
             } else if !is_thin_delegator {
                 println!(
-                    "[warn] Hook: {} (outdated — run `rtk init -g` to upgrade to native binary)",
+                    "[warn] Hook: {} (outdated — run `stc init -g` to upgrade to native binary)",
                     hook_path.display()
                 );
             } else if is_executable && has_guards {
                 println!(
-                    "[warn] Hook: {} (legacy script v{} — run `rtk init -g` to upgrade)",
+                    "[warn] Hook: {} (legacy script v{} — run `stc init -g` to upgrade)",
                     hook_path.display(),
                     hook_version
                 );
@@ -3532,7 +3534,7 @@ fn show_claude_config() -> Result<()> {
         #[cfg(not(unix))]
         {
             println!(
-                "[warn] Hook: {} (legacy script — run `rtk init -g` to upgrade)",
+                "[warn] Hook: {} (legacy script — run `stc init -g` to upgrade)",
                 hook_path.display()
             );
         }
@@ -3554,10 +3556,10 @@ fn show_claude_config() -> Result<()> {
                 println!("[ok] Integrity: hook hash verified");
             }
             Ok(integrity::IntegrityStatus::Tampered { .. }) => {
-                println!("[FAIL] Integrity: hook modified outside rtk init (run: rtk verify)");
+                println!("[FAIL] Integrity: hook modified outside stc init (run: stc verify)");
             }
             Ok(integrity::IntegrityStatus::NoBaseline) => {
-                println!("[warn] Integrity: no baseline hash (run: rtk init -g to establish)");
+                println!("[warn] Integrity: no baseline hash (run: stc init -g to establish)");
             }
             Ok(integrity::IntegrityStatus::NotInstalled)
             | Ok(integrity::IntegrityStatus::OrphanedHash) => {
@@ -3576,10 +3578,10 @@ fn show_claude_config() -> Result<()> {
             println!("[ok] Global (~/.claude/CLAUDE.md): @RTK.md reference");
         } else if content.contains(RTK_BLOCK_START) {
             println!(
-                "[warn] Global (~/.claude/CLAUDE.md): old RTK block (run: rtk init -g to migrate)"
+                "[warn] Global (~/.claude/CLAUDE.md): old RTK block (run: stc init -g to migrate)"
             );
         } else {
-            println!("[--] Global (~/.claude/CLAUDE.md): exists but rtk not configured");
+            println!("[--] Global (~/.claude/CLAUDE.md): exists but stc not configured");
         }
     } else {
         println!("[--] Global (~/.claude/CLAUDE.md): not found");
@@ -3589,9 +3591,9 @@ fn show_claude_config() -> Result<()> {
     if local_claude_md.exists() {
         let content = fs::read_to_string(&local_claude_md)?;
         if content.contains("rtk") {
-            println!("[ok] Local (./CLAUDE.md): rtk enabled");
+            println!("[ok] Local (./CLAUDE.md): stc enabled");
         } else {
-            println!("[--] Local (./CLAUDE.md): exists but rtk not configured");
+            println!("[--] Local (./CLAUDE.md): exists but stc not configured");
         }
     } else {
         println!("[--] Local (./CLAUDE.md): not found");
@@ -3606,7 +3608,7 @@ fn show_claude_config() -> Result<()> {
                     println!("[ok] settings.json: RTK hook configured");
                 } else {
                     println!("[warn] settings.json: exists but RTK hook not configured");
-                    println!("    Run: rtk init -g --auto-patch");
+                    println!("    Run: stc init -g --auto-patch");
                 }
             } else {
                 println!("[warn] settings.json: exists but invalid JSON");
@@ -3656,7 +3658,7 @@ fn show_claude_config() -> Result<()> {
                 let meta = fs::metadata(&cursor_hook)?;
                 let is_executable = meta.permissions().mode() & 0o111 != 0;
                 let content = fs::read_to_string(&cursor_hook)?;
-                let _is_thin = content.contains("rtk rewrite");
+                let _is_thin = content.contains("stc rewrite");
 
                 if !is_executable {
                     println!(
@@ -3665,7 +3667,7 @@ fn show_claude_config() -> Result<()> {
                     );
                 } else {
                     println!(
-                        "[warn] Cursor hook: {} (legacy script — run `rtk init -g --agent cursor` to upgrade)",
+                        "[warn] Cursor hook: {} (legacy script — run `stc init -g --agent cursor` to upgrade)",
                         cursor_hook.display()
                     );
                 }
@@ -3673,7 +3675,7 @@ fn show_claude_config() -> Result<()> {
 
             #[cfg(not(unix))]
             {
-                println!("[warn] Cursor hook: {} (legacy script — run `rtk init -g --agent cursor` to upgrade)", cursor_hook.display());
+                println!("[warn] Cursor hook: {} (legacy script — run `stc init -g --agent cursor` to upgrade)", cursor_hook.display());
             }
         } else {
             println!("[--] Cursor hook: not found");
@@ -3683,17 +3685,17 @@ fn show_claude_config() -> Result<()> {
     }
 
     println!("\nUsage:");
-    println!("  rtk init              # Full injection into local CLAUDE.md");
-    println!("  rtk init -g           # Hook + RTK.md + @RTK.md + settings.json (recommended)");
-    println!("  rtk init -g --auto-patch    # Same as above but no prompt");
-    println!("  rtk init -g --no-patch      # Skip settings.json (manual setup)");
-    println!("  rtk init -g --uninstall     # Remove all RTK artifacts");
-    println!("  rtk init -g --claude-md     # Legacy: full injection into ~/.claude/CLAUDE.md");
-    println!("  rtk init -g --hook-only     # Hook only, no RTK.md");
-    println!("  rtk init --codex            # Configure local AGENTS.md + RTK.md");
-    println!("  rtk init -g --codex         # Configure $CODEX_HOME/AGENTS.md + $CODEX_HOME/RTK.md (or ~/.codex/)");
-    println!("  rtk init -g --opencode      # OpenCode plugin only");
-    println!("  rtk init -g --agent cursor  # Install Cursor Agent hooks");
+    println!("  stc init              # Full injection into local CLAUDE.md");
+    println!("  stc init -g           # Hook + RTK.md + @RTK.md + settings.json (recommended)");
+    println!("  stc init -g --auto-patch    # Same as above but no prompt");
+    println!("  stc init -g --no-patch      # Skip settings.json (manual setup)");
+    println!("  stc init -g --uninstall     # Remove all RTK artifacts");
+    println!("  stc init -g --claude-md     # Legacy: full injection into ~/.claude/CLAUDE.md");
+    println!("  stc init -g --hook-only     # Hook only, no RTK.md");
+    println!("  stc init --codex            # Configure local AGENTS.md + RTK.md");
+    println!("  stc init -g --codex         # Configure $CODEX_HOME/AGENTS.md + $CODEX_HOME/RTK.md (or ~/.codex/)");
+    println!("  stc init -g --opencode      # OpenCode plugin only");
+    println!("  stc init -g --agent cursor  # Install Cursor Agent hooks");
 
     Ok(())
 }
@@ -3706,7 +3708,7 @@ fn show_codex_config() -> Result<()> {
     let local_agents_md = PathBuf::from(AGENTS_MD);
     let local_rtk_md = PathBuf::from(RTK_MD);
 
-    println!("rtk Configuration (Codex CLI):\n");
+    println!("stc Configuration (Codex CLI):\n");
 
     if global_rtk_md.exists() {
         println!("[ok] Global RTK.md: {}", global_rtk_md.display());
@@ -3721,7 +3723,7 @@ fn show_codex_config() -> Result<()> {
         } else if content.contains(RTK_BLOCK_START) {
             println!("[!!] Global AGENTS.md: old inline RTK block");
         } else {
-            println!("[--] Global AGENTS.md: exists but rtk not configured");
+            println!("[--] Global AGENTS.md: exists but stc not configured");
         }
     } else {
         println!("[--] Global AGENTS.md: not found");
@@ -3740,7 +3742,7 @@ fn show_codex_config() -> Result<()> {
         } else if content.contains(RTK_BLOCK_START) {
             println!("[!!] Local AGENTS.md: old inline RTK block");
         } else {
-            println!("[--] Local AGENTS.md: exists but rtk not configured");
+            println!("[--] Local AGENTS.md: exists but stc not configured");
         }
     } else {
         println!("[--] Local AGENTS.md: not found");
@@ -3756,9 +3758,9 @@ fn show_codex_config() -> Result<()> {
     }
 
     println!("\nUsage:");
-    println!("  rtk init --codex              # Configure local AGENTS.md + RTK.md");
-    println!("  rtk init -g --codex           # Configure $CODEX_HOME/AGENTS.md + $CODEX_HOME/RTK.md (or ~/.codex/)");
-    println!("  rtk init -g --codex --uninstall  # Remove global Codex RTK artifacts");
+    println!("  stc init --codex              # Configure local AGENTS.md + RTK.md");
+    println!("  stc init -g --codex           # Configure $CODEX_HOME/AGENTS.md + $CODEX_HOME/RTK.md (or ~/.codex/)");
+    println!("  stc init -g --codex --uninstall  # Remove global Codex RTK artifacts");
 
     Ok(())
 }
@@ -3777,16 +3779,16 @@ fn run_opencode_only_mode(ctx: InitContext) -> Result<()> {
 
 // ─── Gemini CLI support ───────────────────────────────────────────
 
-/// Gemini hook wrapper script — delegates to `rtk hook gemini`
+/// Gemini hook wrapper script — delegates to `stc hook gemini`
 const GEMINI_HOOK_SCRIPT: &str = r#"#!/bin/bash
-exec rtk hook gemini
+exec stc hook gemini
 "#;
 
 fn resolve_gemini_dir() -> Result<PathBuf> {
     resolve_home_subdir(GEMINI_DIR)
 }
 
-/// Entry point for `rtk init --gemini`
+/// Entry point for `stc init --gemini`
 pub fn run_gemini(
     global: bool,
     hook_only: bool,
@@ -3795,7 +3797,7 @@ pub fn run_gemini(
 ) -> Result<()> {
     let InitContext { dry_run, .. } = ctx;
     if !global {
-        anyhow::bail!("Gemini support is global-only. Use: rtk init -g --gemini");
+        anyhow::bail!("Gemini support is global-only. Use: stc init -g --gemini");
     }
 
     let gemini_dir = resolve_gemini_dir()?;
@@ -3894,7 +3896,7 @@ fn patch_gemini_settings(
     if patch_mode == PatchMode::Skip {
         println!(
             "\nManual setup needed: add RTK hook to {}\n\
-             See: https://github.com/rtk-ai/rtk#gemini-cli",
+             See: https://github.com/harshitsinghbhandari/stc#gemini-cli",
             settings_path.display()
         );
         return Ok(());
@@ -4053,7 +4055,7 @@ const COPILOT_HOOK_JSON: &str = r#"{
     "PreToolUse": [
       {
         "type": "command",
-        "command": "rtk hook copilot",
+        "command": "stc hook copilot",
         "cwd": ".",
         "timeout": 5
       }
@@ -4063,35 +4065,35 @@ const COPILOT_HOOK_JSON: &str = r#"{
 "#;
 
 const COPILOT_INSTRUCTIONS: &str = r#"<!-- rtk-instructions v2 -->
-# RTK — Token-Optimized CLI
+# stc — Token-Optimized CLI
 
-**rtk** is a CLI proxy that filters and compresses command outputs, saving 60-90% tokens.
+**stc** is a CLI proxy that filters and compresses command outputs, saving 60-90% tokens.
 
 ## Rule
 
-Always prefix shell commands with `rtk`:
+Always prefix shell commands with `stc`:
 
 ```bash
 # Instead of:              Use:
-git status                 rtk git status
-git log -10                rtk git log -10
-cargo test                 rtk cargo test
-docker ps                  rtk docker ps
-kubectl get pods           rtk kubectl pods
+git status                 stc git status
+git log -10                stc git log -10
+cargo test                 stc cargo test
+docker ps                  stc docker ps
+kubectl get pods           stc kubectl pods
 ```
 
 ## Meta commands (use directly)
 
 ```bash
-rtk gain              # Token savings dashboard
-rtk gain --history    # Per-command savings history
-rtk discover          # Find missed rtk opportunities
-rtk proxy <cmd>       # Run raw (no filtering) but track usage
+stc gain              # Token savings dashboard
+stc gain --history    # Per-command savings history
+stc discover          # Find missed stc opportunities
+stc proxy <cmd>       # Run raw (no filtering) but track usage
 ```
 <!-- /rtk-instructions -->
 "#;
 
-/// Entry point for `rtk init --copilot`.
+/// Entry point for `stc init --copilot`.
 ///
 /// Installs in the current working directory's `.github/` subdirectory.
 pub fn run_copilot(ctx: InitContext) -> Result<()> {
@@ -4120,7 +4122,7 @@ fn run_copilot_at(base: &Path, ctx: InitContext) -> Result<()> {
         &instructions_path,
         COPILOT_INSTRUCTIONS,
         "Copilot instructions",
-        "rtk init --copilot",
+        "stc init --copilot",
         ctx,
     )?;
 
@@ -4150,21 +4152,21 @@ mod tests {
     #[test]
     fn test_init_mentions_all_top_level_commands() {
         for cmd in [
-            "rtk cargo",
-            "rtk gh",
-            "rtk vitest",
-            "rtk tsc",
-            "rtk lint",
-            "rtk prettier",
-            "rtk next",
-            "rtk playwright",
-            "rtk prisma",
-            "rtk pnpm",
-            "rtk npm",
-            "rtk curl",
-            "rtk git",
-            "rtk docker",
-            "rtk kubectl",
+            "stc cargo",
+            "stc gh",
+            "stc vitest",
+            "stc tsc",
+            "stc lint",
+            "stc prettier",
+            "stc next",
+            "stc playwright",
+            "stc prisma",
+            "stc pnpm",
+            "stc npm",
+            "stc curl",
+            "stc git",
+            "stc docker",
+            "stc kubectl",
         ] {
             assert!(
                 RTK_INSTRUCTIONS.contains(cmd),
@@ -4259,7 +4261,7 @@ mod tests {
     fn test_claude_md_mode_creates_full_injection() {
         // Just verify RTK_INSTRUCTIONS constant has the right content
         assert!(RTK_INSTRUCTIONS.contains(RTK_BLOCK_START));
-        assert!(RTK_INSTRUCTIONS.contains("rtk cargo test"));
+        assert!(RTK_INSTRUCTIONS.contains("stc cargo test"));
         assert!(RTK_INSTRUCTIONS.contains(RTK_BLOCK_END));
         assert!(RTK_INSTRUCTIONS.len() > 4000);
     }
@@ -4285,7 +4287,7 @@ mod tests {
         let (content, action) = upsert_rtk_block(&input, RTK_INSTRUCTIONS);
         assert_eq!(action, RtkBlockUpsert::Updated);
         assert!(!content.contains("OLD RTK CONTENT"));
-        assert!(content.contains("rtk cargo test")); // from current RTK_INSTRUCTIONS
+        assert!(content.contains("stc cargo test")); // from current RTK_INSTRUCTIONS
         assert!(content.contains("# Team instructions"));
         assert!(content.contains("More notes"));
     }
@@ -6103,7 +6105,7 @@ mod tests {
         let (cleaned, did_remove) = remove_rtk_block(&content);
         assert!(did_remove);
         assert!(!cleaned.contains(RTK_BLOCK_START));
-        assert!(!cleaned.contains("rtk cargo test"));
+        assert!(!cleaned.contains("stc cargo test"));
     }
 
     #[test]
@@ -6219,8 +6221,8 @@ mod tests {
 
             let content = fs::read_to_string(&plugin).unwrap();
             assert!(
-                content.contains("rtk rewrite"),
-                "extension must delegate to rtk rewrite"
+                content.contains("stc rewrite"),
+                "extension must delegate to stc rewrite"
             );
         });
     }
@@ -6529,7 +6531,7 @@ mod tests {
 
         let instructions_path = github_dir.join("copilot-instructions.md");
         let stale = format!(
-            "# Project rules\n\nUse rg.\n\n{}\n# OLD RTK CONTENT\nrtk foo\n{}\n",
+            "# Project rules\n\nUse rg.\n\n{}\n# OLD RTK CONTENT\nstc foo\n{}\n",
             RTK_BLOCK_START, RTK_BLOCK_END
         );
         fs::write(&instructions_path, &stale).unwrap();
@@ -6547,7 +6549,7 @@ mod tests {
             "Stale RTK block content must be removed"
         );
         assert!(
-            updated.contains("rtk cargo test"),
+            updated.contains("stc cargo test"),
             "Fresh COPILOT_INSTRUCTIONS content must be present"
         );
     }
@@ -6585,7 +6587,7 @@ mod tests {
         let content = fs::read_to_string(&instructions_path).unwrap();
         assert!(content.contains(RTK_BLOCK_START));
         assert!(content.contains(RTK_BLOCK_END));
-        assert!(content.contains("rtk cargo test"));
+        assert!(content.contains("stc cargo test"));
     }
 
     #[test]

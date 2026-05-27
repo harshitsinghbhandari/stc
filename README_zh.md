@@ -7,15 +7,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/rtk-ai/rtk/actions"><img src="https://github.com/rtk-ai/rtk/workflows/Security%20Check/badge.svg" alt="CI"></a>
-  <a href="https://github.com/rtk-ai/rtk/releases"><img src="https://img.shields.io/github/v/release/rtk-ai/rtk" alt="Release"></a>
+  <a href="https://github.com/harshitsinghbhandari/stc/actions"><img src="https://github.com/harshitsinghbhandari/stc/workflows/Security%20Check/badge.svg" alt="CI"></a>
+  <a href="https://github.com/harshitsinghbhandari/stc/releases"><img src="https://img.shields.io/github/v/release/harshitsinghbhandari/stc" alt="Release"></a>
   <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
   <a href="https://discord.gg/RySmvNF5kF"><img src="https://img.shields.io/discord/1478373640461488159?label=Discord&logo=discord" alt="Discord"></a>
   <a href="https://formulae.brew.sh/formula/rtk"><img src="https://img.shields.io/homebrew/v/rtk" alt="Homebrew"></a>
 </p>
 
 <p align="center">
-  <a href="https://www.rtk-ai.app">官网</a> &bull;
+  <a href="https://github.com/harshitsinghbhandari/stc">官网</a> &bull;
   <a href="#安装">安装</a> &bull;
   <a href="docs/TROUBLESHOOTING.md">故障排除</a> &bull;
   <a href="docs/contributing/ARCHITECTURE.md">架构</a> &bull;
@@ -33,11 +33,11 @@
 
 ---
 
-rtk 在命令输出到达 LLM 上下文之前进行过滤和压缩。单一 Rust 二进制文件，零依赖，<10ms 开销。
+stc 在命令输出到达 LLM 上下文之前进行过滤和压缩。单一 Rust 二进制文件，零依赖，<10ms 开销。
 
 ## Token 节省（30 分钟 Claude Code 会话）
 
-| 操作 | 频率 | 标准 | rtk | 节省 |
+| 操作 | 频率 | 标准 | stc | 节省 |
 |------|------|------|-----|------|
 | `ls` / `tree` | 10x | 2,000 | 400 | -80% |
 | `cat` / `read` | 20x | 40,000 | 12,000 | -70% |
@@ -58,30 +58,30 @@ brew install rtk
 ### 快速安装（Linux/macOS）
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/refs/heads/master/install.sh | sh
 ```
 
 ### Cargo
 
 ```bash
-cargo install --git https://github.com/rtk-ai/rtk
+cargo install --git https://github.com/harshitsinghbhandari/stc
 ```
 
 ### 验证
 
 ```bash
-rtk --version   # 应显示 "rtk 0.27.x"
-rtk gain        # 应显示 token 节省统计
+stc --version   # 应显示 "rtk 0.27.x"
+stc gain        # 应显示 token 节省统计
 ```
 
 ## 快速开始
 
 ```bash
 # 1. 为 Claude Code 安装 hook（推荐）
-rtk init --global
+stc init --global
 
 # 2. 重启 Claude Code，然后测试
-git status  # 自动重写为 rtk git status
+git status  # 自动重写为 stc git status
 ```
 
 ## 工作原理
@@ -106,49 +106,49 @@ git status  # 自动重写为 rtk git status
 
 ### 文件
 ```bash
-rtk ls .                        # 优化的目录树
-rtk read file.rs                # 智能文件读取
-rtk find "*.rs" .               # 紧凑的查找结果
-rtk grep "pattern" .            # 按文件分组的搜索结果
+stc ls .                        # 优化的目录树
+stc read file.rs                # 智能文件读取
+stc find "*.rs" .               # 紧凑的查找结果
+stc grep "pattern" .            # 按文件分组的搜索结果
 ```
 
 ### Git
 ```bash
-rtk git status                  # 紧凑状态
-rtk git log -n 10               # 单行提交
-rtk git diff                    # 精简 diff
-rtk git push                    # -> "ok main"
+stc git status                  # 紧凑状态
+stc git log -n 10               # 单行提交
+stc git diff                    # 精简 diff
+stc git push                    # -> "ok main"
 ```
 
 ### 测试
 ```bash
-rtk jest                        # Jest 紧凑输出
-rtk vitest                      # Vitest 紧凑输出
-rtk pytest                      # Python 测试（-90%）
-rtk go test                     # Go 测试（-90%）
-rtk test <cmd>                  # 仅显示失败（-90%）
+stc jest                        # Jest 紧凑输出
+stc vitest                      # Vitest 紧凑输出
+stc pytest                      # Python 测试（-90%）
+stc go test                     # Go 测试（-90%）
+stc test <cmd>                  # 仅显示失败（-90%）
 ```
 
 ### 构建 & 检查
 ```bash
-rtk lint                        # ESLint 按规则分组
-rtk tsc                         # TypeScript 错误分组
-rtk cargo build                 # Cargo 构建（-80%）
-rtk ruff check                  # Python lint（-80%）
+stc lint                        # ESLint 按规则分组
+stc tsc                         # TypeScript 错误分组
+stc cargo build                 # Cargo 构建（-80%）
+stc ruff check                  # Python lint（-80%）
 ```
 
 ### 容器
 ```bash
-rtk docker ps                   # 紧凑容器列表
-rtk docker logs <container>     # 去重日志
-rtk kubectl pods                # 紧凑 Pod 列表
+stc docker ps                   # 紧凑容器列表
+stc docker logs <container>     # 去重日志
+stc kubectl pods                # 紧凑 Pod 列表
 ```
 
 ### 分析
 ```bash
-rtk gain                        # 节省统计
-rtk gain --graph                # ASCII 图表（30 天）
-rtk discover                    # 发现遗漏的节省机会
+stc gain                        # 节省统计
+stc gain --graph                # ASCII 图表（30 天）
+stc discover                    # 发现遗漏的节省机会
 ```
 
 ## 文档
@@ -159,7 +159,7 @@ rtk discover                    # 发现遗漏的节省机会
 
 ## 贡献
 
-欢迎贡献！请在 [GitHub](https://github.com/rtk-ai/rtk) 上提交 issue 或 PR。
+欢迎贡献！请在 [GitHub](https://github.com/harshitsinghbhandari/stc) 上提交 issue 或 PR。
 
 加入 [Discord](https://discord.gg/RySmvNF5kF) 社区。
 

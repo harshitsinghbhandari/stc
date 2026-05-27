@@ -26,15 +26,15 @@ src/
 │   ├── display_helpers.rs     ← Terminal formatting helpers
 │   └── telemetry.rs           ← Analytics ping
 ├── hooks/                     ← Hook system
-│   ├── init.rs                ← rtk init command
-│   ├── rewrite_cmd.rs         ← rtk rewrite command
+│   ├── init.rs                ← stc init command
+│   ├── rewrite_cmd.rs         ← stc rewrite command
 │   ├── hook_cmd.rs            ← Gemini/Copilot hook processors
 │   ├── hook_check.rs          ← Hook status detection
-│   ├── verify_cmd.rs          ← rtk verify command
+│   ├── verify_cmd.rs          ← stc verify command
 │   ├── trust.rs               ← Project trust/untrust
 │   └── integrity.rs           ← SHA-256 hook verification
 ├── analytics/                 ← Token savings analytics
-│   ├── gain.rs                ← rtk gain command
+│   ├── gain.rs                ← stc gain command
 │   ├── cc_economics.rs        ← Claude Code economics
 │   ├── ccusage.rs             ← ccusage data parsing
 │   └── session_cmd.rs         ← Session adoption reporting
@@ -135,7 +135,7 @@ Glob pattern="tests/fixtures/*.txt"
 ### Configuration issues
 
 1. `src/core/config.rs` → `RtkConfig` struct
-2. `src/hooks/init.rs` → `rtk init` command
+2. `src/hooks/init.rs` → `stc init` command
 3. Config file: `~/.config/rtk/config.toml`
 4. Filter files: `~/.config/rtk/filters/` (global) or `.rtk/filters/` (project)
 

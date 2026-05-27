@@ -14,8 +14,8 @@ This guide walks you through your first RTK commands after installation.
 RTK is installed and verified:
 
 ```bash
-rtk --version   # rtk x.y.z
-rtk gain        # shows token savings dashboard
+stc --version   # stc x.y.z
+stc gain        # shows token savings dashboard
 ```
 
 If not, see [Installation](./installation.md).
@@ -24,10 +24,10 @@ If not, see [Installation](./installation.md).
 
 ```bash
 # For Claude Code (global — applies to all projects)
-rtk init --global
+stc init --global
 
 # For a single project only
-cd /your/project && rtk init
+cd /your/project && stc init
 ```
 
 This installs the hook that automatically rewrites commands. Restart your AI assistant after this step.
@@ -37,13 +37,13 @@ This installs the hook that automatically rewrites commands. Restart your AI ass
 To see exactly what `init` would change before it touches anything, add `--dry-run`:
 
 ```bash
-rtk init --global --dry-run
+stc init --global --dry-run
 ```
 
 Every would-be file create/update/patch is printed with a `[dry-run] would ...` prefix, then a `[dry-run] Nothing written.` footer. Nothing on disk is modified, no settings.json is patched, and the telemetry consent prompt is skipped. Combine with `-v` to also print the full content RTK would write:
 
 ```bash
-rtk init --global --dry-run -v
+stc init --global --dry-run -v
 ```
 
 `--dry-run` works for every init flavour (`--agent cursor`, `--gemini`, `--codex`, `--copilot`, `--uninstall`, ...). It cannot be combined with `--show`.
@@ -52,7 +52,7 @@ rtk init --global --dry-run -v
 
 Once the hook is installed, nothing changes in how you work. Your AI assistant runs commands as usual — the hook intercepts them transparently and rewrites them before execution.
 
-For example, when Claude Code runs `cargo test`, the hook rewrites it to `rtk cargo test` before it executes. The LLM receives filtered output with only the failures — not 500 lines of passing tests. You never see or type `rtk`.
+For example, when Claude Code runs `cargo test`, the hook rewrites it to `stc cargo test` before it executes. The LLM receives filtered output with only the failures — not 500 lines of passing tests. You never see or type `stc`.
 
 RTK covers all major ecosystems — Git, Cargo/Rust, JavaScript, Python, Go, Ruby, .NET, Docker/Kubernetes, and more. See [What RTK Optimizes](../resources/what-rtk-covers.md) for the full list.
 
@@ -61,7 +61,7 @@ RTK covers all major ecosystems — Git, Cargo/Rust, JavaScript, Python, Go, Rub
 After a few commands, see how much was saved:
 
 ```bash
-rtk gain
+stc gain
 ```
 
 ```
@@ -76,7 +76,7 @@ Saved          : 40,340  (89.2%)
 Commands RTK doesn't recognize run through passthrough — output is unchanged, usage is tracked:
 
 ```bash
-rtk proxy make install
+stc proxy make install
 ```
 
 ## Next steps

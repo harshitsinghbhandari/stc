@@ -16,28 +16,28 @@ echo ""
 
 # Check 1: RTK installed?
 echo "1. Checking if RTK is installed..."
-if command -v rtk &> /dev/null; then
+if command -v stc &> /dev/null; then
     echo -e "   ${GREEN}✅ RTK is installed${NC}"
-    RTK_PATH=$(which rtk)
+    RTK_PATH=$(which stc)
     echo "   Location: $RTK_PATH"
 else
     echo -e "   ${RED}❌ RTK is NOT installed${NC}"
     echo ""
     echo "   Install with:"
-    echo "   curl -fsSL https://github.com/rtk-ai/rtk/blob/master/install.sh| sh"
+    echo "   curl -fsSL https://github.com/harshitsinghbhandari/stc/blob/master/install.sh| sh"
     exit 1
 fi
 echo ""
 
 # Check 2: RTK version
 echo "2. Checking RTK version..."
-RTK_VERSION=$(rtk --version 2>/dev/null || echo "unknown")
+RTK_VERSION=$(stc --version 2>/dev/null || echo "unknown")
 echo "   Version: $RTK_VERSION"
 echo ""
 
 # Check 3: Is it Token Killer or Type Kit?
 echo "3. Verifying this is Token Killer (not Type Kit)..."
-if rtk gain &>/dev/null || rtk gain --help &>/dev/null; then
+if stc gain &>/dev/null || stc gain --help &>/dev/null; then
     echo -e "   ${GREEN}✅ CORRECT - You have Rust Token Killer${NC}"
     CORRECT_RTK=true
 else
@@ -45,7 +45,7 @@ else
     echo ""
     echo "   You installed the wrong package. Fix it with:"
     echo "   cargo uninstall rtk"
-    echo "   curl -fsSL https://github.com/rtk-ai/rtk/blob/master/install.sh | sh"
+    echo "   curl -fsSL https://github.com/harshitsinghbhandari/stc/blob/master/install.sh | sh"
     CORRECT_RTK=false
 fi
 echo ""
@@ -65,7 +65,7 @@ MISSING_FEATURES=()
 check_command() {
     local cmd=$1
     local name=$2
-    if rtk --help 2>/dev/null | grep -qw "$cmd"; then
+    if stc --help 2>/dev/null | grep -qw "$cmd"; then
         echo -e "   ${GREEN}✅${NC} $name"
         FEATURES+=("$name")
     else
@@ -99,7 +99,7 @@ if [ -f "$HOME/.claude/CLAUDE.md" ] && grep -q "rtk" "$HOME/.claude/CLAUDE.md"; 
     GLOBAL_INIT=true
 else
     echo -e "   ${YELLOW}⚠️${NC}  Global CLAUDE.md not initialized"
-    echo "      Run: rtk init --global"
+    echo "      Run: stc init --global"
 fi
 
 if [ -f "./CLAUDE.md" ] && grep -q "rtk" "./CLAUDE.md"; then
@@ -107,7 +107,7 @@ if [ -f "./CLAUDE.md" ] && grep -q "rtk" "./CLAUDE.md"; then
     LOCAL_INIT=true
 else
     echo -e "   ${YELLOW}⚠️${NC}  Local CLAUDE.md not initialized in current directory"
-    echo "      Run: rtk init (in your project directory)"
+    echo "      Run: stc init (in your project directory)"
 fi
 echo ""
 
@@ -142,7 +142,7 @@ if [ ${#MISSING_FEATURES[@]} -gt 0 ]; then
     echo ""
     echo "To get all features, install the fork:"
     echo "  cargo uninstall rtk"
-    echo "  curl -fsSL https://github.com/rtk-ai/rtk/blob/master/install.sh | sh"
+    echo "  curl -fsSL https://github.com/harshitsinghbhandari/stc/blob/master/install.sh | sh"
     echo "  cd rtk && git checkout feat/all-features"
     echo "  cargo install --path . --force"
 else
@@ -153,8 +153,8 @@ echo ""
 
 if [ "$GLOBAL_INIT" = false ] && [ "$LOCAL_INIT" = false ]; then
     echo -e "${YELLOW}⚠️  RTK not initialized for Claude Code${NC}"
-    echo "   Run: rtk init --global (for all projects)"
-    echo "   Or:  rtk init (for this project only)"
+    echo "   Run: stc init --global (for all projects)"
+    echo "   Or:  stc init (for this project only)"
 fi
 
 echo ""

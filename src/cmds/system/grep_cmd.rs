@@ -74,7 +74,7 @@ pub fn run(
 
         timer.track_passthrough(
             &format!("grep {}", args_display),
-            &format!("rtk grep {} (passthrough)", args_display),
+            &format!("stc grep {} (passthrough)", args_display),
         );
         return Ok(result.exit_code);
     }
@@ -91,7 +91,7 @@ pub fn run(
         println!("{}", msg);
         timer.track(
             &format!("grep -rn '{}' {}", pattern, path),
-            "rtk grep",
+            "stc grep",
             &raw_output,
             &msg,
         );
@@ -152,7 +152,7 @@ pub fn run(
     print!("{}", rtk_output);
     timer.track(
         &format!("grep -rn '{}' {}", pattern, path),
-        "rtk grep",
+        "stc grep",
         &raw_output,
         &rtk_output,
     );

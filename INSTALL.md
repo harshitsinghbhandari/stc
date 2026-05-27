@@ -5,8 +5,8 @@
 **There are TWO completely different projects named "rtk":**
 
 1. ✅ **Rust Token Killer** (this project) - LLM token optimizer
-   - Repos: `rtk-ai/rtk`
-   - Has `rtk gain` command for token savings stats
+   - Repos: `harshitsinghbhandari/stc`
+   - Has `stc gain` command for token savings stats
 
 2. ❌ **Rust Type Kit** (reachingforthejack/rtk) - DIFFERENT PROJECT
    - Rust codebase query tool and type generator
@@ -18,18 +18,18 @@
 
 ```bash
 # Check if RTK is installed
-rtk --version
+stc --version
 
 # CRITICAL: Verify it's the Token Killer (not Type Kit)
-rtk gain    # Should show token savings stats, NOT "command not found"
+stc gain    # Should show token savings stats, NOT "command not found"
 
 # Check installation path
-which rtk
+which stc
 ```
 
-If `rtk gain` works, you have the **correct** RTK installed. **DO NOT reinstall**. Skip to "Project Initialization".
+If `stc gain` works, you have the **correct** RTK installed. **DO NOT reinstall**. Skip to "Project Initialization".
 
-If `rtk gain` fails but `rtk --version` succeeds, you have the **wrong** RTK (Type Kit). Uninstall and reinstall the correct one (see below).
+If `stc gain` fails but `stc --version` succeeds, you have the **wrong** RTK (Type Kit). Uninstall and reinstall the correct one (see below).
 
 ## Installation (only if RTK not available or wrong RTK installed)
 
@@ -44,28 +44,27 @@ cargo uninstall rtk
 ### Quick Install (Linux/macOS)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/master/install.sh | sh
 ```
 
 After installation, **verify you have the correct rtk**:
 ```bash
-rtk gain  # Must show token savings stats (not "command not found")
+stc gain  # Must show token savings stats (not "command not found")
 ```
 
 ### Alternative: Manual Installation
 
 ```bash
-# From rtk-ai repository (NOT reachingforthejack!)
-cargo install --git https://github.com/rtk-ai/rtk
-
-# OR (if published and correct on crates.io)
-cargo install rtk
+# From the stc fork repository (installs the `stc` binary)
+cargo install --git https://github.com/harshitsinghbhandari/stc
 
 # ALWAYS VERIFY after installation
-rtk gain  # MUST show token savings, not "command not found"
+stc gain  # MUST show token savings, not "command not found"
 ```
 
-⚠️ **WARNING**: `cargo install rtk` from crates.io might install the wrong package. Always verify with `rtk gain`.
+> **Note**: stc is not published to crates.io. Install via the Homebrew tap
+> (`brew tap harshitsinghbhandari/homebrew-tap && brew install stc`), the
+> install script, or `cargo install --git` above.
 
 ## Project Initialization
 
@@ -74,15 +73,15 @@ rtk gain  # MUST show token savings, not "command not found"
 ```
   Do you want RTK active across ALL Claude Code projects?
   │
-  ├─ YES → rtk init -g              (recommended)
+  ├─ YES → stc init -g              (recommended)
   │         Hook + RTK.md (~10 tokens in context)
   │         Commands auto-rewritten transparently
   │
-  ├─ YES, minimal → rtk init -g --hook-only
+  ├─ YES, minimal → stc init -g --hook-only
   │         Hook only, nothing added to CLAUDE.md
   │         Zero tokens in context
   │
-  └─ NO, single project → rtk init
+  └─ NO, single project → stc init
             Local CLAUDE.md only (137 lines)
             No hook, no global effect
 ```
@@ -92,7 +91,7 @@ rtk gain  # MUST show token savings, not "command not found"
 **Best for: All projects, automatic RTK usage**
 
 ```bash
-rtk init -g
+stc init -g
 # → Installs hook to ~/.claude/hooks/rtk-rewrite.sh
 # → Creates ~/.claude/RTK.md (10 lines, meta commands only)
 # → Adds @RTK.md reference to ~/.claude/CLAUDE.md
@@ -100,11 +99,11 @@ rtk init -g
 # → If yes: patches + creates backup (~/.claude/settings.json.bak)
 
 # Automated alternatives:
-rtk init -g --auto-patch    # Patch without prompting
-rtk init -g --no-patch      # Print manual instructions instead
+stc init -g --auto-patch    # Patch without prompting
+stc init -g --no-patch      # Print manual instructions instead
 
 # Verify installation
-rtk init --show  # Check hook is installed and executable
+stc init --show  # Check hook is installed and executable
 ```
 
 **Token savings**: ~99.5% reduction (2000 tokens → 10 tokens in context)
@@ -120,11 +119,11 @@ Claude Code's hook registry. RTK adds a PreToolUse hook that rewrites commands t
        │                    │  PreToolUse trigger  │                    │
        │                    │ ───────────────────►│                    │
        │                    │                     │  rewrite command   │
-       │                    │                     │  → rtk git status  │
+       │                    │                     │  → stc git status  │
        │                    │◄────────────────────│                    │
        │                    │  updated command     │                    │
        │                    │                                          │
-       │  execute: rtk git status                                      │
+       │  execute: stc git status                                      │
        │ ─────────────────────────────────────────────────────────────►│
        │                                                               │  filter
        │  "3 modified, 1 untracked ✓"                                  │
@@ -143,7 +142,7 @@ cp ~/.claude/settings.json.bak ~/.claude/settings.json
 
 ```bash
 cd /path/to/your/project
-rtk init  # Creates ./CLAUDE.md with full RTK instructions (137 lines)
+stc init  # Creates ./CLAUDE.md with full RTK instructions (137 lines)
 ```
 
 **Token savings**: Instructions loaded only for this project
@@ -153,7 +152,7 @@ rtk init  # Creates ./CLAUDE.md with full RTK instructions (137 lines)
 #### From old 137-line CLAUDE.md injection (pre-0.22)
 
 ```bash
-rtk init -g  # Automatically migrates to hook-first mode
+stc init -g  # Automatically migrates to hook-first mode
 # → Removes old 137-line block
 # → Installs hook + RTK.md
 # → Adds @RTK.md reference
@@ -161,16 +160,16 @@ rtk init -g  # Automatically migrates to hook-first mode
 
 #### From old hook with inline logic (pre-0.24) — ⚠️ Breaking Change
 
-RTK 0.24.0 replaced the inline command-detection hook (~200 lines) with a **thin delegator** that calls `rtk rewrite`. The binary now contains the rewrite logic, so adding new commands no longer requires a hook update.
+RTK 0.24.0 replaced the inline command-detection hook (~200 lines) with a **thin delegator** that calls `stc rewrite`. The binary now contains the rewrite logic, so adding new commands no longer requires a hook update.
 
 The old hook still works but won't benefit from new rules added in future releases.
 
 ```bash
 # Upgrade hook to thin delegator
-rtk init --global
+stc init --global
 
 # Verify the new hook is active
-rtk init --show
+stc init --show
 # Should show: ✅ Hook: ... (thin delegator, up to date)
 ```
 
@@ -179,11 +178,11 @@ rtk init --show
 ### First-Time User (Recommended)
 ```bash
 # 1. Install RTK
-cargo install --git https://github.com/rtk-ai/rtk
-rtk gain  # Verify (must show token stats)
+cargo install --git https://github.com/harshitsinghbhandari/stc
+stc gain  # Verify (must show token stats)
 
 # 2. Setup with prompts
-rtk init -g
+stc init -g
 # → Answer 'y' when prompted to patch settings.json
 # → Creates backup automatically
 
@@ -194,16 +193,16 @@ rtk init -g
 ### CI/CD or Automation
 ```bash
 # Non-interactive setup (no prompts)
-rtk init -g --auto-patch
+stc init -g --auto-patch
 
 # Verify in scripts
-rtk init --show | grep "Hook:"
+stc init --show | grep "Hook:"
 ```
 
 ### Conservative User (Manual Control)
 ```bash
 # Get manual instructions without patching
-rtk init -g --no-patch
+stc init -g --no-patch
 
 # Review printed JSON snippet
 # Manually edit ~/.claude/settings.json
@@ -213,10 +212,10 @@ rtk init -g --no-patch
 ### Temporary Trial
 ```bash
 # Install hook
-rtk init -g --auto-patch
+stc init -g --auto-patch
 
 # Later: remove everything
-rtk init -g --uninstall
+stc init -g --uninstall
 
 # Restore backup if needed
 cp ~/.claude/settings.json.bak ~/.claude/settings.json
@@ -226,16 +225,16 @@ cp ~/.claude/settings.json.bak ~/.claude/settings.json
 
 ```bash
 # Basic test
-rtk ls .
+stc ls .
 
 # Test with git
-rtk git status
+stc git status
 
 # Test with pnpm
-rtk pnpm list
+stc pnpm list
 
 # Test with Vitest
-rtk vitest
+stc vitest
 ```
 
 ## Uninstalling
@@ -244,7 +243,7 @@ rtk vitest
 
 ```bash
 # Complete removal (global installations only)
-rtk init -g --uninstall
+stc init -g --uninstall
 
 # What gets removed:
 #   - Hook: ~/.claude/hooks/rtk-rewrite.sh
@@ -264,9 +263,9 @@ rtk init -g --uninstall
 cargo uninstall rtk
 
 # If installed via package manager
-brew uninstall rtk          # macOS Homebrew
-sudo apt remove rtk         # Debian/Ubuntu
-sudo dnf remove rtk         # Fedora/RHEL
+brew uninstall stc          # macOS Homebrew
+sudo apt remove stc         # Debian/Ubuntu
+sudo dnf remove stc         # Fedora/RHEL
 ```
 
 ### Restore from Backup (if needed)
@@ -279,46 +278,46 @@ cp ~/.claude/settings.json.bak ~/.claude/settings.json
 
 ### Files
 ```bash
-rtk ls .              # Compact tree view
-rtk read file.rs      # Optimized reading
-rtk grep "pattern" .  # Grouped search results
+stc ls .              # Compact tree view
+stc read file.rs      # Optimized reading
+stc grep "pattern" .  # Grouped search results
 ```
 
 ### Git
 ```bash
-rtk git status        # Compact status
-rtk git log -n 10     # Condensed logs
-rtk git diff          # Optimized diff
-rtk git add .         # → "ok ✓"
-rtk git commit -m "msg"  # → "ok ✓ abc1234"
-rtk git push          # → "ok ✓ main"
+stc git status        # Compact status
+stc git log -n 10     # Condensed logs
+stc git diff          # Optimized diff
+stc git add .         # → "ok ✓"
+stc git commit -m "msg"  # → "ok ✓ abc1234"
+stc git push          # → "ok ✓ main"
 ```
 
 ### Pnpm (fork only)
 ```bash
-rtk pnpm list     # Dependency tree (-70% tokens)
-rtk pnpm outdated # Available updates (-80-90%)
-rtk pnpm install  # Silent installation
+stc pnpm list     # Dependency tree (-70% tokens)
+stc pnpm outdated # Available updates (-80-90%)
+stc pnpm install  # Silent installation
 ```
 
 ### Tests
 ```bash
-rtk cargo test      # Filtered Cargo test output (-90%)
-rtk go test         # Filtered Go tests (NDJSON, -90%)
-rtk jest            # Filtered Jest output (-99.6%)
-rtk vitest          # Filtered Vitest output (-99.6%)
-rtk playwright test # Filtered Playwright output (-94%)
-rtk pytest          # Filtered Python tests (-90%)
-rtk rake test       # Filtered Ruby tests (-90%)
-rtk rspec           # Filtered RSpec tests (-60%)
-rtk test <cmd>      # Generic test wrapper - failures only (-90%)
+stc cargo test      # Filtered Cargo test output (-90%)
+stc go test         # Filtered Go tests (NDJSON, -90%)
+stc jest            # Filtered Jest output (-99.6%)
+stc vitest          # Filtered Vitest output (-99.6%)
+stc playwright test # Filtered Playwright output (-94%)
+stc pytest          # Filtered Python tests (-90%)
+stc rake test       # Filtered Ruby tests (-90%)
+stc rspec           # Filtered RSpec tests (-60%)
+stc test <cmd>      # Generic test wrapper - failures only (-90%)
 ```
 
 ### Statistics
 ```bash
-rtk gain              # Token savings
-rtk gain --graph      # With ASCII graph
-rtk gain --history    # With command history
+stc gain              # Token savings
+stc gain --graph      # With ASCII graph
+stc gain --history    # With command history
 ```
 
 ## Validated Token Savings
@@ -376,22 +375,22 @@ cargo install --path . --force
 
 ## Support and Contributing
 
-- **Website**: https://www.rtk-ai.app
-- **Contact**: contact@rtk-ai.app
+- **Website**: https://github.com/harshitsinghbhandari/stc
+- **Contact**: https://github.com/harshitsinghbhandari/stc/issues
 - **Troubleshooting**: See [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for common issues
-- **GitHub issues**: https://github.com/rtk-ai/rtk/issues
-- **Pull Requests**: https://github.com/rtk-ai/rtk/pulls
+- **GitHub issues**: https://github.com/harshitsinghbhandari/stc/issues
+- **Pull Requests**: https://github.com/harshitsinghbhandari/stc/pulls
 
-⚠️ **If you installed the wrong rtk (Type Kit)**, see [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md#problem-rtk-gain-command-not-found)
+⚠️ **If you installed the wrong stc (Type Kit)**, see [TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md#problem-rtk-gain-command-not-found)
 
 ## AI Assistant Checklist
 
 Before each session:
 
-- [ ] Verify RTK is installed: `rtk --version`
+- [ ] Verify RTK is installed: `stc --version`
 - [ ] If not installed → follow "Install from fork"
-- [ ] If project not initialized → `rtk init`
-- [ ] Use `rtk` for ALL git/pnpm/test/vitest commands
-- [ ] Check savings: `rtk gain`
+- [ ] If project not initialized → `stc init`
+- [ ] Use `stc` for ALL git/pnpm/test/vitest commands
+- [ ] Check savings: `stc gain`
 
-**Golden Rule**: AI coding assistants should ALWAYS use `rtk` as a proxy for shell commands that generate verbose output (git, pnpm, npm, cargo test, vitest, docker, kubectl).
+**Golden Rule**: AI coding assistants should ALWAYS use `stc` as a proxy for shell commands that generate verbose output (git, pnpm, npm, cargo test, vitest, docker, kubectl).

@@ -7,15 +7,15 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/rtk-ai/rtk/actions"><img src="https://github.com/rtk-ai/rtk/workflows/Security%20Check/badge.svg" alt="CI"></a>
-  <a href="https://github.com/rtk-ai/rtk/releases"><img src="https://img.shields.io/github/v/release/rtk-ai/rtk" alt="Release"></a>
+  <a href="https://github.com/harshitsinghbhandari/stc/actions"><img src="https://github.com/harshitsinghbhandari/stc/workflows/Security%20Check/badge.svg" alt="CI"></a>
+  <a href="https://github.com/harshitsinghbhandari/stc/releases"><img src="https://img.shields.io/github/v/release/harshitsinghbhandari/stc" alt="Release"></a>
   <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache 2.0"></a>
   <a href="https://discord.gg/RySmvNF5kF"><img src="https://img.shields.io/discord/1478373640461488159?label=Discord&logo=discord" alt="Discord"></a>
   <a href="https://formulae.brew.sh/formula/rtk"><img src="https://img.shields.io/homebrew/v/rtk" alt="Homebrew"></a>
 </p>
 
 <p align="center">
-  <a href="https://www.rtk-ai.app">Sitio web</a> &bull;
+  <a href="https://github.com/harshitsinghbhandari/stc">Sitio web</a> &bull;
   <a href="#instalacion">Instalar</a> &bull;
   <a href="docs/TROUBLESHOOTING.md">Solucion de problemas</a> &bull;
   <a href="docs/contributing/ARCHITECTURE.md">Arquitectura</a> &bull;
@@ -33,11 +33,11 @@
 
 ---
 
-rtk filtra y comprime las salidas de comandos antes de que lleguen al contexto de tu LLM. Binario Rust unico, cero dependencias, <10ms de overhead.
+stc filtra y comprime las salidas de comandos antes de que lleguen al contexto de tu LLM. Binario Rust unico, cero dependencias, <10ms de overhead.
 
 ## Ahorro de tokens (sesion de 30 min en Claude Code)
 
-| Operacion | Frecuencia | Estandar | rtk | Ahorro |
+| Operacion | Frecuencia | Estandar | stc | Ahorro |
 |-----------|------------|----------|-----|--------|
 | `ls` / `tree` | 10x | 2,000 | 400 | -80% |
 | `cat` / `read` | 20x | 40,000 | 12,000 | -70% |
@@ -57,30 +57,30 @@ brew install rtk
 ### Instalacion rapida (Linux/macOS)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/refs/heads/master/install.sh | sh
 ```
 
 ### Cargo
 
 ```bash
-cargo install --git https://github.com/rtk-ai/rtk
+cargo install --git https://github.com/harshitsinghbhandari/stc
 ```
 
 ### Verificacion
 
 ```bash
-rtk --version   # Debe mostrar "rtk 0.27.x"
-rtk gain        # Debe mostrar estadisticas de ahorro
+stc --version   # Debe mostrar "rtk 0.27.x"
+stc gain        # Debe mostrar estadisticas de ahorro
 ```
 
 ## Inicio rapido
 
 ```bash
 # 1. Instalar hook para Claude Code (recomendado)
-rtk init --global
+stc init --global
 
 # 2. Reiniciar Claude Code, luego probar
-git status  # Automaticamente reescrito a rtk git status
+git status  # Automaticamente reescrito a stc git status
 ```
 
 ## Como funciona
@@ -105,43 +105,43 @@ Cuatro estrategias:
 
 ### Archivos
 ```bash
-rtk ls .                        # Arbol de directorios optimizado
-rtk read file.rs                # Lectura inteligente
-rtk find "*.rs" .               # Resultados compactos
-rtk grep "pattern" .            # Busqueda agrupada por archivo
+stc ls .                        # Arbol de directorios optimizado
+stc read file.rs                # Lectura inteligente
+stc find "*.rs" .               # Resultados compactos
+stc grep "pattern" .            # Busqueda agrupada por archivo
 ```
 
 ### Git
 ```bash
-rtk git status                  # Estado compacto
-rtk git log -n 10               # Commits en una linea
-rtk git diff                    # Diff condensado
-rtk git push                    # -> "ok main"
+stc git status                  # Estado compacto
+stc git log -n 10               # Commits en una linea
+stc git diff                    # Diff condensado
+stc git push                    # -> "ok main"
 ```
 
 ### Tests
 ```bash
-rtk jest                        # Jest compacto
-rtk vitest                      # Vitest compacto
-rtk pytest                      # Tests Python (-90%)
-rtk go test                     # Tests Go (-90%)
-rtk cargo test                  # Tests Rust (-90%)
-rtk test <cmd>                  # Solo fallos (-90%)
+stc jest                        # Jest compacto
+stc vitest                      # Vitest compacto
+stc pytest                      # Tests Python (-90%)
+stc go test                     # Tests Go (-90%)
+stc cargo test                  # Tests Rust (-90%)
+stc test <cmd>                  # Solo fallos (-90%)
 ```
 
 ### Build & Lint
 ```bash
-rtk lint                        # ESLint agrupado por regla
-rtk tsc                         # Errores TypeScript agrupados
-rtk cargo build                 # Build Cargo (-80%)
-rtk ruff check                  # Lint Python (-80%)
+stc lint                        # ESLint agrupado por regla
+stc tsc                         # Errores TypeScript agrupados
+stc cargo build                 # Build Cargo (-80%)
+stc ruff check                  # Lint Python (-80%)
 ```
 
 ### Analiticas
 ```bash
-rtk gain                        # Estadisticas de ahorro
-rtk gain --graph                # Grafico ASCII (30 dias)
-rtk discover                    # Descubrir ahorros perdidos
+stc gain                        # Estadisticas de ahorro
+stc gain --graph                # Grafico ASCII (30 dias)
+stc discover                    # Descubrir ahorros perdidos
 ```
 
 ## Documentacion
@@ -152,7 +152,7 @@ rtk discover                    # Descubrir ahorros perdidos
 
 ## Contribuir
 
-Las contribuciones son bienvenidas. Abre un issue o PR en [GitHub](https://github.com/rtk-ai/rtk).
+Las contribuciones son bienvenidas. Abre un issue o PR en [GitHub](https://github.com/harshitsinghbhandari/stc).
 
 Unete a la comunidad en [Discord](https://discord.gg/RySmvNF5kF).
 

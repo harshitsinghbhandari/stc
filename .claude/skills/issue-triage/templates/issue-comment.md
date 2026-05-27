@@ -23,7 +23,7 @@ Use when: issue is valid but missing information to act on it (reproduction step
 
 To move forward, we need the following:
 
-- {Specific missing info 1 — e.g., "RTK version (`rtk --version` output)"}
+- {Specific missing info 1 — e.g., "RTK version (`stc --version` output)"}
 - {Specific missing info 2 — e.g., "Full command used and raw output"}
 - {Specific missing info 3 — e.g., "OS and shell (macOS/Linux, zsh/bash)"}
 
@@ -32,7 +32,7 @@ To move forward, we need the following:
 {What happens once the info is provided — e.g., "Once confirmed, we'll prioritize this for the next release."}
 
 ---
-*Triaged via [rtk](https://github.com/rtk-ai/rtk) `/issue-triage`*
+*Triaged via [rtk](https://github.com/harshitsinghbhandari/stc) `/issue-triage`*
 ```
 
 ---
@@ -53,7 +53,7 @@ This issue covers the same problem as #{original_number}: **{original_title}**.
 If your situation differs in an important way (different command, different OS, different error message), please reopen and add that context. Otherwise, follow the original issue for updates.
 
 ---
-*Triaged via [rtk](https://github.com/rtk-ai/rtk) `/issue-triage`*
+*Triaged via [rtk](https://github.com/harshitsinghbhandari/stc) `/issue-triage`*
 ```
 
 ---
@@ -74,7 +74,7 @@ If this is still relevant:
 Thanks for taking the time to report it.
 
 ---
-*Triaged via [rtk](https://github.com/rtk-ai/rtk) `/issue-triage`*
+*Triaged via [rtk](https://github.com/harshitsinghbhandari/stc) `/issue-triage`*
 ```
 
 ---
@@ -94,12 +94,12 @@ After review, this request falls outside RTK's current design goals.
 
 ### Alternatives
 
-{If applicable: what the user can do instead. E.g., "For this use case, `rtk proxy <cmd>` gives you raw output while still tracking usage metrics."}
+{If applicable: what the user can do instead. E.g., "For this use case, `stc proxy <cmd>` gives you raw output while still tracking usage metrics."}
 
 If the use case evolves or the scope changes in a future version, feel free to reopen with updated context.
 
 ---
-*Triaged via [rtk](https://github.com/rtk-ai/rtk) `/issue-triage`*
+*Triaged via [rtk](https://github.com/harshitsinghbhandari/stc) `/issue-triage`*
 ```
 
 ---
@@ -128,7 +128,7 @@ If the use case evolves or the scope changes in a future version, feel free to r
 - XL : >1 week
 
 **RTK-specific context to include when relevant** :
-- Mention `rtk --version` as the first diagnostic step for bug reports
+- Mention `stc --version` as the first diagnostic step for bug reports
 - Reference the relevant module (`src/git.rs`, `src/vitest_cmd.rs`, etc.) when known
 - Link to the filter development checklist in CLAUDE.md for feature requests that involve new commands
 - Note performance constraints (<10ms startup) when rejecting async/heavy dependency requests

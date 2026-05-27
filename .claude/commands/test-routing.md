@@ -17,13 +17,13 @@ Vérifie le routing de commandes RTK sans exécution (dry-run). Utile pour teste
 
 ```bash
 /test-routing git status
-# Output: ✅ RTK filter available: git status → rtk git status
+# Output: ✅ RTK filter available: git status → stc git status
 
 /test-routing npm install
 # Output: ⚠️  No RTK filter, would execute raw: npm install
 
 /test-routing cargo test
-# Output: ✅ RTK filter available: cargo test → rtk cargo test
+# Output: ✅ RTK filter available: cargo test → stc cargo test
 ```
 
 ## Quand utiliser
@@ -43,8 +43,8 @@ shift
 ARGS="$@"
 
 # Check if RTK has subcommand for this command
-if rtk --help | grep -E "^  $COMMAND" >/dev/null 2>&1; then
-    echo "✅ RTK filter available: $COMMAND $ARGS → rtk $COMMAND $ARGS"
+if stc --help | grep -E "^  $COMMAND" >/dev/null 2>&1; then
+    echo "✅ RTK filter available: $COMMAND $ARGS → stc $COMMAND $ARGS"
     echo ""
     echo "Expected behavior:"
     echo "  - Command will be filtered through RTK"
@@ -104,7 +104,7 @@ RTK_COMMANDS=(
 
 # Check if command in supported list
 if [[ " ${RTK_COMMANDS[@]} " =~ " ${COMMAND} " ]]; then
-    echo "✅ RTK filter available: $COMMAND $ARGS → rtk $COMMAND $ARGS"
+    echo "✅ RTK filter available: $COMMAND $ARGS → stc $COMMAND $ARGS"
     echo ""
 
     # Show filter details if available
@@ -155,7 +155,7 @@ echo "Command: $COMMAND $ARGS"
 echo ""
 
 # Check if RTK installed
-if ! command -v rtk >/dev/null 2>&1; then
+if ! command -v stc >/dev/null 2>&1; then
     echo "❌ ERROR: RTK not installed"
     echo "   Install with: cargo install --path ."
     exit 1
@@ -167,12 +167,12 @@ echo "RTK Version: $RTK_VERSION"
 echo ""
 
 # Check if command has filter
-if rtk --help | grep -E "^  $COMMAND" >/dev/null 2>&1; then
+if stc --help | grep -E "^  $COMMAND" >/dev/null 2>&1; then
     echo "✅ Filter: Available"
     echo ""
     echo "Routing:"
     echo "  Input:  $COMMAND $ARGS"
-    echo "  Route:  rtk $COMMAND $ARGS"
+    echo "  Route:  stc $COMMAND $ARGS"
     echo "  Filter: Applied"
     echo ""
 
@@ -231,7 +231,7 @@ RTK Version: 0.16.0
 
 Routing:
   Input:  git status
-  Route:  rtk git status
+  Route:  stc git status
   Filter: Applied
 
 Expected Token Savings: 60-80%
@@ -290,7 +290,7 @@ Avant d'exécuter une commande coûteuse, vérifier si RTK a un filtre :
 
 ```bash
 /test-routing cargo build --all-targets
-# ✅ Filter available → use rtk cargo build
+# ✅ Filter available → use stc cargo build
 # ⚠️  No filter → use raw cargo build
 ```
 
@@ -358,5 +358,5 @@ Assistant: "Yes! RTK has a filter for git status with 60-80% token savings."
 
 Pour tester le filtre complet, utiliser :
 ```bash
-rtk <cmd>  # Exécution réelle avec filtre
+stc <cmd>  # Exécution réelle avec filtre
 ```

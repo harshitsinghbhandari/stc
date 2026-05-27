@@ -1,7 +1,7 @@
 # RTK Documentation — Interface Contract
 
 This directory contains user-facing documentation for the RTK website.
-It feeds `rtk-ai/rtk-website` via the `prepare-docs.mjs` pipeline.
+It feeds `harshitsinghbhandari/stc-website` via the `prepare-docs.mjs` pipeline.
 
 **Scope**: `docs/guide/` is website content only. Technical and contributor documentation
 lives in the codebase (distributed, co-located pattern):
@@ -53,5 +53,5 @@ if frontmatter is missing or malformed.
 - **Diagrams**: Mermaid in fenced code blocks
 - **Code samples**: always specify the language (`rust`, `toml`, `bash`)
 - **Language**: English only
-- **No `rtk <cmd>` syntax**: users never type `rtk` — hooks rewrite commands transparently.
-  Only `rtk gain`, `rtk init`, `rtk verify`, and `rtk proxy` appear as user-typed commands.
+- **No `stc <cmd>` syntax**: users never type `stc` — hooks rewrite commands transparently.
+  Only `stc gain`, `stc init`, `stc verify`, and `stc proxy` appear as user-typed commands.

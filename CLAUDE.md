@@ -11,26 +11,26 @@ This is a fork with critical fixes for git argument parsing and modern JavaScrip
 ### Name Collision Warning
 
 **Two different "rtk" projects exist:**
-- This project: Rust Token Killer (rtk-ai/rtk)
+- This project: Rust Token Killer (harshitsinghbhandari/stc)
 - reachingforthejack/rtk: Rust Type Kit (DIFFERENT - generates Rust types)
 
 **Verify correct installation:**
 ```bash
-rtk --version  # Should show "rtk 0.28.2" (or newer)
-rtk gain       # Should show token savings stats (NOT "command not found")
+stc --version  # Should show "rtk 0.28.2" (or newer)
+stc gain       # Should show token savings stats (NOT "command not found")
 ```
 
-If `rtk gain` fails, you have the wrong package installed.
+If `stc gain` fails, you have the wrong package installed.
 
 ## Development Commands
 
-> **Note**: If rtk is installed, prefer `rtk <cmd>` over raw commands for token-optimized output.
-> All commands work with passthrough support even for subcommands rtk doesn't specifically handle.
+> **Note**: If stc is installed, prefer `stc <cmd>` over raw commands for token-optimized output.
+> All commands work with passthrough support even for subcommands stc doesn't specifically handle.
 
 ### Build & Run
 ```bash
 cargo build                   # raw
-rtk cargo build               # preferred (token-optimized)
+stc cargo build               # preferred (token-optimized)
 cargo build --release         # release build (optimized)
 cargo run -- <command>        # run directly
 cargo install --path .        # install locally
@@ -39,7 +39,7 @@ cargo install --path .        # install locally
 ### Testing
 ```bash
 cargo test                    # all tests
-rtk cargo test                # preferred (token-optimized)
+stc cargo test                # preferred (token-optimized)
 cargo test <test_name>        # specific test
 cargo test <module_name>::    # module tests
 cargo test -- --nocapture     # with stdout
@@ -51,7 +51,7 @@ bash scripts/test-all.sh      # smoke tests (installed binary required)
 cargo check                   # check without building
 cargo fmt                     # format code
 cargo clippy --all-targets    # all clippy lints
-rtk cargo clippy --all-targets # preferred
+stc cargo clippy --all-targets # preferred
 ```
 
 ### Pre-commit Gate
@@ -67,7 +67,7 @@ cargo generate-rpm            # RPM package (needs cargo-generate-rpm, after rel
 
 ## Architecture
 
-rtk uses a **command proxy architecture**: `main.rs` routes CLI commands via a Clap `Commands` enum to specialized filter modules in `src/cmds/*/`, each of which executes the underlying command and compresses its output. Token savings are tracked in SQLite via `src/core/tracking.rs`.
+stc uses a **command proxy architecture**: `main.rs` routes CLI commands via a Clap `Commands` enum to specialized filter modules in `src/cmds/*/`, each of which executes the underlying command and compresses its output. Token savings are tracked in SQLite via `src/core/tracking.rs`.
 
 For the full architecture, component details, and module development patterns, see:
 - [ARCHITECTURE.md](docs/contributing/ARCHITECTURE.md) — System design, module organization, filtering strategies, error handling
@@ -81,21 +81,21 @@ Supported ecosystems: git/gh/gt, cargo, go/golangci-lint, npm/pnpm/npx, ruff/pyt
 
 **Purpose**: Execute commands without filtering but track usage for metrics.
 
-**Usage**: `rtk proxy <command> [args...]`
+**Usage**: `stc proxy <command> [args...]`
 
 **Benefits**:
 - **Bypass RTK filtering**: Workaround bugs or get full unfiltered output
-- **Track usage metrics**: Measure which commands Claude uses most (visible in `rtk gain --history`)
+- **Track usage metrics**: Measure which commands Claude uses most (visible in `stc gain --history`)
 - **Guaranteed compatibility**: Always works even if RTK doesn't implement the command
 
 **Examples**:
 ```bash
-rtk proxy git log --oneline -20    # Full git log output (no truncation)
-rtk proxy npm install express      # Raw npm output (no filtering)
-rtk proxy curl https://api.example.com/data  # Any command works
+stc proxy git log --oneline -20    # Full git log output (no truncation)
+stc proxy npm install express      # Raw npm output (no filtering)
+stc proxy curl https://api.example.com/data  # Any command works
 ```
 
-All proxy commands appear in `rtk gain --history` with 0% savings (input = output).
+All proxy commands appear in `stc gain --history` with 0% savings (input = output).
 
 ## Coding Rules
 
@@ -137,7 +137,7 @@ hyperfine 'target/release/rtk git log -10' --warmup 3  # after (should be <10ms)
 **ALWAYS confirm working directory before starting any work**:
 
 ```bash
-pwd  # Verify you're in the rtk project root
+pwd  # Verify you're in the stc project root
 git branch  # Verify correct branch (main, feature/*, etc.)
 ```
 
