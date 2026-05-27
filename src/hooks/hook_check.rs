@@ -1,8 +1,8 @@
 //! Detects whether RTK hooks are installed and warns if they are outdated.
 
 use super::constants::{
-    CLAUDE_DIR, CLAUDE_HOOK_COMMAND, HOOKS_SUBDIR, PRE_TOOL_USE_KEY, REWRITE_HOOK_FILE,
-    SETTINGS_JSON,
+    CLAUDE_DIR, CLAUDE_HOOK_COMMAND, CODEX_HOOK_COMMAND, HOOKS_JSON, HOOKS_SUBDIR,
+    PRE_TOOL_USE_KEY, REWRITE_HOOK_FILE, SETTINGS_JSON,
 };
 use crate::core::constants::RTK_DATA_DIR;
 use std::path::PathBuf;
@@ -84,6 +84,32 @@ fn binary_hook_registered(claude_dir: &std::path::Path) -> bool {
         .flatten()
         .filter_map(|hook| hook.get("command")?.as_str())
         .any(|cmd| cmd == CLAUDE_HOOK_COMMAND)
+}
+
+/// Check whether the `rtk hook codex` PreToolUse hook is registered in the
+/// given Codex config directory's `hooks.json`. Mirrors the OpenCode plugin
+/// detection: a thin existence/registration check used by diagnostics.
+pub fn codex_hook_registered(codex_dir: &std::path::Path) -> bool {
+    let hooks_json = codex_dir.join(HOOKS_JSON);
+    let content = match std::fs::read_to_string(&hooks_json) {
+        Ok(c) if !c.trim().is_empty() => c,
+        _ => return false,
+    };
+    let root: serde_json::Value = match serde_json::from_str(&content) {
+        Ok(v) => v,
+        Err(_) => return false,
+    };
+    root.get("hooks")
+        .and_then(|h| h.get(PRE_TOOL_USE_KEY))
+        .and_then(|p| p.as_array())
+        .map(|arr| {
+            arr.iter()
+                .filter_map(|entry| entry.get("hooks")?.as_array())
+                .flatten()
+                .filter_map(|hook| hook.get("command")?.as_str())
+                .any(|cmd| cmd == CODEX_HOOK_COMMAND)
+        })
+        .unwrap_or(false)
 }
 
 /// Check if the installed hook is missing or outdated, warn once per day.
@@ -298,6 +324,48 @@ mod tests {
         )
         .unwrap();
         assert!(!other_integration_installed(tmp.path()));
+    }
+
+    #[test]
+    fn test_codex_hook_registered_detects_command() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let hooks_json = tmp.path().join(HOOKS_JSON);
+        let content = serde_json::json!({
+            "hooks": {
+                "PreToolUse": [
+                    { "matcher": "Bash", "hooks": [{ "type": "command", "command": CODEX_HOOK_COMMAND }] }
+                ]
+            }
+        });
+        std::fs::write(&hooks_json, content.to_string()).unwrap();
+        assert!(codex_hook_registered(tmp.path()));
+    }
+
+    #[test]
+    fn test_codex_hook_registered_absent() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        // No hooks.json at all.
+        assert!(!codex_hook_registered(tmp.path()));
+
+        // hooks.json present but without our command.
+        let hooks_json = tmp.path().join(HOOKS_JSON);
+        let content = serde_json::json!({
+            "hooks": {
+                "PreToolUse": [
+                    { "matcher": "Bash", "hooks": [{ "type": "command", "command": "other.sh" }] }
+                ]
+            }
+        });
+        std::fs::write(&hooks_json, content.to_string()).unwrap();
+        assert!(!codex_hook_registered(tmp.path()));
+    }
+
+    #[test]
+    fn test_codex_hook_registered_malformed_json() {
+        let tmp = tempfile::tempdir().expect("tempdir");
+        let hooks_json = tmp.path().join(HOOKS_JSON);
+        std::fs::write(&hooks_json, "not json {{{").unwrap();
+        assert!(!codex_hook_registered(tmp.path()));
     }
 
     #[test]

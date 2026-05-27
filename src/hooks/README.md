@@ -6,7 +6,7 @@
 
 The **lifecycle management** layer for LLM agent hooks: install, uninstall, verify integrity, audit usage, and manage trust. This component creates and maintains the hook artifacts that live in `hooks/` (root), but does **not** execute rewrite logic itself — that lives in `discover/registry`.
 
-Owns: `rtk init` installation flows (5 agents via `AgentTarget` enum + 3 special modes: Gemini, Codex, OpenCode), SHA-256 integrity verification, hook version checking, audit log analysis, `rtk rewrite` CLI entry point, and TOML filter trust management.
+Owns: `rtk init` installation flows (5 agents via `AgentTarget` enum + 3 special modes: Gemini, Codex, OpenCode — each with its own programmatic hook protocol and config file), SHA-256 integrity verification, hook version checking, audit log analysis, `rtk rewrite` CLI entry point, and TOML filter trust management.
 
 Does **not** own: the deployed hook scripts themselves (that's `hooks/`), the rewrite pattern registry (that's `discover/`), or command filtering (that's `cmds/`).
 
@@ -28,7 +28,7 @@ LLM agent integration layer that installs, validates, and executes command-rewri
 | Claude-MD (legacy) | `rtk init --claude-md` | 134-line RTK block | CLAUDE.md |
 | Windsurf | `rtk init -g --agent windsurf` | `.windsurfrules` | -- |
 | Cline | `rtk init --agent cline` | `.clinerules` | -- |
-| Codex | `rtk init --codex` | RTK.md in `$CODEX_HOME` or `~/.codex` | AGENTS.md |
+| Codex | `rtk init --codex` | RTK.md in `$CODEX_HOME` or `~/.codex` | AGENTS.md, hooks.json (`PreToolUse` → `rtk hook codex`) |
 | Cursor | `rtk init -g --agent cursor` | Cursor hook | hooks.json |
 | Pi | `rtk init --agent pi` | `.pi/extensions/rtk.ts` | -- |
 | Hermes | `rtk init --agent hermes` | Python plugin in `~/.hermes/plugins/rtk-rewrite/` | `config.yaml` `plugins.enabled` |
@@ -88,13 +88,13 @@ Rules are loaded from all Claude Code `settings.json` files (project + global, i
 | Copilot VS Code (rtk hook copilot) | Yes | `permissionDecision: "ask"` — user prompted |
 | Gemini CLI (rtk hook gemini) | No (allow/deny only) | allow (limitation — no ask mode in Gemini) |
 | Copilot CLI (rtk hook copilot) | No updatedInput | deny-with-suggestion (unchanged) |
-| Codex | ask parsed but no-op | allow (limitation — fails open) |
+| Codex (rtk hook codex) | ask parsed but no-op | allow (limitation — fails open) |
 
 ### Implementation
 
 - `permissions.rs` — loads deny/ask/allow rules, evaluates precedence, returns `PermissionVerdict`
 - `rewrite_cmd.rs` — maps verdict to exit code (consumed by shell hook)
-- `hook_cmd.rs` — maps verdict to JSON `permissionDecision` field (Copilot/Gemini)
+- `hook_cmd.rs` — maps verdict to JSON `permissionDecision` field (Claude/Copilot/Gemini/Cursor/Codex)
 
 ## Exit Code Contract
 
