@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
-# Use local release build if available, otherwise fall back to installed rtk
-if [ -f "./target/release/rtk" ]; then
-  RTK="$(cd "$(dirname ./target/release/rtk)" && pwd)/$(basename ./target/release/rtk)"
-elif command -v rtk &> /dev/null; then
-  RTK="$(command -v rtk)"
+# Use local release build if available, otherwise fall back to installed stc
+if [ -f "./target/release/stc" ]; then
+  RTK="$(cd "$(dirname ./target/release/stc)" && pwd)/$(basename ./target/release/stc)"
+elif command -v stc &> /dev/null; then
+  RTK="$(command -v stc)"
 else
-  echo "Error: rtk not found. Run 'cargo build --release' or install rtk."
+  echo "Error: stc not found. Run 'cargo build --release' or install stc."
   exit 1
 fi
 BENCH_DIR="$(pwd)/scripts/benchmark"
@@ -637,12 +637,12 @@ bench_rewrite() {
   fi
 }
 
-bench_rewrite "rewrite quoted"       "$RTK rewrite 'git status'"     "rtk git status"
-bench_rewrite "rewrite unquoted"     "$RTK rewrite git status"       "rtk git status"
-bench_rewrite "rewrite ls -al"       "$RTK rewrite ls -al"           "rtk ls -al"
-bench_rewrite "rewrite npm exec"     "$RTK rewrite npm exec"         "rtk npm exec"
-bench_rewrite "rewrite cargo test"   "$RTK rewrite cargo test"       "rtk cargo test"
-bench_rewrite "rewrite compound"     "$RTK rewrite 'cargo test && git push'" "rtk cargo test && rtk git push"
+bench_rewrite "rewrite quoted"       "$RTK rewrite 'git status'"     "stc git status"
+bench_rewrite "rewrite unquoted"     "$RTK rewrite git status"       "stc git status"
+bench_rewrite "rewrite ls -al"       "$RTK rewrite ls -al"           "stc ls -al"
+bench_rewrite "rewrite npm exec"     "$RTK rewrite npm exec"         "stc npm exec"
+bench_rewrite "rewrite cargo test"   "$RTK rewrite cargo test"       "stc cargo test"
+bench_rewrite "rewrite compound"     "$RTK rewrite 'cargo test && git push'" "stc cargo test && stc git push"
 
 # ===================
 # Summary
