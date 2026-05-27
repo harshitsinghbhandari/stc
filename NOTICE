@@ -1,0 +1,31 @@
+stc (Save Token Cost)
+Copyright 2026 Harshit Singh Bhandari
+
+This product is a modified fork of "rtk" (Rust Token Killer).
+Original work Copyright 2024 Patrick Szymkowiak and the rtk-ai/rtk contributors
+(rtk-ai and rtk-ai Labs), licensed under the Apache License, Version 2.0.
+Original project: https://github.com/rtk-ai/rtk
+
+This fork is also distributed under the Apache License, Version 2.0. A copy of
+the license is provided in the LICENSE file in this repository.
+
+------------------------------------------------------------------------------
+Modifications notice (Apache License, Version 2.0, Section 4(b))
+------------------------------------------------------------------------------
+
+This is a MODIFIED version of the original "rtk" work, maintained by
+Harshit Singh Bhandari. Files that carry changes are marked as modified
+through this NOTICE. Significant changes made in this fork include:
+
+  * Renamed the user-facing CLI command and binary from `rtk` to `stc`
+    (the internal Rust crate, data directory, RTK_* environment variables,
+    and `[rtk]` log prefix are retained for compatibility).
+  * Added transparent OpenAI Codex CLI auto-rewrite via a PreToolUse hook.
+  * Replaced the upstream release pipeline with a fork-owned pipeline that
+    cuts GitHub releases on harshitsinghbhandari/stc and publishes a Homebrew
+    formula (`stc`) to the harshitsinghbhandari/homebrew-tap tap.
+  * Re-pointed project URLs and packaging metadata to the fork.
+
+Use of the names "rtk", "rtk-ai", "Patrick Szymkowiak", or "stc" does not
+imply endorsement; they are used solely for accurate attribution as required
+by the Apache License, Version 2.0.

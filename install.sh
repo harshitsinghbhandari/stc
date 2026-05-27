@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
-# rtk installer - https://github.com/harshitsinghbhandari/stc
+# stc installer - https://github.com/harshitsinghbhandari/stc
 # Usage: curl -fsSL https://raw.githubusercontent.com/harshitsinghbhandari/stc/refs/heads/master/install.sh | sh
 
 set -e
 
 REPO="harshitsinghbhandari/stc"
-BINARY_NAME="rtk"
-INSTALL_DIR="${RTK_INSTALL_DIR:-$HOME/.local/bin}"
+BINARY_NAME="stc"
+INSTALL_DIR="${STC_INSTALL_DIR:-${RTK_INSTALL_DIR:-$HOME/.local/bin}}"
 
 # Colors
 RED='\033[0;31m'
@@ -64,7 +64,7 @@ get_latest_version() {
     fi
 
     if [ -z "$VERSION" ]; then
-        error "Failed to get latest version (GitHub API may be rate-limited; set RTK_VERSION=vX.Y.Z to pin)"
+        error "Failed to get latest version (GitHub API may be rate-limited; set STC_VERSION=vX.Y.Z to pin)"
     fi
 }
 
@@ -135,9 +135,9 @@ main() {
     detect_os
     detect_arch
     get_target
-    if [ -n "$RTK_VERSION" ]; then
-        VERSION="$RTK_VERSION"
-        info "Using pinned version from RTK_VERSION: $VERSION"
+    if [ -n "${STC_VERSION:-$RTK_VERSION}" ]; then
+        VERSION="${STC_VERSION:-$RTK_VERSION}"
+        info "Using pinned version from STC_VERSION: $VERSION"
     else
         get_latest_version
     fi
