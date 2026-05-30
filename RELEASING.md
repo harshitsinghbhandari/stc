@@ -62,12 +62,12 @@ so a Personal Access Token is required.
 ### Option A — push a version tag (recommended)
 
 1. Make sure `version` in `Cargo.toml` is the version you want to release
-   (e.g. `0.40.0`) and that `develop`/`master` is in the state you want.
+   (e.g. `0.1.0`) and that `develop`/`master` is in the state you want.
 2. Create and push an annotated tag matching `vMAJOR.MINOR.PATCH`:
 
    ```bash
-   git tag -a v0.40.0 -m "stc v0.40.0"
-   git push origin v0.40.0
+   git tag -a v0.1.0 -m "stc v0.1.0"
+   git push origin v0.1.0
    ```
 
 3. The `Release` workflow (`.github/workflows/release.yml`) then:
@@ -82,7 +82,7 @@ so a Personal Access Token is required.
 ### Option B — manual dispatch
 
 GitHub → Actions → **Release** → **Run workflow**, and provide the `tag`
-(e.g. `v0.40.0`). Check `prerelease` to skip the Homebrew formula update.
+(e.g. `v0.1.0`). Check `prerelease` to skip the Homebrew formula update.
 
 > Note: when a tag is created by automation using the default `GITHUB_TOKEN`,
 > GitHub will not re-trigger the tag-push event. The `CD` workflow therefore
@@ -97,7 +97,7 @@ GitHub → Actions → **Release** → **Run workflow**, and provide the `tag`
 # After the formula is published to the tap:
 brew tap harshitsinghbhandari/homebrew-tap
 brew install stc
-stc --version      # -> stc 0.40.0
+stc --version      # -> stc 0.1.0
 stc gain
 ```
 
