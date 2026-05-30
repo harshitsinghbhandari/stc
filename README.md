@@ -100,7 +100,7 @@ Download from [releases](https://github.com/harshitsinghbhandari/stc/releases):
 ### Verify Installation
 
 ```bash
-stc --version   # Should show "stc 0.40.0"
+stc --version   # Should show "stc 0.1.0"
 stc gain        # Should show token savings stats
 ```
 
